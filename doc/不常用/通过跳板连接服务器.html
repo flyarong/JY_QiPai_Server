@@ -1,0 +1,105 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title></title>
+<style id="system" type="text/css">h1,h2,h3,h4,h5,h6,p,blockquote {    margin: 0;    padding: 0;}body {    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;    font-size: 13px;    line-height: 18px;    color: #737373;    margin: 10px 13px 10px 13px;}a {    color: #0069d6;}a:hover {    color: #0050a3;    text-decoration: none;}a img {    border: none;}p {    margin-bottom: 9px;}h1,h2,h3,h4,h5,h6 {    color: #404040;    line-height: 36px;}h1 {    margin-bottom: 18px;    font-size: 30px;}h2 {    font-size: 24px;}h3 {    font-size: 18px;}h4 {    font-size: 16px;}h5 {    font-size: 14px;}h6 {    font-size: 13px;}hr {    margin: 0 0 19px;    border: 0;    border-bottom: 1px solid #ccc;}blockquote {    padding: 13px 13px 21px 15px;    margin-bottom: 18px;    font-family:georgia,serif;    font-style: italic;}blockquote:before {    content:"C";    font-size:40px;    margin-left:-10px;    font-family:georgia,serif;    color:#eee;}blockquote p {    font-size: 14px;    font-weight: 300;    line-height: 18px;    margin-bottom: 0;    font-style: italic;}code, pre {    font-family: Monaco, Andale Mono, Courier New, monospace;}code {    background-color: #fee9cc;    color: rgba(0, 0, 0, 0.75);    padding: 1px 3px;    font-size: 12px;    -webkit-border-radius: 3px;    -moz-border-radius: 3px;    border-radius: 3px;}pre {    display: block;    padding: 14px;    margin: 0 0 18px;    line-height: 16px;    font-size: 11px;    border: 1px solid #d9d9d9;    white-space: pre-wrap;    word-wrap: break-word;}pre code {    background-color: #fff;    color:#737373;    font-size: 11px;    padding: 0;}@media screen and (min-width: 768px) {    body {        width: 748px;        margin:10px auto;    }}</style><style id="custom" type="text/css"></style></head>
+<body marginheight="0"><h1>跳板服务器</h1>
+<ul>
+<li>服务器的 ssh 端口、数据库 端口 都不对外网公开。</li>
+<li>开放一台跳板服务器，所有 ssh 和 数据库 连接，均通过 跳板服务器。</li>
+</ul>
+<h1>xshell 管理服务器</h1>
+<ol>
+<li><p>跳板服务器 配置</p>
+<ul>
+<li>连接参数 主机 ip：47.106.175.111 （外网地址）</li>
+<li>连接参数 端口号 : 22</li>
+<li>用户名/密码</li>
+<li>SSH -&gt; 隧道：添加 =&gt; 类型选 SOCKS4/5 , 侦听端口填 8668 , 勾上‘仅接受本地连接’</li>
+<li>代理 -&gt; 浏览： 添加 =&gt; 名称填 代理8668, 类型选 SOCKS4/5 , 主机 127.0.0.1, 端口 8668 。确定 保存，注意：最后确定界面中，‘代理服务器’一栏一定要选 &lt;无&gt; ！</li>
+</ul>
+</li>
+<li><p>应用服务器 配置</p>
+<ul>
+<li>连接参数 主机 ip: （内网地址）</li>
+<li>连接参数 端口号 : 22</li>
+<li>用户名/密码</li>
+<li>代理 -&gt; 代理服务器 列表中 选择 ‘代理8668’。</li>
+</ul>
+</li>
+<li><p>使用方法</p>
+<ul>
+<li>先连接跳板服务器，再连接应用服务器即可</li>
+</ul>
+</li>
+</ol>
+<h1>xftp 文件管理</h1>
+<ol>
+<li>配置<ul>
+<li>常规 -&gt; 主机 ip： 内网地址</li>
+<li>常规 -&gt; 端口号： 22</li>
+<li>常规 -&gt; 代理服务器： 列表中 选择 ‘代理8668’。</li>
+</ul>
+</li>
+<li>使用方法<ul>
+<li>先在 xshell 中连接跳板服务器（如果已连接，忽略此步骤）</li>
+<li>连接要管理的服务器</li>
+</ul>
+</li>
+</ol>
+<h1>navicat 连接数据库</h1>
+<ol>
+<li>配置<ul>
+<li>主机 ip ：（内网地址）</li>
+<li>端口</li>
+<li>SSH -&gt; 勾选‘使用 SSH 通道’ -&gt; 主机 47.106.175.111,端口 22，用户名/密码</li>
+</ul>
+</li>
+</ol>
+<h1>命令行代理模式</h1>
+<ol>
+<li>连接跳板并开启代理： <pre><code>ssh -o TCPKeepAlive=yes -D 8668 root@47.106.175.111</code></pre>
+</li>
+<li>使用代理连接应用服务器：<pre><code>ssh -o ProxyCommand='nc -x 127.0.0.1:8668 %h %p' username@xxx.xxx.xxx.xxx</code></pre>
+</li>
+</ol>
+<h1>端口转发模式：在不方便使用代理时用</h1>
+<h2>步骤</h2>
+<ol>
+<li>在本地建立转发端口<pre><code>ssh -o TCPKeepAlive=yes -L &lt;本地端口&gt;:&lt;阿里云内网地址&gt;:&lt;端口&gt; root@47.106.175.111</code></pre>
+</li>
+<li>通过本地端口连接服务器<pre><code>将原本要连接的服务器 ip 改为 127.0.0.1 ，端口改为上述的 &lt;本地端口&gt;</code></pre>
+</li>
+</ol>
+<h2>举例</h2>
+<ul>
+<li>web 测试服 ssh<ol>
+<li>建立转发端口<pre><code>ssh -o TCPKeepAlive=yes -L 9001:172.18.107.228:22 root@47.106.175.111</code></pre>
+</li>
+<li>连接 ssh<pre><code>ssh -p 9001 root@127.0.0.1</code></pre>
+</li>
+</ol>
+</li>
+<li>web 正式服 ssh<ol>
+<li>建立转发端口<pre><code>ssh -o TCPKeepAlive=yes -L 9002:172.18.107.232:22 root@47.106.175.111</code></pre>
+</li>
+<li>连接 ssh<pre><code>ssh -p 9002 root@127.0.0.1</code></pre>
+</li>
+</ol>
+</li>
+<li>测试服 mysql<ol>
+<li>建立转发端口<pre><code>ssh -o TCPKeepAlive=yes -L 9003:172.18.107.229:3306 root@47.106.175.111</code></pre>
+</li>
+<li>连接数据库<pre><code>使用 127.0.0.1:9003 连接数据库</code></pre>
+</li>
+</ol>
+</li>
+<li>下载服务器远程桌面<ol>
+<li>建立转发端口<pre><code>ssh -o TCPKeepAlive=yes -L 9004:172.18.107.230:3389 root@47.106.175.111</code></pre>
+</li>
+<li>连接远程桌面<pre><code>‘远程桌面连接’中使用 127.0.0.1:9004</code></pre>
+</li>
+</ol>
+</li>
+</ul>
+<p>Edit By <a href="http://mahua.jser.me">MaHua</a></p>
+</body></html>

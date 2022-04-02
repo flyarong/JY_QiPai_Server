@@ -1,0 +1,81 @@
+#
+# 协议：服务端 => 客户端
+#
+
+# 任务改变
+task_change_msg @ {
+	request {
+		task_item $ : task_item
+	}
+}
+
+# 任务的子任务id改变
+fish_daily_children_tasks_change_msg @ {
+	request {
+		fish_game_id $ : integer
+		children_tasks $ : *task_item
+	}
+}
+
+
+# 步步生财 任务改变
+stepstep_money_task_change_msg @ {
+	request {
+		task_item $ : task_item
+	}
+}
+
+# 步步生财大步骤启动
+stepstep_money_task_big_step_open @ {
+	request {
+		now_big_step $ : integer    # 当前的大步骤
+		step_tasks $ : *task_item    # 这个步骤的所有任务
+	}
+}
+
+
+
+# 鲸鱼宝箱
+get_jingyu_award_box @ {
+	request {
+		jingbi_value $ : integer   # 得到的鲸币值
+		blast_value $ : integer    # 暴击的倍数
+	}
+}
+
+# 金猪任务改变
+goldpig_task_change_msg @ {
+	request {
+		task_item $ : task_item
+	}
+}
+
+# 金猪剩余次数改变
+goldpig_task_remain_change_msg @ {
+	request {
+		task_remain $ : integer
+	}
+}
+
+# 金猪2 剩余次数改变
+goldpig2_task_remain_change_msg @ {
+	request {
+		task_remain $ : integer
+	}
+}
+
+################################################################## 周卡相关
+# 鲸币 周卡剩余次数改变
+jinbgi_zhouka_remain_change_msg @ {
+	request {
+		task_remain $ : integer
+	}
+}
+
+# 千元赛 周卡剩余次数改变
+qys_zhouka_remain_change_msg @ {
+	request {
+		task_remain $ : integer
+		next_get_day $ : integer      #第几天后能领取
+	}
+}

@@ -1,0 +1,47 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.fg_room_info {
+	game_id $ : integer
+	init_stake $ : integer
+	init_rate $ : integer
+}
+
+
+.fg_p_info {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string 
+	score $: integer
+	#1-准备了  0-没准备
+	ready $: integer
+	#头像框
+	dressed_head_frame $: integer
+	#荣誉分
+	glory_score $: integer
+}
+
+.fg_room_rent {
+	asset_type $ : string
+	asset_count $ : integer
+}
+
+.fg_activity_data {
+	key $ : string
+	value $ : integer
+}
+
+
+.fg_exchange_hongbao_data {
+	jing_bi $ : integer
+	hong_bao $ : integer
+	is_exchanged $ : integer
+}

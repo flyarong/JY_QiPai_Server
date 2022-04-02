@@ -1,0 +1,145 @@
+
+# 报名
+fsg_signup @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		game_id $ : integer
+		name $ : string
+		game_type $ : string
+	}
+}
+
+
+fsg_quit_game @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+
+
+.frame {
+	msg_type $ : string
+	id  $ : integer
+	index  $ : integer
+	seat_num  $ : integer
+	x  $ : integer
+	y  $ : integer
+	time  $ : integer
+	begin_time  $ : integer
+	fish_ids  $ : *integer
+	shell_ids $ : *shell_dead
+	ids  $ : *integer
+	data  $ : *integer
+	type  $ : integer
+	path  $ : integer
+	value  $ : integer
+	rate  $ : integer
+	score  $ : integer
+	num  $ : integer
+	types  $ : *integer
+	moneys  $ : *integer
+	group_id  $ : integer
+	speed  $ : integer
+	bullet_index  $ : integer
+	boom_num $ : integer
+	activity_id $ : integer
+	status $ : integer
+}
+
+.frame_data {
+	shoot $ : *frame
+	boom $ : *frame
+	fish $ : *frame
+	fish_group $ : *frame
+	fish_team $ : *frame
+	fish_explode $ : *frame
+	activity $ : *frame
+	event $ : *frame
+	skill $ : *frame
+	time $ : string
+	fish_out_pool $ : *integer
+	assets $ : *asset_data
+	frame_id $ : integer
+}
+
+
+
+# 请求所有数据 断线重连
+fsg_all_info @ {
+	request {
+	}
+	response {
+		result $ : integer
+
+		game_id $ : integer
+		name $ : string
+		game_type $ : string
+
+		#--房间信息
+		seat_num $ : integer
+		players_info $ : *fsg_p_info
+		room_info $ : fsg_room_info
+		my_barbette_id $ : *integer
+
+		skill_status $ : *fsg_skill
+
+		#--渔场信息
+		fishery_barbette_id $ : *integer
+		begin_time $ : string
+		fishery_data $ : string
+
+	}
+}
+
+
+# 请求所有数据 断线重连
+fsg_all_info_test @ {
+	request {
+	}
+	response {
+		result $ : integer
+
+		game_id $ : integer
+		name $ : string
+		game_type $ : string
+
+		fish_map_id $ : integer
+
+		skill_cfg $ : *fsg_skill_cfg
+
+		#--房间信息
+		seat_num $ : integer
+		players_info $ : *fsg_p_info
+		room_info $ : fsg_room_info
+		my_barbette_id $ : *integer
+
+		skill_status $ : *fsg_skill
+		
+		#--渔场信息
+		fishery_barbette_id $ : *integer
+		begin_time $ : string
+		fishery_data $ : frame_data
+
+		frozen_time_data $ : *integer
+	}
+}
+
+
+# 强制从当前渔场 跳至 xx渔场
+fsg_force_change_fishery @ {
+	request {
+		target_fishery $ : integer     # 目标渔场id
+	}
+	response {
+		result $ : integer
+	}
+}
+

@@ -1,0 +1,39 @@
+# 生财之道  s2c
+
+# 推广礼包收益激活
+tglb_profit_activate @ {
+	request {
+		is_active_tglb1_profit $ : integer    # 是否激活推广礼包1收益 , 1 = true ,
+	}
+}
+
+# 金猪礼包缓存值更新
+goldpig_profit_cache_change @ {
+  request {
+    now_goldpig_profit_cache $ : integer    # 当前的金猪礼包缓存
+  }
+}
+
+# sczd各种开关改变
+sczd_activate_change_msg @ {
+  request {
+    is_activate_xj_profit $ : integer           # 是否激活下级玩家奖 收益 , 1 = true 
+    is_activate_tglb_profit $ : integer         # 是否激活下级礼包 收益 , 1 = true 
+    is_activate_gjhhr $ : integer               # 是否激活 高级合伙人 , 1 = true 
+    is_activate_bisai_profit $ : integer        # 是否激活 比赛奖收益 , 1 = true 
+  }
+}
+
+
+#####
+vip_lb_base_info_change_msg @ {
+  request {
+    is_buy_vip_lb $ : integer           # 是否购买vip 礼包 0未买  1 购买
+    task_get_num1 $ : integer           # 1号任务当前获取的次数
+    task_max_num1 $ : integer           # 1号任务总获取的次数
+    task_get_num2 $ : integer           # 2号任务当前获取的次数
+    task_max_num2 $ : integer           # 2号任务总获取的次数
+    task_overdue_time $ : integer       # 任务过期时间戳
+    remain $ : integer                    # 剩余的礼包数量
+  }
+}

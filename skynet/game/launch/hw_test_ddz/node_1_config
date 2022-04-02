@@ -1,0 +1,16 @@
+root="./"
+thread = 8
+logger = nil
+harbor = 0
+start = "hw_test_ddz/node_1_main"
+bootstrap = "snlua bootstrap"	-- The service for bootstrap
+luaservice = "./service/?.lua;./game/launch/?.lua;./game/services/?.lua"
+lualoader = "lualib/loader.lua"
+lua_path="./lualib/?.lua;".."./lualib/?/init.lua;./game/common/?.lua;./game/services/?.lua"
+lua_cpath = root .. "luaclib/?.so"
+cpath = "./cservice/?.so"
+cluster = "./game/launch/hw_test/clustername.lua"
+snax = "./test/?.lua"
+my_node_name="node_1"
+strict_transfer=1
+

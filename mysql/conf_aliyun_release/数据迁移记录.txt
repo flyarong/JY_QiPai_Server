@@ -1,0 +1,99 @@
+2019-3-29
+-------------------------------
+内容 修改主机+从机的 binlog 路径；
+     修改从机的 数据 路径
+     重做主从备份
+
+☆ 准备：
+    1、 准备好 从机 的 新 log 文件夹：所有者、组、权限、apparmor
+        准备好从机的 data 文件夹：所有者、组、权限、apparmor
+        在下列两处位置加入 /mnt/data_c 下的相应内容
+                。。。
+            # Allow data dir access
+            /var/lib/mysql/ r,
+            /var/lib/mysql/** rwk,
+            /mnt/data_c/mysql/data/ r,
+            /mnt/data_c/mysql/data/** rwk,
+                。。。
+            # Allow log file access
+            /var/log/mysql.err rw,
+            /var/log/mysql.log rw,
+            /var/log/mysql/ r,
+            /var/log/mysql/** rw,
+            /mnt/data_c/mysql/log/ r,
+            /mnt/data_c/mysql/log/** rw,
+
+    2、修改主机 binlog 、从机的 data + binlog 配置
+        datadir	 = /mnt/data_c/mysql/data
+        log_bin  = /mnt/data_c/mysql/log/mysql-bin.log
+
+☆ 执行迁移
+    1、关闭游戏服务器 ====>
+    2、主库、备库 停机（重新启动 启用准备好的 新配置）
+        service mysql stop
+    3、主库
+        启动，锁表，记录 binlog 位置，导出数据。
+
+            FLUSH TABLES WITH READ LOCK;
+
+            show master status;
+                +------------------+----------+--------------+------------------+-------------------+
+                | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
+                +------------------+----------+--------------+------------------+-------------------+
+                | mysql-bin.000001 |      154 | jygame       |                  |                   |
+                +------------------+----------+--------------+------------------+-------------------+
+
+            cd /mnt/data_c/test
+            mysqldump -u root -p --master-data jygame > jygame.sql
+
+        解除表锁定
+            unlock tables
+
+    4、启动游戏服务器 ====>
+    5、从库
+        重新加载 apparmor
+            /etc/init.d/apparmor reload
+        压缩、拷贝、解压主库数据
+
+            在主库执行
+                zip jygame.zip jygame.sql
+            回到从库
+            cd /mnt/data_c/test
+            scp root@172.18.107.235:/mnt/data_c/test/jygame.zip ./
+            unzip jygame.zip
+        拷贝 data 到新位置
+            cp -auxv /var/lib/mysql/* /mnt/data_c/mysql/data/
+
+        启动数据库 ，停止 slave ，删除 旧数据库，建立新的数据库
+            service mysql start
+            stop slave
+            
+        导入数据
+            mysql -uroot -p jygame < jygame.sql
+                或 
+            source /home/jygame.sql; （mysql 控制台）
+
+        重新设置 同步参数 （注意 binlog 日志位置）
+            CHANGE MASTER TO 
+                MASTER_LOG_FILE='mysql-bin.000001',
+                MASTER_LOG_POS=872;
+        
+        启动 从机 同步
+            start slave;
+
+2019-2-18
+----------------------------
+
+同步本次更新的数据库结构
+
+停 从服务器(service mysql stop  )
+停 主服务器
+
+cp -auxv /var/lib/mysql /mnt/data_c/mysql/data
+
+/etc/init.d/apparmor reload
+
+
+启动主服务器 service mysql start
+启动从服务器
+

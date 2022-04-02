@@ -1,0 +1,13 @@
+TRUNCATE TABLE jyh_merchant_order;
+TRUNCATE TABLE jyh_merchant_tax_ticket;
+TRUNCATE TABLE jyh_merchant_trade;
+TRUNCATE TABLE jyh_operation_log;
+TRUNCATE TABLE jyh_user;
+TRUNCATE TABLE jyh_vc_user;
+TRUNCATE TABLE jyh_user_bill;
+TRUNCATE TABLE jyh_user_game_consumption_rebate;
+TRUNCATE TABLE jyh_user_game_consumption_record;
+TRUNCATE TABLE jyh_user_merchant_order_rebate;
+TRUNCATE TABLE jym_user_withdraw;
+TRUNCATE TABLE jyh_user_recharge_rebate;
+TRUNCATE TABLE jyh_user_recharge_record;

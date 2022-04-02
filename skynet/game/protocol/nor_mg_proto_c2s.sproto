@@ -1,0 +1,160 @@
+
+# 协议：城市杯， 客户端 => 服务端
+#
+# 比赛场报名
+nor_mg_signup @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		is_cancel_signup $ : integer 	# 0-不可以取消  1-可以取消
+		signup_num $ : integer
+		cancel_signup_cd $ : integer
+		game_id $ : integer
+		name $ : string
+		total_players $ : integer
+		total_round $ : integer
+		match_model $ : string
+	}
+}
+
+# 新手引导报名
+nor_mg_xsyd_signup @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		is_cancel_signup $ : integer 	# 0-不可以取消  1-可以取消
+		signup_num $ : integer
+		cancel_signup_cd $ : integer
+		game_id $ : integer
+		name $ : string
+		total_players $ : integer
+		total_round $ : integer
+		match_model $ : string
+	}
+}
+
+
+
+#请求所属类型的信息，通过服务器s2c发送
+nor_mg_req_info_by_send @ {
+	request {
+	#type种类:
+		#all  --所有信息
+		type $ : string
+	}
+	response {
+		result $ : integer
+	}
+}
+
+nor_mg_cancel_signup @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+nor_mg_req_cur_signup_num @ {
+	request {
+	}
+	response {
+		result $ : integer
+		signup_num $ : integer
+	}
+}
+nor_mg_quit_game @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+nor_mg_replay_game @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		is_cancel_signup $ : integer 	# 0-不可以取消  1-可以取消
+		signup_num $ : integer
+		cancel_signup_cd $ : integer
+		game_id $ : integer
+		name $ : string
+		total_players $ : integer
+		total_round $ : integer
+		match_model $ : string
+	}
+}
+
+nor_mg_req_specified_signup_num @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		signup_num $ : integer
+		id $ : integer
+	}
+}
+
+
+nor_mg_req_cur_player_num @ {
+	request {
+	}
+	response {
+		result $ : integer
+		match_player_num $ : integer
+		in_table_player_num $ : integer
+	}
+}
+
+
+nor_mg_query_match_active_player_num @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		id $ : integer
+		num $ : integer
+	}
+}
+
+
+
+nor_mg_query_all_rank @ {
+	request {
+		id $ : integer
+		index $ : integer
+	}
+	response {
+		result $ : integer
+		rank_list $ : *nor_mg_rank_info
+	}
+}
+
+
+nor_mg_get_match_status @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		start_time $ : integer
+	}
+}
+
+
+nor_mg_revive @ {
+	request {
+		opt $ : integer
+	}
+	response {
+		result $ : integer
+	}
+}

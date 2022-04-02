@@ -1,0 +1,66 @@
+
+!include /etc/mysql/conf.d/mysql.cnf
+!include /etc/mysql/mysql.conf.d/mysqld.cnf
+
+[client]
+
+port	=	23456
+
+
+[mysqld]
+
+port	=	23456
+
+server-id	=	1
+
+#datadir		= /mnt/mysql/data
+#lc-messages-dir	= /usr/share/mysql
+log_error	=	/mnt/mysql/data/error.log
+
+default-storage-engine=INNODB
+sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+max_connections=16
+query_cache_limit=1M
+query_cache_size=32M
+table_open_cache=320
+tmp_table_size=369M
+thread_cache_size=8
+
+
+myisam_max_sort_file_size=10G
+myisam_sort_buffer_size=616M
+key_buffer_size=64M
+read_buffer_size=1M
+read_rnd_buffer_size=8M
+sort_buffer_size=1M
+
+
+max_allowed_packet	= 16M
+thread_stack		= 192K
+
+myisam-recover-options  = BACKUP
+
+query_cache_limit	= 1M
+query_cache_size        = 16M
+
+slow_query_log=on
+slow-query-log-file=/mnt/mysql/data/mysql-slow.log
+long_query_time=10
+
+expire_logs_days	= 15
+innodb_support_xa	= 1
+max_binlog_size   	= 100M
+log_bin			= /mnt/mysql/mysql-bin
+
+innodb_buffer_pool_size=100M
+innodb_log_buffer_size=16M
+innodb_log_file_size=32M
+innodb_log_files_in_group = 2
+
+
+innodb_flush_log_at_trx_commit=0
+innodb_thread_concurrency=8
+innodb_file_per_table=1
+
+
+

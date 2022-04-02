@@ -1,0 +1,10 @@
+#
+# 协议：服务端 => 客户端
+#
+
+dafuhao_base_info_change @ {
+	request {
+		need_credits $ : integer          # 本次需要积分
+		now_credits $ : integer           # 我的积分
+	}
+}

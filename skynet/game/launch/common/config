@@ -1,0 +1,21 @@
+root = "./"
+luaservice = root.."service/?.lua;"..root.."game/?.lua;"..root.."game/services/?.lua;"..root.."game/activity_service/?.lua;"..root.."game/launch/?.lua;"
+lualoader = root .. "lualib/loader.lua"
+lua_path = root.."lualib/?.lua;"..root.."game/?.lua;"..root.."lualib/?/init.lua;"..root.."game/services/?.lua;"..root.."game/activity_service/?.lua;"..root.."game/common/?.lua;"..root.."game/config/?.lua;"..root.."?.lua;"
+lua_cpath = root .. "luaclib/?.so"
+snax = root.."game/service/?.lua;"
+
+game_config_dir = "./game/config/"
+
+harbor = 0
+
+thread = 8
+logger = nil
+logpath = "."
+
+profile = true
+
+bootstrap = "snlua bootstrap"	-- The service for bootstrap
+cpath = root.."cservice/?.so"
+
+dumpath = "./logs"

@@ -1,0 +1,29 @@
+
+
+
+# 帧数据 客户端每0.033秒发送一次
+
+#子弹结构 ： id = 子弹id, index = 子弹索引 , seat_num = 座位号
+#碰撞结构 ： id = 子弹id, fish_ids = 鱼id列表
+
+nor_fishing_nor_frame_data @ {
+	request {
+		data $ : string
+	}
+	response {
+		result $ : integer
+		data $ : string
+	}
+}
+
+
+
+nor_fishing_nor_frame_data_test @ {
+	request {
+		data $ : frame_data
+	}
+	response {
+		result $ : integer
+		data $ : frame_data
+	}
+}

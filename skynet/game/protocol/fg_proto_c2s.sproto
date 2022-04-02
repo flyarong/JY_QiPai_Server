@@ -1,0 +1,105 @@
+
+# 协议：城市杯， 客户端 => 服务端
+#
+# 报名
+fg_signup @ {
+	request {
+		id $ : integer
+		xsyd $ : integer #-- 1 ok
+	}
+	response {
+		result $ : integer
+		game_id $ : integer
+		name $ : string
+		game_type $ : string
+		jdz_type $ : string
+	}
+}
+
+
+# 比赛场切换游戏
+fg_switch_game @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		game_id $ : integer
+		name $ : string
+		game_type $ : string
+	}
+}
+
+#请求所属类型的信息，通过服务器s2c发送
+fg_req_info_by_send @ {
+	request {
+	#type种类:
+		#all  --所有信息
+		type $ : string
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+fg_quit_game @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+fg_ready @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+fg_cancel_ready @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+fg_huanzhuo @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+fg_get_activity_award @ {
+	request {
+	}
+	response {
+		result $ : integer
+		data $ : integer
+	}
+}
+
+
+fg_get_settlement_players_info @ {
+	request {
+	}
+	response {
+		result $ : integer
+		settlement_players_info $ : *fg_p_info
+	}
+}
+
+fg_settle_exchange_hongbao @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}

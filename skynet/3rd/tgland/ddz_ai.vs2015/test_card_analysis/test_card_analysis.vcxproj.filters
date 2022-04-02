@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{12e1c66e-128a-418a-bbb2-255652e1c7a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{0e9b6e32-881e-4470-bd5a-61910bb18214}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ddz_ai_util.cpp" />
+    <ClCompile Include="..\..\ddz_boyi_search.cpp" />
+    <ClCompile Include="..\..\fenpai.cpp" />
+    <ClCompile Include="..\..\lys_card.cpp" />
+    <ClCompile Include="..\..\pai_struct.cpp" />
+    <ClCompile Include="..\..\pai_type_map.cpp" />
+    <ClCompile Include="..\..\query_map.cpp" />
+    <ClCompile Include="..\..\type_face_exist_map.cpp" />
+    <ClCompile Include="..\test_src\lys_card_analysis_test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ddz_ai_util.hpp" />
+    <ClInclude Include="..\..\ddz_boyi_search.hpp" />
+    <ClInclude Include="..\..\ddz_enums.h" />
+    <ClInclude Include="..\..\fenpai.h" />
+    <ClInclude Include="..\..\lys_card.hpp" />
+    <ClInclude Include="..\..\pai_struct.h" />
+    <ClInclude Include="..\..\pai_type_map.h" />
+    <ClInclude Include="..\..\query_map.h" />
+    <ClInclude Include="..\..\type_face_exist_map.h" />
+  </ItemGroup>
+</Project>

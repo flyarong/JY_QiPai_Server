@@ -1,0 +1,126 @@
+# 生财之道  c2s
+
+
+#请求 我的生财之道的基本数据
+get_player_sczd_base_info @ {
+	request {
+		 
+	}
+	response {
+		result $ : integer
+		is_activate_bbsc_profit $ : integer         # 是否激活下级bbsc 收益 , 1 = true 
+		is_activate_xj_profit $ : integer           # 是否激活下级玩家奖 收益 , 1 = true 
+		is_activate_tglb_profit $ : integer         # 是否激活下级礼包 收益 , 1 = true 
+		is_activate_tglb_cache $ : integer          # 是否激活下级礼包 缓存 , 1 = true 
+		is_activate_bisai_profit $ : integer        # 是否激活 比赛奖 缓存 , 1 = true 
+		is_activate_gjhhr $ : integer               # 是否激活 高级合伙人 , 1 = true 
+
+		my_get_award $ : integer              # 总共获取的奖励值
+		my_all_son_count $ : integer          # 我的总共的son数量
+		goldpig_profit_cache $ : integer      # 下级购买金猪礼包的返奖缓存值
+	}
+}
+
+# 请求我的son的数据
+query_my_son_main_info @ {
+	request {
+		sort_type $ : integer                # 排序类型 ，1 为贡献值 升序 ，2 贡献值降序 3 注册时间升序 4 注册时间降序
+		page_index $ : integer               # 查询第几页的数据
+	}
+	response {
+		result $ : integer
+		is_clear_old_data $ : integer             # 是否清空之前页的数据 1 = true，如果排序方式改变了，要清掉之前的，索引页从1开始
+		son_main_infos $ : *son_main_info         # 这一页的son的数据
+	}
+}
+
+# 请求某一个son的基本贡献信息
+query_son_base_contribute_info @ {
+	request {
+		son_id $ : string         
+	}
+	response {
+		result $ : integer
+		son_id $ : string
+		son_tgli_gx $ : integer          # son的推广礼包的贡献值
+		son_bbsc_gx $ : integer          # son的步步生财的贡献值
+		son_vip_lb_gx $ : integer          # son的vip礼包的贡献值
+		son_bbsc_progress $ : integer    # son当前的步步生财进度
+	}
+}
+
+# 请求某个son的具体的贡献详情
+query_son_details_contribute_info @ {
+	request {
+		son_id $ : string
+		page_index $ : integer                  # 查询第几页的数据
+	}
+	response {
+		result $ : integer
+		son_id $ : string
+		detail_infos $ : *sczd_contribute_data  
+	}
+}
+
+# 请求我的生财之道的收入明细
+query_my_sczd_income_details @ {
+	request {
+		page_index $ : integer                  # 查询第几页的数据
+	}
+	response {
+		result $ : integer
+		detail_infos $ : *sczd_contribute_data  
+	}
+}
+
+
+# 请求我的生财之道的提现明细
+query_my_sczd_spending_details @ {
+	request {
+		page_index $ : integer                  # 查询第几页的数据
+	}
+	response {
+		result $ : integer
+		extract_infos $ : *sczd_extract_record  
+	}
+}
+
+# 提现
+get_sczd_cash @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+# 请求搜索一个下级的id
+search_son_by_id @ {
+	request {
+		id $ : string                  # 查询的孩子的id
+	}
+	response {
+		result $ : integer
+		son_info $ : son_main_info         # 这个son的数据
+	}
+}
+
+
+#################### vip 礼包相关
+
+## 请求vip礼包基本数据
+query_vip_lb_base_info @ {
+	request {
+	}
+	response {
+		result $ : integer
+		is_buy_vip_lb $ : integer             # 是否购买vip 礼包 0未买  1 购买
+		task_get_num1 $ : integer             # 1号任务当前获取的次数
+		task_max_num1 $ : integer             # 1号任务总获取的次数
+		task_get_num2 $ : integer             # 2号任务当前获取的次数
+		task_max_num2 $ : integer             # 2号任务总获取的次数
+		task_overdue_time $ : integer         # 任务过期时间戳
+		remain $ : integer                    # 剩余的礼包数量
+	}
+}
+

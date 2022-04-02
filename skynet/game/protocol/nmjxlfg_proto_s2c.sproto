@@ -1,0 +1,155 @@
+#
+# 协议：服务端 => 客户端
+#
+
+#dmg start********** ***************************************************************************
+
+#nmjxlfg start********** 麻将自由场*********************************************************************
+
+#匹配超时自动取消报名消息
+nmjxlfg_auto_cancel_signup_msg @ {
+	request {
+		result $ : integer
+	}
+}
+
+#进入房间消息
+nmjxlfg_enter_room_msg @ {
+	request {
+		status_no $ : integer
+		room_info $ : nmjxlfg_room_info
+		players_info $ : nmjxlfg_players_info
+		win_count $ : integer
+	}
+}
+
+#玩家加入桌子
+nmjxlfg_join_msg @ {
+	request {
+		status_no $ : integer
+		#玩家信息
+		player_info $ : nmjxlfg_p_info
+	}
+}
+
+#投骰子（定庄）
+nmjxlfg_tou_sezi_msg @ {
+	request {
+		status_no $ : integer
+
+        #庄家座位号
+        zj_seat $ : integer
+
+		#色子结果：庄家 从 东方位 算起
+		sezi_value1 $ : integer
+		sezi_value2 $ : integer
+	}
+}
+
+nmjxlfg_auto_msg @ {
+	request {
+		p $ : integer
+		auto_status $ : integer
+	}
+}
+
+#牌消息
+nmjxlfg_pai_msg @ {
+	request {
+		status_no $ : integer
+		#我的牌的列表
+		my_pai_list $ : *integer
+		#当前牌池的数量
+		remain_card $ : integer
+		#当前局数
+		race $ : integer
+	}
+}
+
+#权限消息
+nmjxlfg_permit_msg @ {
+	request {
+		status_no $ : integer
+
+		#当前状态
+		#ding_que-定缺 cp-出牌 mo_pai-摸牌 peng_gang_hu-碰杠胡（别人打的）
+		status $ : string
+
+		# 牌
+		pai $ : integer
+
+		# 允许的操作
+		allow_opt $ : nmjxlfg_allow_opt
+
+		#倒计时
+		countdown $ : integer
+
+		#当前权限拥有人 0表示所有人 1-4具体的玩家
+		cur_p $ : integer
+
+		#其他数据
+		other $ : string
+	}
+}
+
+#分数改变
+nmjxlfg_grades_change_msg @ {
+	request {
+		status_no $ : integer
+
+		# 分数改变信息
+		data $ : *nmjxlfg_grades_change
+
+	}
+}
+
+#玩家操作消息
+nmjxlfg_action_msg @ {
+	request {
+		status_no $ : integer
+		action $ : nmjxlfg_action
+	}
+}
+
+
+#玩家定缺结果消息
+nmjxlfg_dingque_result_msg @ {
+	request {
+		status_no $ : integer
+		result $ : *integer
+	}
+}
+
+
+#玩家胡了消息
+nmjxlfg_hu_msg @ {
+	request {
+		status_no $ : integer
+		hu $ : nmjxlfg_hu_data
+	}
+}
+
+
+#真结算（最后 游戏结束时 的结算）
+nmjxlfg_gameover_msg @ {
+	request {
+		status_no $ : integer
+		settlement_info $ : nmjxlfg_settlement_info
+	}
+}
+
+
+nmjxlfg_all_info @ {
+	request {
+		status_no $ : integer
+		room_info $ : nmjxlfg_room_info
+		players_info $ : nmjxlfg_players_info
+		match_info $ : nmjxlfg_match_info
+		status_info $ : nmjxlfg_status_info
+		settlement_info $ : nmjxlfg_settlement_info
+	}
+}
+
+
+#nmjxlfg end********************************************************************************************
+

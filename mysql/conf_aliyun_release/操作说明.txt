@@ -1,0 +1,115 @@
+
+-- 创建用户
+
+grant all privileges on *.* to 'game'@'%' identified by 'passwordxxx';
+
+-- 创建只读用户
+
+grant select on *.* to 'read'@'%' identified by 'passwordxxx';
+
+-- 应用刚修改的权限（使权限立即生效）
+flush  privileges;
+
+-- 如果 加密方式 不是 mysql_native_password ，则要修改
+
+select plugin from user where user = 'game';
+update user set plugin='mysql_native_password' where user='game' and host='%';
+update user set authentication_string=password('passwordxxx') where user='game' and host='%';
+
+
+-- 其他常用命令
+
+★ 在终端登录数据库
+	mysql -u root -p
+★ 删除用户
+	drop user 'game'@'%';
+★ 显示用户权限
+	show grants for 'game';
+	
+★ 启动mysql数据库
+	/etc/init.d/mysql start
+		或
+	service mysql start
+★ 重启
+	/etc/init.d/mysql restart
+		或
+	service mysql restart
+★ 关闭
+	/etc/init.d/mysql stop
+		或
+	service mysql stop
+
+★ 赋予 临时表创建权限
+	GRANT create temporary tables ON *.* TO `read`@`%`;
+
+★ sql语句日志相关
+
+	-- 查询日志
+	show global variables like '%general%';   
+	show variables like '%log_output%'; 
+	set global general_log_file='xxxx.log'
+	set global general_log=off;
+	set global general_log=on;	
+
+	set global log_output='FILE';
+	set global log_output='TABLE';
+
+	-- 慢查询
+	show variables like '%slow_query_log%';
+	show variables like '%long_query_time%'
+
+★ 二进制日志 binlog 相关
+
+	按日期删除 binlog
+	purge master logs before '2014-11-18 00:00:00';
+
+	按日志文件删除 binlog （不含）
+	purge master logs to 'mysql-bin.000389';
+
+	binlog 保留天数
+	set global expire_logs_days=7;
+
+★ 生产服务器 防止误操作配置
+
+	-- 防止 不带条件的 delete 和 update 语句 ；
+	-- 查看配置 show variables like '%sql_safe_updates%';
+	set global sql_safe_updates=1;
+
+	
+-- 其他资料
+
+★ 配置文件位置：  
+	/etc/mysql/mysql.cnf
+	/etc/mysql/conf.d/mysql.cnf
+	/etc/mysql/mysql.conf.d/mysqld.cnf
+	
+
+★ 阿里云新挂载磁盘
+	fdisk -l 				运行  命令查看实例上的数据盘
+	fdisk -u /dev/vdx 		分区数据盘 vdx （例如 vda vdb）
+		p 查看
+		n 新分区
+			p 创建为主分区
+			1 创建 1 个分区
+			默认 第一个，最后一个 扇区编号
+		w 写入新分区 			
+	fdisk -lu /dev/vdx 		查看新分区
+
+	mkfs.ext4 /dev/vdx1		在新分区 vdx1 上创建 ext4 文件系统
+	mount /dev/vdx1 /mnt	挂载到 mnt
+	umount /mnt 			卸载 mnt
+
+★ ubuntu 中，mysql 数据迁移
+	1. service mysql stop 
+	2. 修改配置 .conf 
+	3. cp -auxv <旧位置> <新位置>
+	4. 修改 /etc/apparmor.d/usr.sbin.mysqld  ： 
+		#/var/lib/mysql/ r,
+		#/var/lib/mysql/** rwk,
+		/data/mysql_data/ r,
+		/data/mysql_data/** rwk,	
+	5. 重加载 apparmor 配置
+		/etc/init.d/apparmor reload
+	6. service mysql start
+
+apparmor_status	

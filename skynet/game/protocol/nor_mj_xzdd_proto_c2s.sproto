@@ -1,0 +1,57 @@
+#
+# 协议：客户端 => 服务端
+#
+
+#mfg start ********** 麻将自由场**********************************************************************
+
+
+nor_mj_xzdd_auto @ {
+	request {
+		operate $ : integer # 1 开启 , 0 关闭
+	}
+	response {
+		result $ : integer
+	}
+}
+
+# 操作
+nor_mj_xzdd_operator @ {
+	request {
+        type $ : string # 操作类型，参见 nor_mj_xzdd_action.type
+        pai $ : integer # 牌
+	}
+	response {
+		result $ : integer
+	}
+}
+
+# 操作-换三张
+nor_mj_xzdd_huansanzhang @ {
+	request {
+        paiVec $ : *integer # 牌
+	}
+	response {
+		result $ : integer
+	}
+}
+
+# 操作-打漂
+nor_mj_xzdd_dapiao @ {
+	request {
+        piaoNum $ : integer # 飘的倍数
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+# 获取这次对局的输赢分数
+nor_mj_xzdd_get_race_score @ {
+	request {
+	}
+	response {
+		result $ : integer
+		race_score $ : integer
+	}
+}

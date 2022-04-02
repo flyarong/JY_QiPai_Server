@@ -1,0 +1,149 @@
+#
+# 协议：服务端 => 客户端
+#
+
+
+#匹配超时自动取消报名消息
+nor_mg_all_info @ {
+	request {
+		status_no $ : integer
+		status $ : string 
+		game_type $ : string
+		game_kaiguan $ : integer         # 游戏开关，客户端转成二进制
+		game_multi $ : string            # 游戏倍数，一个字节表示一个
+		players_info $ : *nor_mg_p_info
+		match_info $ : nor_mg_match_info
+		round_info $ : nor_mg_round_info
+		room_info $ : nor_mg_room_info
+		signup_num $ : integer
+		countdown $ : integer
+		rank $ : integer
+		promoted_type $ : integer
+		gameover_info $ : nor_mg_final_result
+
+		#--复活数据
+		revive_num $ : integer
+		revive_round $ : integer
+		revive_assets $ : *asset_data
+
+		#游戏数据
+		nor_mj_xzdd_status_info $ : nor_mj_xzdd_status_info
+		nor_ddz_nor_status_info $ : nor_ddz_nor_status_info
+	}
+}
+
+#匹配超时自动取消报名消息
+nor_mg_auto_cancel_signup_msg @ {
+	request {
+		status_no $ : integer
+	}
+}
+
+#比赛场开始
+nor_mg_begin_msg @ {
+	request {
+		#最新状态编号
+		status_no $ : integer
+		#初始排名
+		rank $ : integer
+		score $ : integer
+		total_players $ : integer
+	}
+}
+
+#比赛场进入房间消息
+nor_mg_enter_room_msg @ {
+	request {
+		status_no $ : integer
+		seat_num $ : integer
+		round_info $: nor_mg_round_info
+		room_info $ : nor_mg_room_info
+		players_info $ : *nor_mg_p_info
+	}
+}
+
+#玩家加入桌子
+nor_mg_join_msg @ {
+	request {
+		status_no $ : integer
+		#玩家信息
+		player_info $ : nor_mg_p_info
+	}
+}
+
+
+nor_mg_gameover_msg @ {
+	request {
+		status_no $ : integer
+		final_result $ : nor_mg_final_result
+		round_info $: nor_mg_round_info
+	}
+}
+
+#比赛场斗地主分数改变
+nor_mg_score_change_msg @ {
+	request {
+		status_no $ : integer
+		score $ : integer
+	}
+}
+nor_mg_rank_msg @ {
+	request {
+		status_no $ : integer
+		rank $ : integer
+	}
+}
+
+#--等待结果
+nor_mg_wait_result_msg @ {
+	request {
+		status_no $ : integer
+		status $ : string
+		round_info $: nor_mg_round_info
+	}
+}
+
+#--晋级，准备开始下一轮
+nor_mg_promoted_msg @ {
+	request {
+		status_no $ : integer
+		status $ : string
+		countdown $ : integer
+		#--0表示普通晋级 1表示晋级决赛
+		promoted_type $ : integer
+		round_info $: nor_mg_round_info
+	}
+}
+
+
+
+
+#比赛被放弃
+nor_mg_match_discard_msg @ {
+	request {
+		game_id $ : integer
+	}
+}
+
+
+
+
+#你已经失败 需要复活
+nor_mg_wait_revive_msg @ {
+	request {
+		status_no $ : integer
+		num $ : integer
+		time $ : integer
+		round $ : integer
+		assets $ : *asset_data
+	}
+}
+
+
+
+#条件已经满足 免费复活
+nor_mg_free_revive_msg @ {
+	request {
+		status_no $ : integer
+	}
+}

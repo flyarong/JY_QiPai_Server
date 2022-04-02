@@ -1,0 +1,107 @@
+#
+# 协议：服务端 => 客户端
+#
+
+
+#匹配超时自动取消报名消息
+citymg_all_info @ {
+	request {
+		status_no $ : integer
+		status $ : string 
+		game_type $ : string
+		players_info $ : *citymg_p_info
+		match_info $ : citymg_match_info
+		round_info $ : citymg_round_info
+		signup_num $ : integer
+		rank $ : integer
+		match_type $ : integer
+		promoted_type $ : integer
+		gameover_info $ : citymg_final_result
+
+		#游戏数据
+		nor_mj_xzdd_status_info $ : nor_mj_xzdd_status_info
+		nor_ddz_nor_status_info $ : nor_ddz_nor_status_info
+	}
+}
+
+#匹配超时自动取消报名消息
+citymg_auto_cancel_signup_msg @ {
+	request {
+		status_no $ : integer
+	}
+}
+
+#比赛场开始
+citymg_begin_msg @ {
+	request {
+		#最新状态编号
+		status_no $ : integer
+		#初始排名
+		rank $ : integer
+		score $ : integer
+		total_players $ : integer
+	}
+}
+
+#比赛场进入房间消息
+citymg_enter_room_msg @ {
+	request {
+		status_no $ : integer
+		seat_num $ : integer
+		round_info $: citymg_round_info
+		players_info $ : *citymg_p_info
+	}
+}
+
+#玩家加入桌子
+citymg_join_msg @ {
+	request {
+		status_no $ : integer
+		#玩家信息
+		player_info $ : citymg_p_info
+	}
+}
+
+
+citymg_gameover_msg @ {
+	request {
+		status_no $ : integer
+		final_result $ : citymg_final_result
+	}
+}
+
+#比赛场斗地主分数改变
+citymg_score_change_msg @ {
+	request {
+		status_no $ : integer
+		score $ : integer
+	}
+}
+citymg_rank_msg @ {
+	request {
+		status_no $ : integer
+		rank $ : integer
+	}
+}
+
+#--等待结果
+citymg_wait_result_msg @ {
+	request {
+		status_no $ : integer
+		status $ : string
+	}
+}
+
+#--晋级，准备开始下一轮
+citymg_promoted_msg @ {
+	request {
+		status_no $ : integer
+		status $ : string
+		countdown $ : integer
+		#--0表示普通晋级 1表示晋级决赛
+		promoted_type $ : integer
+	}
+}
+
+
+

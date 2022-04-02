@@ -1,0 +1,203 @@
+#
+# 协议：服务端 => 客户端
+#
+
+#********** 麻将xzdd*********************************************************************
+
+nor_mj_xzdd_ready_msg @ {
+	request {
+		status_no $ : integer
+		#玩家信息
+		seat_num $ : integer
+		#本局
+		cur_race $ : integer
+	}
+}
+nor_mj_xzdd_begin_msg @ {
+	request {
+		status_no $ : integer
+        cur_race $ : integer
+	}
+}
+#投骰子（定庄）
+nor_mj_xzdd_tou_sezi_msg @ {
+	request {
+		status_no $ : integer
+        #庄家座位号
+        zj_seat $ : integer
+		#色子结果：庄家 从 东方位 算起
+		sezi_value1 $ : integer
+		sezi_value2 $ : integer
+	}
+}
+
+nor_mj_xzdd_auto_msg @ {
+	request {
+		p $ : integer
+		auto_status $ : integer
+	}
+}
+
+#牌消息
+nor_mj_xzdd_pai_msg @ {
+	request {
+		status_no $ : integer
+		#我的牌的列表
+		my_pai_list $ : *integer
+		#当前牌池的数量
+		remain_card $ : integer
+	}
+}
+
+#权限消息
+nor_mj_xzdd_permit_msg @ {
+	request {
+		status_no $ : integer
+
+		#当前状态
+		#ding_que-定缺 cp-出牌 mo_pai-摸牌 peng_gang_hu-碰杠胡（别人打的）
+		status $ : string 
+
+		# 牌
+		pai $ : integer
+
+		# 允许的操作
+		allow_opt $ : nor_mj_xzdd_allow_opt
+
+		#倒计时
+		countdown $ : integer
+
+		#当前权限拥有人 0表示所有人 1-4具体的玩家
+		cur_p $ : integer
+
+		#其他数据
+		other $ : string
+	}
+}
+
+
+#玩家操作消息
+nor_mj_xzdd_action_msg @ {
+	request {
+		status_no $ : integer
+		action $ : nor_mj_xzdd_action
+	}
+}
+
+
+#玩家定缺结果消息
+nor_mj_xzdd_dingque_result_msg @ {
+	request {
+		status_no $ : integer
+		result $ : *integer
+	}
+}
+
+
+
+#玩家胡了消息
+nor_mj_xzdd_hu_msg @ {
+	request {
+		status_no $ : integer
+		hu $ : nor_mj_xzdd_hu_data
+	}
+}
+
+#结算
+nor_mj_xzdd_settlement_msg @ {
+	request {
+		status_no $ : integer
+		settlement_info $ : nor_mj_xzdd_settlement_info
+
+		# 游戏玩家的信息 离桌也不清除
+		game_players_info $ : *fg_p_info
+
+		#是否结束(是否还有下一局) 0-no   1-yes
+		is_over $ : integer
+
+		score_change_list $ : *nor_mj_xzdd_grades_change_item   # 分数变化列表
+
+	}
+}
+
+nor_mj_xzdd_player_exit_msg @ {
+	request {
+		status_no $ : integer
+		seat_num $ : integer
+	}
+}
+
+nor_mj_xzdd_gameover_msg @ {
+	request {
+		status_no $ : integer
+	}
+}
+
+
+nor_mj_xzdd_next_game_msg @ {
+	request {
+		status_no $ : integer
+		cur_race $ : integer 
+	}
+}
+
+#分数改变
+nor_mj_xzdd_score_change_msg @ {
+	request {
+		status_no $ : integer
+
+		# 分数改变信息
+		data $ : *nor_mj_xzdd_grades_change
+
+		# 类型 (为何改变)
+		type $ : string
+
+	}
+}
+
+# 操作
+nor_mj_xzdd_huansanzhang_msg @ {
+	request {
+		status_no $ : integer
+        pai_vec $ : *integer # 新换的n张牌
+        pai_list $ : *integer # 新的手牌
+        jipaiqi $ : *integer # 新的记牌器
+        is_time_out $ : integer # 是否是超时
+	}
+}
+
+# 换牌完成
+nor_mj_xzdd_huan_pai_finish_msg @ {
+	request {
+		status_no $ : integer
+	}
+}
+
+# 打漂完成
+nor_mj_xzdd_da_piao_msg @ {
+	request {
+		status_no $ : integer
+		seat_num $ : integer    #哪个座位打漂
+		piao_num $ : integer    #漂的几分
+	}
+}
+
+# 打漂完成
+nor_mj_xzdd_da_piao_finish_msg @ {
+	request {
+		status_no $ : integer
+	}
+}
+
+
+
+# 游戏破产
+nor_mj_xzdd_game_bankrupt_msg @ {
+	request {
+		status_no $ : integer
+		game_bankrupt $ : *integer
+	}
+}
+
+
+

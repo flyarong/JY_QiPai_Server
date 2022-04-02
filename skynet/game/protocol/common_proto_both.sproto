@@ -1,0 +1,104 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+.package {
+	type $ : integer
+	session $ : integer
+}
+
+
+.object_attribute {
+	name $ : string 			#-- 道具属性名字
+	value $ : string 			#-- 道具属性值
+}
+
+##道具
+.player_asset {
+	asset_type $ : string 				#-- 资产类型
+	asset_value $ : string 				#-- 资产数量(不可叠加的物品，此项为道具的object_id)
+	attribute $ : *object_attribute 	#-- 属性列表
+}
+
+
+#装扮 可能有数量或时间限制
+.dress_item{
+	id $ : integer 		#装扮id
+	num $ : integer 	#装扮数量限制
+	time $ : integer 	#装扮可用时间限制
+}
+
+
+#装扮数据
+.dress_data{
+	head_frame $ : *dress_item 		#头像框数据
+	expression $ : *dress_item 	#表情数据
+	phrase $ : *dress_item 		#短语数据
+}
+
+#收货地址
+.shipping_address{
+	name $ : string 	#收货人名字
+	phone_number $ : string 	#收货人电话
+	address $ : string 	#收货人地址
+}
+
+
+#邮件
+.email{
+
+	id $ : integer 	#邮件ID
+	type $ : string 	#邮件类型
+	title $ : string 	#标题
+	sender $ : string 	#发送人
+	state $ : string 	#状态
+	create_time $ : string 	#创建时间
+	valid_time $ : string 	#有效时间
+	data $ : string 	#邮件数据
+
+}
+
+#奖杯状态
+.million_cup_data{
+	issue $ : integer 	#期号
+	bonus $ : integer 	#奖金
+}
+
+
+
+#资产数据结构
+.asset_data{
+	asset_type $ : string 	#资产类型
+	value $ : integer 	#数量
+}
+
+
+
+#卡券数据结构
+.ticket_data{
+	id $ : integer 	#卡券id
+	type $ : string 	#卡券类型
+	num $ : integer 	#卡券数量
+	valid_time $ : string 	#有效期
+	data $ : integer(2) 	#卡券折扣
+}
+
+
+
+.glory_data {
+	level $ : integer
+	score $ : integer
+}
+
+
+
+#复合财产数据
+.complex_asset_data {
+	dress_data $ : dress_data 	#装扮数据 
+	asset_data $ : *asset_data  #资产数据
+}
+
+.gift_bag_data {
+	gift_bag_id $ : integer
+	status $ : integer
+}

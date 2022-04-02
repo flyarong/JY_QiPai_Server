@@ -1,0 +1,16 @@
+#
+# 协议：客户端 => 服务端
+#
+
+#下棋子
+nor_gobang_nor_xiaqi @ {
+	request {
+		pos $ : integer 	# 坐标
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+

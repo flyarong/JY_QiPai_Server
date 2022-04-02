@@ -1,0 +1,28 @@
+include "../common/config"
+
+harbor = 0
+
+luaservice = luaservice .. "./test/?.lua;"
+
+cluster = "./game/launch/" .. _dir_names[1] .. "/clustername.lua"
+
+start = _dir_names[1] .. "/single_main"	-- main script
+
+--logger = "./wss_single_test.log"
+--daemon = "./wss_single_test.pid"
+
+debug_file = "./debug_wss_single_test.log"
+debug_file_size = 10	-- 日志文件大小（单位：MB）：超过此大小即分文件
+
+my_node_name="node_1"
+
+strict_transfer=1
+
+-- 托管服务 放在指定的测试节点上(用于调试环境)
+plyer_agent_node = "node_1"
+
+-- 注意：配置了此项，即为中心服务器，集群中仅允许一个中心服务器！
+center = "./game/launch/" .. _dir_names[1] .. "/center"
+
+-- 托管服务 放在指定的测试节点上(用于调试环境)
+tuoguan_test_node = "node_1"

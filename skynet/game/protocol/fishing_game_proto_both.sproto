@@ -1,0 +1,50 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+.fsg_room_info {
+	game_id $ : integer
+	t_num $ : integer
+}
+
+
+.fsg_p_info {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string 
+	score $: integer
+	fish_coin $: integer
+	#1-准备了  0-没准备
+	ready $: integer
+	#头像框
+	dressed_head_frame $: integer
+	#荣誉分
+	glory_score $: integer
+}
+
+
+.fsg_skill {
+	skill $ : string
+	time $ : integer
+	seat_num $ : integer
+}
+
+
+
+.fsg_skill_cfg {
+	skill $ : string
+	time $ : integer
+	cd_time $ : integer
+}
+
+.shell_dead {
+	shell_id $ : integer
+	money $ : integer
+}
+

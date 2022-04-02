@@ -1,0 +1,140 @@
+#
+# 协议：客户端 => 服务端
+#
+
+
+#创建房卡房间
+friendgame_create_room @ {
+	request {
+		game_type $ : string # 游戏类型
+		game_cfg $ : *friendgame_room_option # 选项列表
+	}
+	response {
+		result $ : integer #
+	}
+}
+
+
+#加入房卡房间
+friendgame_join_room @ {
+	request {
+		room_no $ : string # 房间号
+	}
+	response {
+		result $ : integer #
+		game_type $ : string # 房间类型
+	}
+}
+
+friendgame_exit_room @ {
+	request {
+	}
+	response {
+		result $ : integer #
+	}
+}
+
+
+friendgame_begin_game @ {
+	request {
+	}
+	response {
+		result $ : integer #
+	}
+}
+
+#请求所有信息
+friendgame_req_all_info @ {
+	request {
+	}
+	response {
+		result $ : integer #
+	}
+}
+
+
+#房卡房间历史记录id
+friendgame_get_history_record_ids @ {
+	request {
+	}
+	response {
+		result $ : integer #
+		list $ : *integer #纪录列表
+	}
+}
+
+
+
+#房卡房间历史记录1
+friendgame_get_history_record @ {
+	request {
+		id $ : integer #
+	}
+	response {
+		result $ : integer #
+		record $ : friendgame_history_record #纪录列表
+	}
+}
+
+
+#房卡房间历史记录n
+friendgame_get_all_history_record @ {
+	request {
+	}
+	response {
+		result $ : integer #
+		records $ : *friendgame_history_record #纪录列表
+	}
+}
+
+friendgame_req_info_by_send @ {
+	request {
+		type $ : string
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+begin_vote_cancel_room  @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+player_vote_cancel_room @ {
+	request {
+		opt $ : integer
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+send_gps_info @ {
+	request {
+		locations $ : string #地点
+		latitude $ : string #经度
+		longitude $ : string #纬度
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+query_gps_info @ {
+	request {
+	}
+	response {
+		result $ : integer
+		data $ : *friendgame_gps_data
+	}
+}
+
+

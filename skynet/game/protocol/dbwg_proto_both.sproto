@@ -1,0 +1,186 @@
+#
+# 协议：客户端 服务端 共用
+#
+#dbwg 百万大奖赛 ********************************************************************************
+
+#屏幕
+.dbwg_bonus_rank_list_info {
+	name $ : string
+	#奖金
+	bonus $ : integer
+	rank $ : integer
+}
+
+.dbwg_match_list_info {
+	#比赛状态 status  0 没有比赛  1 未开始  2 报名  3 比赛中 4 比赛结束
+	status $ : integer
+	issue $ : integer #期数
+	ticket $ : integer
+	bonus $ : integer
+	signup_time $ : string
+	begin_time $ : string
+}
+
+.dbwg_match_info {
+	#游戏名字
+	name $ : string
+	bonus $ : integer
+	issue $ : integer #期数
+	#总轮数
+	total_round $ : integer
+	signup_time $ : string
+	begin_time $ : string
+}
+
+.dbwg_round_info {#--轮信息
+
+	#当前轮数
+	round $ : integer
+
+	# 此轮晋级分数
+	rise_grades $ : integer
+
+	# 此轮的局数
+	race_count $ : integer
+
+	# 此轮的初始倍率
+	init_rate $ : integer
+
+	# 此轮的底分
+	init_stake $ : integer
+}
+
+
+
+.dbwg_room_info {
+	room_id $ : string
+	##桌号
+	t_num $ : integer
+	#座位号
+	seat_num $ : integer
+}
+
+.dbwg_action {
+	#动作类型
+	type $ : integer
+	#做出动作的人
+	p $ : integer
+	#分数
+	rate $ : integer
+	#出牌列表
+	cp_list $ : *integer
+}
+
+.dbwg_status_info {
+	#当前状态
+	status $ : string
+	#倒计时
+	countdown $ : integer(2)
+	#当前权限拥有人
+	cur_p $ : integer
+	#我的牌列表
+	my_pai_list $ : *integer
+	##每个人剩余的牌数量
+	remain_pai_amount $ : *integer
+	##我的倍数
+	my_rate $: integer
+	##动作序列 保留最近两次的即可
+	act_list $ : *dbwg_action
+	##玩家的托管状态
+	auto_status $ : *integer
+	#当前轮数
+	round $ : integer
+	#当前局数
+	race $ : integer
+	#我的座位号
+	seat_num $ : integer
+	#地主座位号
+	dizhu $ : integer
+	#地主牌
+	dz_pai $ : *integer
+	grades $ : integer
+
+	jipaiqi $ : *integer
+	round_info $: dbwg_round_info
+	
+	#加倍情况 0-还没有加倍 1-已经加倍
+	jiabei $ : integer
+
+	#我已经复活了几次
+	fuhuo_status $ : integer
+	
+	#总共可复活多少次
+	fuhuo_count $ : integer
+}
+.dbwg_p_info {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string
+	grades $: integer
+}
+.dbwg_players_info {
+	p_info $ : *dbwg_p_info
+	##玩家数量
+	p_count $ : integer
+}
+.dbwg_dz_info {
+			#地主座位号
+			dizhu $ : integer
+			#地主牌
+			dz_pai $ : *integer
+		}
+.dbwg_pai_info {
+			#玩家（座位号）
+			p $ : integer
+			#牌列表
+			pai $ : *integer
+	}
+
+.dbwg_ddz_settlement_info {
+	# 4农民  5地主 0都输了（不叫地主的情况）
+	winner $ : integer
+	#玩家得分 
+	p_scores $ : *integer 
+	
+	#玩家的加倍情况
+	p_jiabei $ : *integer
+
+	#玩家的叫地主情况
+	p_jdz $ : *integer
+
+	#炸弹数量
+	bomb_count $ : integer
+
+	#春天 0-无 1-春天  2-反春
+	chuntian $ : integer
+
+	#玩家剩余的牌的列表
+	remain_pai $ : *dbwg_pai_info
+}
+
+
+.dbwg_reward {
+	asset_type $ : string
+	value $ : integer
+}
+
+.dbwg_final_result {
+	
+	#登顶 0-失败  1-成功
+	is_win $ : integer
+
+	#你坚持到的轮数
+	round $ : integer
+
+	#总共有几轮
+	round_count $ : integer
+
+	#安慰奖
+	reward $ : *dbwg_reward
+}

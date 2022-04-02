@@ -1,0 +1,286 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+
+#nmjxlfg start********** 麻将血流自由场**********************************************************************
+
+
+.nmjxlfg_room_rent {
+	asset_type $ : string
+	asset_count $ : integer
+}
+
+#比赛列表信息
+.nmjxlfg_match_list_info {
+	game_id $ : integer
+	ui_order $ : integer
+	signup_service_id $ : string
+	room_rent $ : nmjxlfg_room_rent #房费
+}
+
+
+.nmjxlfg_match_info {
+	#--游戏名字
+	name $ : string
+
+}
+
+#分数改变信息
+.nmjxlfg_grades_change{
+
+    # 分数改变的人
+    cur_p $ : integer
+
+    # 分数变化量
+    grades $ : integer
+
+}
+
+# 胡牌数据
+.nmjxlfg_hu_data
+ {
+	#座位号
+	seat_num $ : integer
+
+ 	#胡牌类型：zimo-自摸 pao-别人点炮 qghu-抢杠胡
+	hu_type $ : string
+
+	#胡 的牌
+	pai $ : integer
+	#点炮人
+	dianpao_p $ : integer
+}
+.nmjxlfg_hu_data_list
+{
+	hu_data $ : *nmjxlfg_hu_data
+}
+
+# 番型 数据： 番型 -> 倍数
+.nmjxlfg_multi_data
+{
+    qing_yi_se $ : integer # nil 或 番数
+    da_dui_zi $ : integer # nil 或 番数
+    qi_dui $ : integer # nil 或 番数
+    long_qi_dui $ : integer # nil 或 番数
+
+    dai_geng $ : integer # nil 或 根数
+
+    jiang_dui $ : integer # nil 或 番数
+    men_qing $ : integer # nil 或 番数
+    zhong_zhang $ : integer # nil 或 番数
+    jin_gou_diao $ : integer # nil 或 番数
+
+    hai_di_ly $ : integer # nil 或 番数 ,海底捞月 最后一张牌胡牌（自摸）
+    hai_di_pao $ : integer # nil 或 番数 ,海底炮  最后一张牌胡牌（被人点炮）
+    tian_hu $ : integer # nil 或 番数 天胡：庄家，第一次发完牌既胡牌
+    di_hu $ : integer # nil 或 番数 ,地胡：非庄家第一次发完牌 既自摸或 被别人点炮
+    gang_shang_hua $ : integer # nil 或 番数 ,杠上花：自己杠后补杠自摸
+    gang_shang_pao $ : integer # nil 或 番数 ,杠上炮：别人杠后补拍点炮
+
+    zimo $ : integer # nil 或 番数 自摸
+    qiangganghu $ : integer # nil 或 番数 抢杠胡
+}
+
+# 杠的牌信息
+.nmjxlfg_gang_pai
+{
+    pai $ : integer
+    gang_type $ : string # "zg"/"wg"/"ag"
+
+	# 倍数
+	sum  $ : integer
+}
+
+# 结算
+.nmjxlfg_settle_data
+ {
+
+    # 结算类型：hu 胡牌， ting 听牌, wujiao 无叫, hz 花猪
+    # 注意： 这个数据放到 nmjxlfg_settlement_item 中了
+    #   settle_type $ : string
+
+ 	#胡牌类型（settle_type == hu）：zimo-自摸 pao-别人点炮 qghu-抢杠胡
+	hu_type $ : string
+
+	#胡的牌
+	hu_pai $ : integer
+
+	multi $ : nmjxlfg_multi_data
+
+	# 总番数
+	sum_multi $ : integer
+
+	# 注意： 这个数据放到 nmjxlfg_settlement_item 中了
+	# score $ : integer # 分数
+
+	# 总倍数
+	sum  $ : integer
+}
+
+.nmjxlfg_action {
+	#动作类型
+	type $ : string # "dq" 定缺； "cp" 出牌; "peng" 碰; "gang" 杠; "hu" 胡; "guo" 过;
+
+	#做出动作的人
+	p $ : integer
+
+	#牌
+	pai $ : integer
+
+	#胡信息
+	hu_data $ : nmjxlfg_hu_data
+
+	#额外数据
+	other $ : string # type=gang（zg 直杠,ag 暗杠,wg 弯杠）
+}
+
+.nmjxlfg_p_info {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string
+	jing_bi $ : string
+	#头像框
+	dressed_head_frame $: integer
+}
+
+.nmjxlfg_room_info {
+	#座位号
+	game_id $ : integer
+	seat_num $ : integer
+	init_stake $ : integer
+
+	#总共多少局
+	race_count $ : integer
+}
+
+.nmjxlfg_players_info {
+	p_info $ : *nmjxlfg_p_info
+	##玩家数量
+	p_count $ : integer
+}
+
+.nmjxlfg_pg_pai_info {
+	type $ : string
+	pai $ : integer
+}
+
+.nmjxlfg_player_pg_pai_info {
+	pg_pai_list $ : *nmjxlfg_pg_pai_info
+}
+
+.nmjxlfg_player_chu_pai_info {
+	pai_list $ : *integer
+}
+
+.nmjxlfg_sezi_data{
+	sezi_value1 $ : integer
+	sezi_value2 $ : integer
+	zj_seat $ : integer
+}
+
+
+.nmjxlfg_chupai_data{
+	seat_num $ : integer
+	pai $ : integer
+}
+
+.nmjxlfg_allow_opt
+{
+    peng $ : integer # 可以碰
+    gang $ : integer # 可以杠
+    hu $ : integer # 可以胡
+}
+
+.nmjxlfg_status_info {
+
+	status $ : string
+
+	countdown $ : integer(2)
+
+	cur_p $ : integer
+
+	#当前局数
+	cur_race $ : integer
+
+	cur_chupai $ : nmjxlfg_chupai_data
+
+	cur_mopai $ : integer
+
+	cur_pgh_card $ : integer
+
+	remain_card $ : integer
+
+	player_remain_card $ : *integer
+
+	#--我的牌列表
+	my_pai_list $ : *integer
+
+	pg_pai $ : *nmjxlfg_player_pg_pai_info
+
+	chu_pai $ : *nmjxlfg_player_chu_pai_info
+
+	#--玩家的托管状态
+	auto_status $ : *integer
+
+	#--定缺的花色 -1 0 1-3 具体的花色
+	dingque_pai $ : *integer
+
+	#--当前动作
+	action $ : nmjxlfg_action
+
+	#--骰子
+	sezi_data $ : nmjxlfg_sezi_data
+
+	hu_data $ : *nmjxlfg_hu_data_list
+
+	cur_pgh_allow_opt $ : nmjxlfg_allow_opt
+
+	jipaiqi $ : *integer
+
+	#有出牌权限时的过记录 用于过掉胡牌  弯杠等
+	is_guo $ : integer
+}
+
+.nmjxlfg_settlement_item
+{
+    seat_num $ : integer
+
+    # 结算类型：hu 胡牌， ting 听牌, wujiao 无叫, hz 花猪
+    settle_type $ : string
+
+	settle_data $ : *nmjxlfg_settle_data
+
+	# 总番数
+	sum_multi $ : integer
+
+	score $ : integer # 分数
+
+	shou_pai $ : *integer # 手上的牌
+	pg_pai $ : *nor_mj_pg_pai # 碰杠的牌
+
+	# 总倍数
+	sum  $ : integer
+}
+
+.nmjxlfg_settlement_info{
+    settlement_items $ : *nmjxlfg_settlement_item
+
+	#房费
+	room_rent $ : nmjxlfg_room_rent
+}
+
+#nmjxlfg end********************************************************************************************
+
+
+
+
+
+
+

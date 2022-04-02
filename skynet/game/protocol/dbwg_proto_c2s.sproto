@@ -1,0 +1,175 @@
+#
+# 协议：客户端 => 服务端
+#
+#dbwg 百万大奖赛 ********************************************************************************
+
+
+#--获取排名
+dbwg_bonus_rank_list @ {
+	request {
+	}
+	response {
+		result $ : integer
+		rank_list $ : *dbwg_bonus_rank_list_info
+		my_rank $ : dbwg_bonus_rank_list_info
+		date $ : string #--排行日期
+		issue $ : integer #--排行期号
+	}
+}
+
+dbwg_req_game_list @ {
+	request {
+	}
+	response {
+		result $ : integer
+		match_list_info $ : dbwg_match_list_info
+	}
+}
+
+
+#报名
+dbwg_signup @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		match_info $ : dbwg_match_info
+	}
+}
+
+dbwg_cancel_signup @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+#比赛场斗地主 加倍操作
+dbwg_jiabei @ {
+	request {
+		rate $ : integer 	# 0-不加倍  2-加倍
+	}
+	response {
+		result $ : integer
+	}
+}
+#比赛场斗地主 叫地主操作
+dbwg_jiao_dizhu @ {
+	request {
+		rate $ : integer 	# 0-3
+	}
+	response {
+		result $ : integer
+	}
+}
+#比赛场斗地主 出牌操作
+dbwg_chupai @ {
+	request {
+		#比赛场斗地主 所处牌的类型
+		type $ : integer
+		#比赛场斗地主 所出牌的列表
+		cp_list $ : *integer
+	}
+	response {
+		result $ : integer
+	}
+}
+#比赛场斗地主 托管操作
+dbwg_auto @ {
+	request {
+		operate $ : integer # 1 开启 , 0 关闭
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+#请求所属类型的信息，通过服务器s2c发送
+dbwg_req_info_by_send @ {
+	request {
+	#type种类:
+		#all  --所有信息
+		#status --状态信息
+		#dizhu --地主信息
+		#players --玩家信息
+		#grades --分数排名信息
+		#settlement --结算信息
+		#final_result --最终结算信息
+		type $ : string
+	}
+	response {
+		result $ : integer
+	}
+}
+
+dbwg_quit_game @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+#复活
+dbwg_fuhuo_game @ {
+	request {
+		#0-放弃复活  1-进行复活
+		fuhuo $ : integer
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+#请求状态信息
+dbwg_req_status_info @ {
+	request {
+	}
+	response {
+		result $ : integer
+		status_no $ : integer	#状态编号
+		status_info $ : dbwg_status_info
+	}
+}
+
+#直接请求所有的信息
+dbwg_req_all_info @ {
+	request {
+	}
+	response {
+		result $ : integer
+		status_no $ : integer
+		match_info $ : dbwg_match_info
+		room_info $ : dbwg_room_info
+		status_info $ : dbwg_status_info
+		players_info $ : dbwg_players_info
+		settlement_info $ : dbwg_ddz_settlement_info
+		final_result $ : dbwg_final_result
+		round_info $ : dbwg_round_info
+	}
+}
+
+
+dbwg_shared_finish @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+dbwg_query_shared_status @ {
+	request {
+	}
+	response {
+		result $ : integer
+		status $ : integer	#  1-今日已经分享  0-今日未分享
+	}
+}

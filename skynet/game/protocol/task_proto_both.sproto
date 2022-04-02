@@ -1,0 +1,23 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+.task_item {
+	id $ : integer
+	now_total_process $ : integer    # 当前总进度
+	now_lv $ : integer               # 当前等级
+	now_process $ : integer          # 当前等级总进度
+	need_process $ : integer         # 当前等级需要的总进度
+	task_round $ : integer           # 应该领取的奖励档位
+
+	# 0-不能领取 | 1-可领取 | 2-已完成 | 3- 未启用
+	award_status $ : integer
+
+	# 奖励领取的状态
+	award_get_status $ : integer
+}
+
+.award_data {
+	asset_type $ : string
+	asset_value $ : string
+}

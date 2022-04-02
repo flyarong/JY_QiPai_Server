@@ -1,0 +1,34 @@
+
+-- 创建用户
+
+grant all privileges on *.* to 'game'@'%' identified by 'passwordxxx';
+
+-- 创建只读用户
+
+grant select on *.* to 'read'@'%' identified by 'passwordxxx';
+
+-- 如果 加密方式 不是 mysql_native_password ，则要修改
+
+select plugin from user where user = 'game';
+update user set plugin='mysql_native_password' where user='game' and host='%';
+update user set authentication_string=password('passwordxxx') where user='game' and host='%';
+
+
+-- 其他常用命令
+
+★ 在终端登录数据库
+	mysql -u root -p
+★ 删除用户
+	drop user 'game'@'%';
+★ 显示用户权限
+	show grants for 'game';
+	
+★ 启动mysql数据库
+	sudo /etc/init.d/mysql start
+★ 重启
+	sudo /etc/init.d/mysql restart
+★ 关闭
+	sudo /etc/init.d/mysql stop
+	
+	
+	

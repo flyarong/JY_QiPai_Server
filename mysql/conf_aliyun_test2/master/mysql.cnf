@@ -1,0 +1,75 @@
+
+!include /etc/mysql/conf.d/mysql.cnf
+!include /etc/mysql/mysql.conf.d/mysqld.cnf
+
+[client]
+
+port	=	3306
+
+
+[mysqld]
+
+port	=	3306
+
+#datadir		= /mnt/mysql/data
+#lc-messages-dir	= /usr/share/mysql
+#log_error	=	/mnt/mysql/data/error.log
+
+default-storage-engine=INNODB
+sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+max_connections=500
+query_cache_limit=1M
+query_cache_size=32M
+table_open_cache=320
+tmp_table_size=369M
+thread_cache_size=8
+
+myisam_max_sort_file_size=10G
+myisam_sort_buffer_size=616M
+key_buffer_size=64M
+read_buffer_size=1M
+read_rnd_buffer_size=8M
+sort_buffer_size=1M
+
+
+max_allowed_packet	= 16M
+thread_stack		= 192K
+
+myisam-recover-options  = BACKUP
+
+query_cache_limit	= 1M
+query_cache_size        = 16M
+
+slow_query_log=on
+slow-query-log-file=/var/lib/mysql/mysql-slow.log
+long_query_time=10
+
+expire_logs_days	= 15
+innodb_support_xa	= 1
+max_binlog_size   	= 100M
+log_bin			= /var/log/mysql/mysql-bin.log
+
+
+
+innodb_thread_concurrency=8
+innodb_file_per_table=1
+
+###################################
+
+# 单用户连接数
+max_user_connections = 100
+innodb_buffer_pool_size = 5G # 调整为 内存的 %80 ，尽量多利用内存
+innodb_log_buffer_size=16M
+
+# 说明： checkpoint 最好不要超过 innodb_log_files_in_group * innodb_log_file_size 的0.75
+#        通过命令 show engine innodb status\G; 查看 checkpoint
+innodb_log_file_size = 256M
+innodb_log_files_in_group = 2
+innodb_flush_log_at_trx_commit=2 # 0 每秒 write+flush ; 1 每次事物都 write+flush ; 2 每次事物 write ，每秒 flush ! 说明： 2 综合了安全和性能
+innodb_flush_method=O_DIRECT
+
+# 主从复制
+server-id = 1
+log_bin  = /var/log/mysql/mysql-bin.log
+binlog_do_db = jygame2
+

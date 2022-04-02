@@ -1,0 +1,51 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+#vip返奖任务的每日记录结构
+.reward_task_record {
+	id $ : integer                 # 唯一id
+	get_award_value $ : integer    #当日领取or找回or领取找回的值
+
+	# 0-没有完成 | 1-完成未领取 | 2-完成并领取 | 3-领取了找回奖励
+	status $ : integer
+	time $ : integer
+}
+
+# 推广奖金的获得记录
+.generalize_award_get_record { 
+	id $ : integer                 # 唯一id
+	player_id $ : integer          # 购买人的id
+	player_name $ : string         # 购买人的名字
+	buy_vip_day $ : integer        # 购买的vip天数
+	payback_value $ : integer      # 奖励值
+	buy_time $ : integer           # 时间
+}
+
+# 推广奖金的提现记录
+.generalize_award_extract_record { 
+	id $ : integer                     # 唯一id
+	extract_value $ : integer          # 提现值
+	extract_time $ : integer           # 提现时间
+}
+
+.statistics_day_record {
+	day $ : integer      # 几号
+	total $ : integer    # 多少钱
+}
+
+# 推广奖金的统计记录
+.generalize_award_statistics_record { 
+	year $ : integer                                 # 某年
+	month $ : integer                                # 某月
+	total $ : integer                                # 月的总计
+	record_data $ : *statistics_day_record           # 数据
+}
+
+# 推广子节点
+.generalize_children { 
+	player_id $ : integer                         # 子玩家的id
+	player_name $ : string                        # 子玩家的昵称
+	vip_day $ : integer                           # 子玩家剩余的vip天数
+}
+

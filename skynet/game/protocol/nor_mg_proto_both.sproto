@@ -1,0 +1,91 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.nor_mg_match_info {
+	#游戏名字
+	name $ : string   
+	#总参与人数
+	total_players $ : integer
+	#总轮数
+	total_round $ : integer
+	match_model  $ : string
+	# 0-不可以取消  1-可以取消
+	is_cancel_signup $ : integer
+}
+
+
+.nor_mg_round_info {#--轮信息
+
+	#当前轮数
+	round $ : integer
+
+	# 0-初赛  1-决赛 
+	round_type $ : integer
+
+	# 此轮晋级人数
+	rise_num $ : integer
+
+	# 晋级分数
+	rise_score $ : integer
+
+	# 此轮的局数
+	race_count $ : integer
+
+	# 此轮的初始倍率
+	init_rate $ : integer
+
+	# 此轮的底分
+	init_stake $ : integer
+	# 决赛的轮数
+	final_round $ : integer
+}
+
+
+.nor_mg_p_info {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string 
+	score $: integer
+	#头像框
+	dressed_head_frame $: integer
+	#荣誉分
+	glory_score $: integer
+}
+
+.nor_mg_reward {
+	asset_type $ : string
+	value $ : integer
+}
+
+.nor_mg_final_result {
+	rank $ : integer
+	reward $ : *nor_mg_reward
+	game_id $ : integer
+}
+
+
+.nor_mg_room_info {
+	game_id $ : integer
+	##桌号
+	t_num $ : integer
+	#座位号
+	seat_num $ : integer
+}
+
+
+
+
+.nor_mg_rank_info {
+	rank $ : integer
+	player_id $ : string
+	player_name $ : string
+	head_link $ : string
+}

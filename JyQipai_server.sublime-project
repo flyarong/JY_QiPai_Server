@@ -1,0 +1,10 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"folder_exclude_patterns": ["logs",".svn", ".git", ".hg", "CVS",".idea"],
+			"file_exclude_patterns": ["*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj","*.o", "*.a", "*.l",".gitignore"]
+		}
+	]
+}

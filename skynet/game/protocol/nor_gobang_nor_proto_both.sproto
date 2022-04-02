@@ -1,0 +1,110 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.nor_gobang_nor_match_info {
+	#游戏名字
+	name $ : string   
+	#游戏类型 
+	game_model $ : integer
+}
+.nor_gobang_nor_room_info {
+	#座位号
+	game_id $ : integer
+	seat_num $ : integer
+	init_stake $ : integer
+	init_rate $ : integer
+}
+.nor_gobang_nor_action {
+	#动作类型
+	type $ : string
+	#做出动作的人
+	p $ : integer
+	#坐标
+	pos $ : integer
+	#当前操作人的剩余总时间
+	race_time $ : integer
+}
+.nor_gobang_nor_p_info {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string
+	jing_bi $ : string
+	#头像框
+	dressed_head_frame $: integer
+	#荣誉分
+	glory_score $: integer
+}
+.nor_gobang_nor_players_info {
+	p_info $ : *nor_gobang_nor_p_info
+	##玩家数量
+	p_count $ : integer
+}
+.nor_gobang_nor_settlement_info {
+	# 获胜的座位号 0代表没人赢
+	win_seat $ : integer
+	win_type $ : string
+	award $ : *integer
+	type $ : string
+	#输的玩家如果破产还差多少才够输
+	lose_surplus $ : *integer
+	#倍数
+	p_rate $ : integer
+	#赢封顶
+	yingfengding $ : *integer
+
+}
+
+
+.nor_gobang_nor_status_info {
+
+	#当前状态
+	status $ : string
+	#倒计时
+	countdown $ : integer(2)
+	#当前权限拥有人
+	cur_p $ : integer
+
+	##动作序列 下棋动作
+	act_list $ : *nor_gobang_nor_action
+
+	#我的座位号
+	seat_num $ : integer
+	#黑子玩家
+	first_seat $ : integer
+	
+	#是否结束(是否还有下一局) 0-no   1-yes
+	is_over $ : integer
+
+	init_stake $ : integer
+	init_rate $ : integer
+
+	ready $ : *integer
+
+	cur_race $ : integer
+	race_count $ : integer
+	p_race_times $ : *integer
+	countdown_max $ : integer
+	p_race_time_max $ : integer
+
+	settlement_info $ : nor_gobang_nor_settlement_info
+}
+
+#分数改变信息
+.nor_gobang_grades_change{
+
+    # 分数改变的人
+    cur_p $ : integer
+
+    # 分数变化量
+    score $ : integer
+}
+
+

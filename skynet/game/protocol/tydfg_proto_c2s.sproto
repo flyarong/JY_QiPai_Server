@@ -1,0 +1,130 @@
+#
+# 协议：客户端 => 服务端
+#
+
+#************ 癞子自由场 tydfg start*********************************************************
+
+
+#自由场请求游戏场次列表
+tydfg_req_game_list @ {
+	request {
+	}
+	response {
+		result $ : integer 
+		tydfg_match_list $ : *tydfg_match_list_info 
+	}
+}
+
+
+# 比赛场报名
+tydfg_signup @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		countdown $ : integer
+		game_model $ : integer
+	}
+}
+#闷抓
+tydfg_men_zhua @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+#看牌
+tydfg_kan_pai @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+#抓牌
+tydfg_zhua_pai @ {
+	request {
+		opt $ : integer 	# 0-不抓  1-抓
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+tydfg_jiabei @ {
+	request {
+		# 0-不加  1-加
+		opt $ : integer 	
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+#比赛场斗地主 出牌操作
+tydfg_chupai @ {
+	request {
+		#比赛场斗地主 所处牌的类型
+		type $ : integer
+		#比赛场斗地主 所出牌的列表
+		cp_list $ : tydfg_cp_list
+	}
+	response {
+		result $ : integer
+	}
+}
+#比赛场斗地主 托管操作
+tydfg_auto @ {
+	request {
+		operate $ : integer # 1 开启 , 0 关闭
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+#请求所属类型的信息，通过服务器s2c发送
+tydfg_req_info_by_send @ {
+	request {
+	#type种类:
+		#all  --所有信息
+		#status --状态信息
+		type $ : string
+	}
+	response {
+		result $ : integer
+	}
+}
+
+tydfg_cancel_signup @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+tydfg_quit_game @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+tydfg_replay_game @ {
+	request {
+		id $ : integer
+	}
+	response {
+		result $ : integer
+		countdown $ : integer
+		game_model $ : integer
+	}
+}

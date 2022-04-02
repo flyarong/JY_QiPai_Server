@@ -1,0 +1,92 @@
+
+	
+-------------------------------	
+-- 主机 master 
+	
+grant replication slave on *.* to 'replic'@'%' identified by 'jYserVer246';	
+
+
+配置文件 [mysqld]节点：
+   
+    server-id               = 1
+    log_bin                 = /var/log/mysql/mysql-bin.log
+	binlog_do_db = jygame
+	
+	
+锁定数据
+	FLUSH TABLES WITH READ LOCK
+	
+查看并保存主机状态
+	show master status;
+    +------------------+----------+--------------+------------------+
+    | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
+    +------------------+----------+--------------+------------------+
+    | mysql-bin.000055 |  1528312 | sample       |                  |
+    +------------------+----------+--------------+------------------+
+
+导出数据
+	mysqldump -u root -p --master-data jygame > jygame.sql
+
+
+解锁数据
+	 unlock tables
+	 
+	 
+--------------------------------
+-- 从机 slave
+
+ 配置：
+	 
+	server-id  = 2
+	replicate-do-db = jygame
+	relay_log = /var/log/mysql/mysqld-relay-bin
+	log-slave-updates       = ON
+	 
+ 导入数据：
+    进入 mysql 命令行 执行：
+        source /home/jygame.sql;
+    或
+        mysql -uroot -p jygame < jygame.sql
+	 
+-----------------
+-- 开始同步
+
+	
+-- 从机 
+	
+	设置同步参数：
+	
+    CHANGE MASTER TO 
+       MASTER_HOST='172.18.107.235',
+	   MASTER_PORT=2356,
+       MASTER_USER='replic', 
+       MASTER_PASSWORD='****', 
+       MASTER_LOG_FILE='mysql-bin.000001',
+       MASTER_LOG_POS=872;
+	   
+	开始同步指令	
+	
+	start slave
+
+-----------------
+-- 查看同步状态
+
+	主机：
+	    show master status \G
+	从机：
+	    show slave status \G
+
+	检查以下项：
+        Slave_IO_Running: Yes
+        Slave_SQL_Running: Yes
+
+    同步完成后，slave 中的 Read_Master_Log_Pos 和 master 中的 Position 要一致
+
+-------------------------------
+-- 其他常用命令
+
+start slave
+stop slave
+
+-- 修改了同步配置时使用（重新做 主从的时候）
+reset slave 

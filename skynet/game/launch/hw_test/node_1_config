@@ -1,0 +1,23 @@
+include "../common/config"
+
+harbor = 0
+
+luaservice = luaservice .. "./test/?.lua;"
+
+cluster = "./game/launch/" .. _dir_names[1] .. "/clustername.lua"
+
+start = _dir_names[1] .. "/node_1_main"	-- main script
+
+--daemon = "./gate.pid"
+
+my_node_name="node_1"
+
+strict_transfer=1
+
+
+debug_file = "./yy_single_203.log"
+debug_file_size = 10	-- 日志文件大小（单位：MB）：超过此大小即分文件
+
+
+-- 注意：配置了此项，即为中心服务器，集群中仅允许一个中心服务器！
+center = "./game/launch/" .. _dir_names[1] .. "/center"

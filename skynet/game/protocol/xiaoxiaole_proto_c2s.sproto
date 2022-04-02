@@ -1,0 +1,46 @@
+
+# 消消乐 all info
+xxl_all_info @ {
+	request {
+	}
+	response {
+		result $ : integer                # 0 成功
+		last_award_rate $ : integer       # 上一次的奖励的总倍数
+		last_award_money $ : integer      # 上一次的奖励的总钱数
+		kaijiang_maps $ : string          # 消除的maps
+		lucky_maps $ : string             # lucky的maps
+	}
+}
+
+# 消消乐 开奖
+xxl_kaijiang @ {
+	request {
+		bets $ : *integer       # 所有的下注 
+	}
+	response {
+		result $ : integer            # 0 成功
+		kaijiang_maps $ : string      # 消除的maps
+		lucky_maps $ : string         # lucky的maps
+		award_rate $ : integer        # 奖励的倍数
+		award_money $ : integer       # 奖励的总钱数
+	}
+}
+
+
+# 消消乐 进入游戏
+xxl_enter_game @ {
+	request {
+	}
+	response {
+		result $ : integer      # 0 成功
+	}
+}
+
+# 消消乐 退出游戏
+xxl_quit_game @ {
+	request {
+	}
+	response {
+		result $ : integer      # 0 成功
+	}
+}

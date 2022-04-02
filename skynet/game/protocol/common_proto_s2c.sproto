@@ -1,0 +1,131 @@
+#
+# 协议：服务端 => 客户端
+#
+
+#将要被踢出的原因
+will_kick_reason @ {
+	request {
+		reason $ : string #  'logout' 玩家注销（心跳超时）；'relogin' 被新的登录挤下线
+	}
+}
+
+#通知资产改变消息
+notify_asset_change_msg @ {
+	request {
+		player_asset $ : *player_asset
+		change_asset $ : *player_asset
+		type $ : string #改变的类型(原因)
+	}
+}
+
+
+#通知装扮改变消息
+notify_dress_change_msg @ {
+	request {
+		dress_data $ : dress_data #装扮数据
+		type $ : string #改变的类型(原因)
+	}
+}
+
+#通知装扮改变消息
+notify_dress_item_change_msg @ {
+	request {
+		dress_type $ : string #装扮类型
+		dress_id $ : integer #装扮id
+		dress_num $ : integer #装扮数量
+		dress_time $ : integer #装扮时间
+		change_type $ : string #改变类型
+	}
+}
+
+
+
+#通知新邮件
+notify_new_email_msg @ {
+	request {
+		email $ : email 	#-- 邮件
+	}
+}
+
+#通知订单充值结果
+notify_pay_order_msg @ {
+	request {
+		result $ : integer 	# 0成功
+		error_info $ : string
+		order_id $ : string
+		goods_id $ : integer
+		transaction_id $ : string
+		definition_id $ : string
+	}
+}
+
+
+#广播消息
+multicast_msg @ {
+	request {
+		type $ : integer #--广播类型 1系统广播 2 其他广播
+		format_type $ : integer #--广播消息格式类型 1 纯文本 其他指定格式
+		content $ : string #--内容
+	}
+}
+
+
+
+#--百万大奖赛奖杯状态
+notify_million_cup_msg @ {
+	request {
+		million_cup_status $ : million_cup_data #有则显示nil
+	}
+}
+
+
+
+#--通知卡券变化消息
+notify_ticket_change_msg @ {
+	request {
+		player_ticket $ : *ticket_data #卡券
+	}
+}
+
+# 接收语音聊天
+recv_voice_chat @ {
+	request {
+		player_id $ : string
+		data $ : string
+	}
+}
+recv_player_easy_chat @ {
+	request {
+		player_id $ : string
+		act_apt_player_id $ : string   #动画等的接受人ID(action_accpt_player_id)
+		parm $ : string   #发送的内容
+	}
+}
+
+
+#--通知荣誉等级升级
+notify_glory_promoted_msg @ {
+	request {
+		level $ : integer
+		score $ : integer
+	}
+}
+
+
+# 开关，番数 改变
+kaiguan_multi_change_msg @ {
+	request {
+		game_kaiguan $ : integer         # 游戏开关，客户端转成二进制
+		game_multi $ : string            # 游戏倍数，一个字节表示一个
+	}
+}
+
+
+
+gift_bag_status_change_msg @ {
+	request {
+		gift_bag_id $ : integer
+		status $ : integer
+		permit_time $ : string #权限时间
+	}
+}

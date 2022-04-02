@@ -1,0 +1,201 @@
+#
+# 协议：服务端 => 客户端
+#
+
+#dbwg start******************************************************************* 
+
+
+#比赛被放弃，由于人数不足
+dbwg_discard_msg @ {
+	request {
+		#当前人数
+		player_num $ : integer
+		#至少需要的人数
+		min_player $ : integer
+	}
+}
+
+#比赛场开始
+dbwg_begin_msg @ {
+	request {
+		#最新状态编号
+		status_no $ : integer
+	}
+}
+
+
+#进入房间消息
+dbwg_enter_room_msg @ {
+
+	request {
+		status_no $ : integer
+		room_info $ : dbwg_room_info
+		round_info $: dbwg_round_info
+		players_info $ : dbwg_players_info
+	}
+
+}
+
+#比赛场玩家加入
+dbwg_join_msg @ {
+	request {
+		status_no $ : integer
+		#玩家信息
+		player_info $ : dbwg_p_info
+	}
+}
+
+#比赛场斗地主牌消息
+dbwg_pai_msg @ {
+	request {
+		status_no $ : integer
+		#我的牌的列表
+		my_pai_list $ : *integer
+		#所有玩家手里剩余的牌数量
+		remain_pai_amount $ : *integer
+		#当前轮数
+		round $ : integer
+		#当前局数
+		race $ : integer
+	}
+}
+#比赛场斗地主权限消息
+dbwg_permit_msg @ {
+	request {
+		status_no $ : integer
+		#当前状态
+		status $ : string
+		#倒计时
+		countdown $ : integer
+		#当前权限拥有人 0表示所有人 1-3具体的玩家 4农民 5 地主
+		cur_p $ : integer
+		#其他数据 
+		other $ : integer
+	}
+}
+#比赛场斗地主玩家操作消息
+dbwg_action_msg @ {
+	request {
+		status_no $ : integer
+		action $ : dbwg_action
+	}
+}
+#加倍完成消息
+dbwg_jiabeifinshani_msg @ {
+	request {
+		status_no $ : integer
+		my_rate $ : integer
+	}
+}
+#比赛场斗地主地主消息
+dbwg_dizhu_msg @ {
+	request {
+		status_no $ : integer
+		#地主信息
+		dz_info $ : dbwg_dz_info
+	}
+}
+#比赛场斗地主玩家托管状态消息
+dbwg_auto_msg @ {
+	request {
+		p $ : integer
+		auto_status $ : integer
+	}
+}
+
+
+#结算消息
+dbwg_ddz_settlement_msg @ {
+	request {
+		status_no $ : integer
+		settlement_info $ : dbwg_ddz_settlement_info
+	}
+}
+
+
+#等待复活消息 
+dbwg_wait_fuhuo_msg @ {
+	request {
+		status_no $ : integer
+		
+		#当前状态
+		status $ : string
+
+		#你坚持到的轮数
+		round $ : integer
+
+		#总共有几轮
+		round_count $ : integer
+
+		#我已经复活了几次
+		fuhuo_status $ : integer
+		
+		#总共可复活多少次
+		fuhuo_count $ : integer
+
+		countdown $ : integer
+	}
+}
+
+#比赛结束消息 
+dbwg_gameover_msg @ {
+	request {
+		status_no $ : integer
+		final_result $ : dbwg_final_result
+	}
+}
+
+
+dbwg_start_again_msg @ {
+	request {
+		status_no $ : integer
+		status $ : string
+	}
+}
+dbwg_new_game_msg @ {
+	request {
+		status_no $ : integer
+		race $ : integer # 局数
+		status $ : string
+	}
+}
+
+
+#--晋级，准备开始下一轮
+dbwg_promoted_msg @ {
+	request {
+		status_no $ : integer
+		status $ : string
+		countdown $ : integer
+	}
+}
+
+
+#比赛场斗地主分数改变
+dbwg_grades_change_msg @ {
+	request {
+		status_no $ : integer
+		grades $ : integer
+	}
+}
+
+dbwg_status_info @ {
+	request {
+		status_no $ : integer
+		status_info $ : dbwg_status_info
+		
+	}
+}
+
+dbwg_all_info @ {
+	request {
+		result $ : integer
+		status_no $ : integer
+		match_info $ : dbwg_match_info
+		room_info $ : dbwg_room_info
+		status_info $ : dbwg_status_info
+		players_info $ : dbwg_players_info
+		settlement_info $ : dbwg_ddz_settlement_info
+		final_result $ : dbwg_final_result
+	}
+}

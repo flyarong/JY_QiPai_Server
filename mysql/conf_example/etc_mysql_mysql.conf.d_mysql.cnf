@@ -1,0 +1,134 @@
+
+[mysqld]
+pid-file	= /var/run/mysqld/mysqld.pid
+socket		= /var/run/mysqld/mysqld.sock
+datadir		= /mnt/mysql/data
+port		= 23456
+lc-messages-dir	= /usr/share/mysql
+skip-external-locking
+
+#bind-address	= 127.0.0.1
+
+symbolic-links=0
+
+# character-set-server = utf8
+
+default-storage-engine=INNODB
+sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+max_connections=160
+query_cache_limit=1M
+query_cache_size=32M
+table_open_cache=320
+tmp_table_size=369M
+thread_cache_size=8
+
+#*** MyISAM Specific options
+
+myisam_max_sort_file_size=10G
+myisam_sort_buffer_size=616M
+key_buffer_size=64M
+read_buffer_size=1M
+read_rnd_buffer_size=8M
+sort_buffer_size=1M
+
+# * Fine Tuning
+#
+
+max_allowed_packet	= 16M
+thread_stack		= 192K
+
+# This replaces the startup script and checks MyISAM tables if needed
+# the first time they are touched
+
+myisam-recover-options  = BACKUP
+
+#max_connections        = 100
+#table_cache            = 64
+#thread_concurrency     = 10
+#
+# * Query Cache Configuration
+#
+
+query_cache_limit	= 1M
+query_cache_size        = 16M
+
+#
+# * Logging and Replication
+#
+# Both location gets rotated by the cronjob.
+# Be aware that this log type is a performance killer.
+# As of 5.1 you can enable the log at runtime!
+#general_log_file        = /var/log/mysql/mysql.log
+#general_log             = 1
+#
+# Error log - should be very few entries.
+#
+
+log_error = /mnt/mysql/data/error.log
+
+#
+# Here you can see queries with especially long duration
+#log_slow_queries	= /var/log/mysql/mysql-slow.log
+#long_query_time = 2
+
+slow_query_log=on
+slow-query-log-file=/mnt/mysql/data/mysql-slow.log
+long_query_time=10
+
+#log-queries-not-using-indexes
+#
+# The following can be used as easy to replay backup logs or for replication.
+# note: if you are setting up a replication slave, see README.Debian about
+#       other settings you may need to change.
+
+#*** master setting
+
+server-id		= 10
+log_bin			= /mnt/mysql/mysql-bin
+expire_logs_days	= 15
+innodb_support_xa	= 1
+max_binlog_size   	= 100M
+
+#binlog_do_db		= include_database_name
+#binlog_ignore_db	= include_database_name
+#
+# * InnoDB
+#
+# InnoDB is enabled by default with a 10MB datafile in /var/lib/mysql/.
+# Read the manual for more InnoDB related options. There are many!
+#
+# * Security Features
+#
+# Read the manual, too, if you want chroot!
+# chroot = /var/lib/mysql/
+#
+# For generating SSL certificates I recommend the OpenSSL GUI "tinyca".
+#
+# ssl-ca=/etc/mysql/cacert.pem
+# ssl-cert=/etc/mysql/server-cert.pem
+# ssl-key=/etc/mysql/server-key.pem
+
+innodb_buffer_pool_size=4G
+innodb_log_buffer_size=16M
+innodb_log_file_size=512M
+innodb_log_files_in_group = 2
+
+# innodb_additional_mem_pool_size=32M
+
+innodb_flush_log_at_trx_commit=0
+innodb_thread_concurrency=8
+innodb_file_per_table=1
+
+
+##################################################################################
+##################################################################################
+##################################################################################
+
+#vi /etc/apparmor.d/usr.sbin.mysqld
+#/etc/init.d/apparmor restart
+
+
+#递归修改文件夹mydir及包含的所有子文件（夹）的所属用户（jay）和用户组（fefjay）：
+#chown -R jay:fefjay mydir #mysql:mysql
+
+

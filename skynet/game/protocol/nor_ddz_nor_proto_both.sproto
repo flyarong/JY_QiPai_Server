@@ -1,0 +1,173 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.nor_ddz_nor_match_info {
+	#游戏名字
+	name $ : string   
+	#游戏类型 
+	game_model $ : integer
+}
+.nor_ddz_nor_room_info {
+	#座位号
+	game_id $ : integer
+	seat_num $ : integer
+	init_stake $ : integer
+	init_rate $ : integer
+}
+.nor_ddz_nor_cp_list {
+	#非癞子的牌的序列
+	nor $ : *integer
+	#由癞子生成的牌
+	lz $ : *integer
+}
+.nor_ddz_nor_action {
+	#动作类型
+	type $ : integer
+	#做出动作的人
+	p $ : integer
+	#分数
+	rate $ : integer
+	#出牌列表
+	cp_list $ : nor_ddz_nor_cp_list
+}
+.nor_ddz_nor_p_info {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string
+	jing_bi $ : string
+	#头像框
+	dressed_head_frame $: integer
+	#荣誉分
+	glory_score $: integer
+}
+.nor_ddz_nor_players_info {
+	p_info $ : *nor_ddz_nor_p_info
+	##玩家数量
+	p_count $ : integer
+}
+.nor_ddz_nor_dz_info {
+			#地主座位号
+			dizhu $ : integer
+			#地主牌
+			dz_pai $ : *integer
+			rangpai_num $ : integer
+		}
+.nor_ddz_nor_pai_info {
+			#玩家（座位号）
+			p $ : integer
+			#牌列表
+			pai $ : *integer
+		}
+
+.nor_ddz_nor_settlement_info {
+	# 4农民  5地主 0都输了（不叫地主的情况）
+	winner $ : integer
+	award $ : *integer
+	#托管包赔情况 包赔人的位置
+	auto_baopei_pos $ : integer
+
+	#输的玩家如果破产还差多少才够输
+	lose_surplus $ : *integer
+
+	#玩家剩余的牌的列表
+	remain_pai $ : *nor_ddz_nor_pai_info
+
+	#玩家的加倍情况
+	p_jiabei $ : *integer
+
+	#玩家的叫地主情况
+	p_jdz $ : *integer
+
+	#炸弹数量
+	bomb_count $ : integer
+
+	#春天 0-无 1-春天  2-反春
+	chuntian $ : integer
+
+	#二人抢地主次数
+	er_qiang_dizhu_count $ : integer
+	#赢封顶
+	yingfengding $ : *integer
+
+}
+
+
+.nor_ddz_nor_status_info {
+
+	#当前状态
+	status $ : string
+	#倒计时
+	countdown $ : integer(2)
+	#当前权限拥有人
+	cur_p $ : integer
+	
+	#癞子的牌类型
+	laizi $ : integer
+
+	#我的牌列表
+	my_pai_list $ : *integer
+	##每个人剩余的牌数量
+	remain_pai_amount $ : *integer
+	##我的倍数
+	my_rate $: integer
+	##动作序列 保留最近两次的即可
+	act_list $ : *nor_ddz_nor_action
+	##玩家的托管状态
+	auto_status $ : *integer
+	#我的座位号
+	seat_num $ : integer
+	#地主座位号
+	dizhu $ : integer
+	#地主牌
+	dz_pai $ : *integer
+	#记牌器
+	jipaiqi $ : *integer
+	#加倍情况 0-还没有加倍 1-已经加倍
+	jiabei $ : integer
+	win_count $ : integer
+	
+	#是否结束(是否还有下一局) 0-no   1-yes
+	is_over $ : integer
+
+	init_stake $ : integer
+	init_rate $ : integer
+
+	ready $ : *integer
+
+	cur_race $ : integer
+	race_count $ : integer
+
+	rangpai_num $ : integer
+	er_qiang_dizhu_count $ : integer
+
+	# -1 还没开始  0没有倒拉 1倒或拉了
+	dao_la_data $ : *integer 
+	#--0-nil  1-不操作  2-是操作
+	men_data $ : *integer 
+	zhua_data $ : *integer
+
+	# -- 闷拉倒 必须操作
+	is_must_mld_opt $ : integer
+
+	settlement_info $ : nor_ddz_nor_settlement_info
+}
+
+#分数改变信息
+.nor_ddz_grades_change{
+
+    # 分数改变的人
+    cur_p $ : integer
+
+    # 分数变化量
+    score $ : integer
+}
+
+

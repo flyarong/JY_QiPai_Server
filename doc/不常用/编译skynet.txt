@@ -1,0 +1,67 @@
+需要安装的东西：
+
+sudo apt-get install make
+sudo apt-get install yum
+sudo apt-get install gcc
+sudo apt-get install g++
+sudo apt-get install autoconf
+sudo apt-get install libreadline6-dev
+sudo apt-get install curl libcurl3 libcurl3-dev
+
+获取源代码：
+
+git clone https://github.com/cloudwu/skynet.git
+
+编译：
+
+cd skynet
+make linux
+
+
+
+
+-- 常用调试命令
+
+set print pretty on
+set args game/launch/lyx_test2/single_config.lua
+
+run
+
+where
+frame n
+
+b ./lualib-src/sproto/lsproto.c:331
+b ./lualib-src/lua-crypt.c:368
+b 3rd/tgland/lua-tgland.cpp:70
+
+s 进入
+n 单步
+
+k 终止调试中的进程
+
+----------
+-- 部署
+
+git branch
+git branch -r
+git branch -a
+
+git pull
+
+git diff
+
+git reset --hard    ## 慎用： 丢弃所有修改
+
+git checkout -b match_dev origin/match_dev
+
+
+-- 拷贝编译文件 rsync
+scp -rp root@172.18.107.229:/home/jyserver/test/skynet_build/luaclib/* ./luaclib/
+scp -rp root@172.18.107.229:/home/jyserver/test/skynet_build/cservice/* ./cservice/
+scp root@172.18.107.229:/home/jyserver/test/skynet_build/skynet ./
+
+-- 信任
+ssh-copy-id -i /root/.ssh/id_rsa.pub 172.18.107.235
+ssh-copy-id -i /root/.ssh/id_rsa.pub 172.18.107.233
+ssh-copy-id -i /root/.ssh/id_rsa.pub 172.18.107.234
+ssh-copy-id -i /root/.ssh/id_rsa.pub 172.18.107.238

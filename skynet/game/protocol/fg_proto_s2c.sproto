@@ -1,0 +1,106 @@
+#
+# 协议：服务端 => 客户端
+#
+
+
+#all_info
+fg_all_info @ {
+	request {
+		status_no $ : integer
+		status $ : string 
+		game_type $ : string
+		jdz_type $ : string
+		game_kaiguan $ : integer         # 游戏开关，客户端转成二进制
+		game_multi $ : string            # 游戏倍数，一个字节表示一个
+		players_info $ : *fg_p_info
+		settlement_players_info $ : *fg_p_info
+		room_info $ : fg_room_info
+		room_rent $ : fg_room_rent
+		countdown $ : integer
+
+		exchange_hongbao $ : fg_exchange_hongbao_data
+
+		glory_score_count $ : integer
+		glory_score_change $ : integer
+
+		#游戏数据
+		nor_mj_xzdd_status_info $ : nor_mj_xzdd_status_info
+		nor_ddz_nor_status_info $ : nor_ddz_nor_status_info
+		nor_gobang_nor_status_info $ : nor_gobang_nor_status_info
+
+		#活动数据
+		activity_data $ : *fg_activity_data
+	}
+}
+
+#匹配超时自动取消报名消息
+fg_auto_quit_game_msg @ {
+	request {
+		status $ : integer
+	}
+}
+
+
+#比赛场进入房间消息
+fg_enter_room_msg @ {
+	request {
+		status_no $ : integer
+		seat_num $ : integer
+		room_info $ : fg_room_info
+		players_info $ : *fg_p_info
+	}
+}
+
+#玩家加入桌子
+fg_join_msg @ {
+	request {
+		status_no $ : integer
+		#玩家信息
+		player_info $ : fg_p_info
+	}
+}
+
+#玩家离开
+fg_leave_msg @ {
+	request {
+		status_no $ : integer
+		#玩家座位号
+		seat_num $ : integer
+	}
+}
+
+#玩家准备
+fg_ready_msg @ {
+	request {
+		status_no $ : integer
+		#玩家座位号
+		seat_num $ : integer
+	}
+}
+
+fg_gameover_msg @ {
+	request {
+		status_no $ : integer
+		exchange_hongbao $ : fg_exchange_hongbao_data
+		glory_score_count $ : integer
+		glory_score_change $ : integer
+	}
+}
+
+#分数改变
+fg_score_change_msg @ {
+	request {
+		status_no $ : integer
+		score $ : integer
+	}
+}
+
+
+
+#活动数据
+fg_activity_data_msg @ {
+	request {
+		#活动数据
+		activity_data $ : *fg_activity_data
+	}
+}

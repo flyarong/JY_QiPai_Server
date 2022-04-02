@@ -1,0 +1,99 @@
+
+# 砸金蛋 换一波蛋
+zjd_replace_eggs @ {
+	request {
+		level $ : integer #锤子的等级
+	}
+	response {
+		result $ : integer                 # 0 成功
+		level $ : integer                  # 锤子的等级
+		award_list $ : *integer            # 奖励列表
+		replace_money $ : integer          # 换一波蛋的钱;砸一下蛋，这个换一波蛋的钱会减少
+	}
+}
+
+# 砸金蛋 换锤子
+zjd_replace_hammer @ {
+	request {
+		level $ : integer       # 要换到的 锤子的等级
+	}
+	response {
+		result $ : integer      # 0 成功
+		level $ : integer       # 锤子的等级
+	}
+}
+
+# 砸金蛋 开奖,砸了一下
+zjd_kaijiang @ {
+	request {
+		level $ : integer #锤子的等级
+		egg_no $ : integer
+	}
+	response {
+		result $ : integer                 # 0 成功
+		level $ : integer                  # 锤子的等级
+		egg_no $  : integer                # 蛋的id
+		egg_status $ : integer             # 蛋的状态
+		is_spend_hammer $ : integer        # 是否用锤子，1是用锤子，0是用钱
+		replace_money $ : integer          # 换一波蛋的钱;砸一下蛋，这个换一波蛋的钱会减少
+		kaijiang $ : *zjd_kaijiang_result   # 结果
+		status $ : integer  				# 0表示普通 1-N表示特殊的开奖 , 1 = 一网打尽 2 = 天女散花 3 = 大锤子 ，4 = 免费n次
+		use_money $ : integer #使用的钱  目前只有财神模式启用
+		use_hammer $ : integer	#使用的锤子数量  目前只有财神模式启用
+		dikou_money $ : integer	#使用的锤子抵扣的总金币
+	}
+}
+
+# 砸金蛋 获得游戏状态
+zjd_get_game_status  @ {
+	request {
+	}
+	response {
+		result $ : integer            # 0 成功
+		status $ : zjd_game_status
+	}
+}
+
+# 砸金蛋退出游戏
+zjd_exit_game  @ {
+	request {
+	}
+	response {
+		result $ : integer      # 0 成功
+	}
+}
+
+# 砸金蛋 排行榜
+get_zjd_rank @ {
+	request {
+	}
+	response {
+		result $ : integer          # 0 成功
+		rank_data $ : *zjd_rank_data     
+	}
+}
+
+# 砸金蛋 日志
+get_zjd_log @ {
+	request {
+		page_index $ : integer          # 页码
+	}
+	response {
+		result $ : integer              # 0 成功
+		log_data $ : *zjd_log_data     
+	}
+}
+# 砸金蛋 财神模式  连胜活动 连胜次数查询
+get_zjd_cs_ls_act_cur_ls @ {
+	request {
+		level $ : integer          # 锤子等级
+	}
+	response {
+		result $ : integer              # 0 成功
+		cur_ls $ : integer     
+	}
+}
+
+
+
+

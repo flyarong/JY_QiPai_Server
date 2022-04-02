@@ -1,0 +1,37 @@
+
+git库根(JyQipai_server)\
+    doc\        服务器程序内部文档
+    skynet\     服务器源代码
+        game\   游戏源代码
+            common\		公用代码，例如：
+                ddz_libs\
+                math\      
+                skynet_plus.lua				
+            config\		游戏业务相关配置，例如：
+                config_1
+                config_2
+                config_3
+            launch\		程序启动配置和引导代码
+                config_readme.txt  配置项说明文件：列出所有配置项及其说明，如果程序中增加了配置，要更新此文件
+                common\            公用配置，通过 include 包含
+                    config.lua
+                jy_game_hw\
+                    gate_config.lua
+                    gate_main.lua
+                    login_config.lua
+                    login_main.lua
+                    。。。
+                jy_game_lyx\
+                    。。。
+            protocol\	协议定义代码或文档
+                client\
+                gate\
+                。。。
+            service\    服务：每个文件或文件夹为一个服务
+                dataserver            服务的代码不止一个文件，则放在文件夹中
+                    dataserver.lua    服务文件 和 文件夹名字一致
+                    xxx.lua
+                    yyy.lua
+                gatesvr.lua    
+                loginsvr.lua
+                protoloader.lua

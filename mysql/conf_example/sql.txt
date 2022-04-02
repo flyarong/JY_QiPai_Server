@@ -1,0 +1,22 @@
+用root进行操作(5.7)
+
+//create user
+CREATE USER 'read'@'%' IDENTIFIED BY '123456';
+
+//
+grant all privileges on *.* to jy@"%" identified by '123456';
+
+//
+SELECT DISTINCT CONCAT('User: ''',user,'''@''',host,''';') AS query FROM mysql.user;
+
+//
+flush privileges;
+
+//
+Delete FROM user Where User='root' and Host='localhost';
+
+show grants for 'read'@'%';
+
+grant all privileges on *.* to root@"localhost" identified by '123456';
+
+GRANT select ON *.* TO 'read'@'%'

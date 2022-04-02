@@ -1,0 +1,18 @@
+#
+# 协议：服务端 => 客户端
+#
+
+# vip 数据改变
+notify_vip_change_msg @ {
+	request {
+		vip_data $ : vip_data     # vip 数据
+	}
+}
+
+# vip 推广奖励改变
+generalize_award_change_msg @ {
+	request {
+		award_value $ : integer            # 当前可领取的奖励值
+		total_award_value $ : integer      # 总共的奖励值
+	}
+}

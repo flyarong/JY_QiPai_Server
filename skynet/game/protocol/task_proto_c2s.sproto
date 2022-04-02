@@ -1,0 +1,195 @@
+#
+# 协议：客户端 => 服务端
+#
+
+#请求所有的任务数据
+query_task_data @ {
+	request {
+	}
+	response {
+		result $ : integer
+		task_list $ : *task_item
+	}
+}
+
+query_one_task_data @ {
+	request {
+		task_id $ : integer           # 任务id,不传获取全部
+	}
+	response {
+		result $ : integer
+		task_data $ : task_item
+	}
+}
+
+# 请求一个任务的子任务
+query_fish_daily_children_tasks @ {
+	request {
+		fish_game_id $ : integer           # 渔场id
+	}
+	response {
+		result $ : integer
+		children_tasks $ : *task_item
+	}
+}
+
+#请求某个任务的奖励
+get_task_award @ {
+	request {
+		id $ : integer 
+	}
+	response {
+		result $ : integer
+		id $ : integer 
+	}
+}
+
+#请求某个任务的奖励  new
+get_task_award_new @ {
+	request {
+		id $ : integer 
+		award_progress_lv $ : integer 
+	}
+	response {
+		result $ : integer
+		id $ : integer 
+		award_list $ : award_data
+	}
+}
+
+#请求某个 步步生财 任务的奖励
+get_stepstep_money_task_award @ {
+	request {
+		id $ : integer 
+	}
+	response {
+		result $ : integer
+		id $ : integer 
+		now_get_hongbao_num $ : integer               # 当前获得的红包劵
+	}
+}
+
+#请求对局红包的上限
+get_duiju_hongbao_upper_limit @ {
+	request {
+	}
+	response {
+		result $ : integer
+		upper_limit $ : integer        # 对局红包领取上限
+		real_upper_limit $ : integer   # 对局红包 真正的领取上限
+   		now_get_value $ : integer      # 当前领取的奖励值
+	}
+}
+
+# 请求步步生财数据
+query_stepstep_money_data @ {
+	request {
+	}
+	response {
+		result $ : integer
+		now_big_step $ : integer                      # 当前所在的大步骤
+		total_hongbao_num $ : integer                 # 总共能获得的红包劵
+		now_get_hongbao_num $ : integer               # 当前获得的红包劵
+		step_tasks $ : *task_item                     # 当前大步骤的任务
+		over_time $ : integer                         # 过期时间
+		version $ : string                            # 新旧版本，new 或 old
+	}
+}
+
+# 请求一个大步骤的任务数据
+query_stepstep_money_big_step_data @ {
+	request {
+		big_step $ : integer
+	}
+	response {
+		result $ : integer
+		step_tasks $ : *task_item             # 当前步骤的任务
+	}
+}
+
+# 请求 金猪任务 的进度
+query_goldpig_task_data @ {
+	request {
+	}
+	response {
+		result $ : integer
+		task_list $ : *task_item
+	}
+}
+
+# 请求 金猪任务 的 还可以领取的次数
+query_goldpig_task_remain @ {
+	request {
+	}
+	response {
+		result $ : integer
+		remain_num $ : integer
+	}
+}
+
+#请求金猪任务的奖励
+get_goldpig_task_award @ {
+	request {
+		id $ : integer 
+	}
+	response {
+		result $ : integer
+		id $ : integer 
+	}
+}
+
+# 请求 金猪任务2 的进度
+query_goldpig2_task_data @ {
+	request {
+	}
+	response {
+		result $ : integer
+		task_list $ : *task_item
+	}
+}
+
+# 请求 金猪任务2 的 还可以领取的次数
+query_goldpig2_task_remain @ {
+	request {
+	}
+	response {
+		result $ : integer
+		remain_num $ : integer
+	}
+}
+
+# 请求 金猪任务2 的 每日 领取的情况
+query_goldpig2_task_today_data @ {
+	request {
+	}
+	response {
+		result $ : integer
+		total_num $ : integer       # 每日总共的领取次数
+		remain_num $ : integer      # 当日剩余的领取次数
+	}
+}
+
+
+################################################################## 周卡相关
+# 请求鲸币 周卡剩余次数
+query_jingbi_zhouka_remain @ {
+	request {
+	}
+	response {
+		result $ : integer
+		remain_num $ : integer
+	}
+}
+
+# 请求千元赛 周卡剩余次数
+query_qys_zhouka_remain @ {
+	request {
+	}
+	response {
+		result $ : integer
+		remain_num $ : integer        #周卡剩余的领取次数
+		next_get_day $ : integer      #第几天后能领取
+	}
+}
+
+

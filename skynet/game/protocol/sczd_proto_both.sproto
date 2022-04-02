@@ -1,0 +1,28 @@
+# 生财之道  both
+
+# 每个son的main信息
+.son_main_info {
+	id $ : string                # 玩家id
+	name $ : string
+	is_have_login $ : integer     # 是否登录过
+    my_all_gx $ : integer         # 我对邀请人的总贡献
+    m_register_time $ : integer   # 我的注册时间
+    last_login_time $ : integer   # 最后登录时间
+}
+
+# 每一条贡献的结构
+.sczd_contribute_data {
+	id $ : string                  # 玩家id
+	name $ : string                # 玩家昵称
+	treasure_type $ : integer      # 财富产生原因,1~100 表示完成第几天的bbsc , 101表示推广礼包1 , 102表示推广礼包2 , 105 表示历史账单转移 , 110 是自己完成了金猪任务 ,150  千元赛返利  , 103 vip 礼包返利
+    treasure_value $ : integer     # 产生的财富值
+    time $ : integer               # 产生的时间
+    is_active $ : integer          # 是否激活
+}
+
+# 生财之道提现记录
+.sczd_extract_record { 
+	id $ : integer                     # 唯一id
+	extract_value $ : integer          # 提现值
+	extract_time $ : integer           # 提现时间
+}

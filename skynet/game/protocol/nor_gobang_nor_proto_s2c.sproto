@@ -1,0 +1,129 @@
+#
+# 协议：服务端 => 客户端
+#
+
+#dfg start********** ************************************************************************
+
+
+nor_gobang_nor_ready_msg @ {
+	request {
+		status_no $ : integer
+		seat_num $ : integer
+		cur_race $ : integer
+	}
+}
+
+nor_gobang_nor_begin_msg @ {
+	request {
+		status_no $ : integer
+        cur_race $ : integer
+        p_race_times $ : *integer
+		countdown_max $ : integer
+        p_race_time_max $ : integer
+	}
+}
+
+
+#玩家加入桌子
+nor_gobang_nor_join_msg @ {
+	request {
+		status_no $ : integer
+		#玩家信息
+		player_info $ : nor_gobang_nor_p_info
+	}
+}
+#选黑子消息
+nor_gobang_nor_xhz_msg @ {
+	request {
+		status_no $ : integer
+		#黑子玩家
+		first_seat $ : integer
+	}
+}
+
+#权限消息
+nor_gobang_nor_permit_msg @ {
+	request {
+		status_no $ : integer
+		#当前状态
+		status $ : string
+		#倒计时
+		countdown $ : integer
+		#当前权限拥有人
+		cur_p $ : integer
+		#其他数据 
+		other $ : integer
+	}
+}
+#玩家操作消息
+nor_gobang_nor_action_msg @ {
+	request {
+		status_no $ : integer
+		action $ : nor_gobang_nor_action
+	}
+}
+
+#比赛结束消息 
+nor_gobang_nor_gameover_msg @ {
+	request {
+		status_no $ : integer
+	}
+}
+#进入房间消息
+nor_gobang_nor_enter_room_msg @ {
+	request {
+		status_no $ : integer
+		room_info $ : nor_gobang_nor_room_info
+		players_info $ : nor_gobang_nor_players_info
+	}
+}
+
+nor_gobang_nor_start_again_msg @ {
+	request {
+		status_no $ : integer
+		status $ : string
+	}
+}
+
+nor_gobang_nor_new_game_msg @ {
+	request {
+		status_no $ : integer
+		status $ : string
+		cur_race $ : string
+	}
+}
+
+
+nor_gobang_nor_status_info @ {
+	request {
+		status_no $ : integer
+		status_info $ : nor_gobang_nor_status_info
+		
+	}
+}
+
+ 
+
+#结算
+nor_gobang_nor_settlement_msg @ {
+	request {
+		status_no $ : integer
+		settlement_info $ : nor_gobang_nor_settlement_info
+		
+		#是否结束(是否还有下一局) 0-no   1-yes
+		is_over $ : integer
+	}
+}
+
+#分数改变
+nor_gobang_nor_score_change_msg @ {
+	request {
+		status_no $ : integer
+
+		# 分数改变信息
+		data $ : *nor_gobang_grades_change
+
+	}
+}
+
+

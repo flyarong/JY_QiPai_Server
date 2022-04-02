@@ -1,0 +1,9 @@
+Debug
+*.VC.db
+*.opendb
+test_card_analysis/Debug/*
+test_card_analysis/Release/*
+Release/*
+Debug/*
+enc_temp_folder/*
+

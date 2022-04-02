@@ -1,0 +1,35 @@
+#
+# 协议：客户端 => 服务端
+#
+
+# 大富豪 获取基本信息
+query_dafuhao_base_info @ {
+	request {
+	}
+	response {
+		result $ : integer                # 0 成功
+		need_credits $ : integer          # 本次需要积分
+		now_credits $ : integer           # 我的积分
+	}
+}
+
+# 大富豪 摇骰子
+dafuhao_game_kaijiang @ {
+	request {
+	}
+	response {
+		result $ : integer                # 0 成功
+		award_id $ : integer              # 奖励id
+	}
+}
+
+# 大富豪  请求抽奖广播
+dafuhao_get_broadcast @ {
+	request {
+	}
+	response {
+		result $ : integer                # 0 成功
+		player_name $ : string            # 玩家名
+		award_id $ : integer              # 奖励id
+	}
+}

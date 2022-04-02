@@ -1,0 +1,732 @@
+#
+# 协议：客户端 => 服务端
+#
+
+# 登录
+login @ {
+	request {
+	    channel_type $:string # 渠道类型： phone, weixin_gz , weixin,youke
+		login_id $ : string # （可选）用户在该渠道的 id ，渠道内唯一；如果缓存第三方授权过期 或首次授权，则 为空
+		password $ : string # （可选）用户密码
+		channel_args $ : string # 渠道的附加参数，通常为 json 字符串
+		introducer $ : string # （可选，创建用户时才需要）介绍人用户 id
+        device_os $: string # （可选）设备的操作系统
+        device_id $: string # （可选）设备的 id
+		market_channel $:string # 推广渠道
+	}
+	response {
+		result $ : integer # 0 succed ,or error id 
+		user_id $ : string # 登录成功返回用户 id （系统唯一 id）
+		channel_type $:string # 渠道类型
+		login_id $ : string # 登录id 快速登录使用 客户端应当保存
+		refresh_token $ : string # 登录token 验证使用 客户端应当保存
+		name $ : string 	# 玩家名字
+		head_image $ : string # 玩家头像连接 可能为空串
+		sex $ : integer		# 性别 1男 0女
+		introducer $ : string # 简介
+		location $ : string #当前玩家所在位置
+		vice_location $ : string #当前玩家所在 副 位置
+		game_id $ : integer #当前玩家所在游戏id
+		player_asset $ : *player_asset #当前玩家资产
+		xsyd_status $ : integer # 0-没有进行过  1-进行过
+		million_cup_status $ : million_cup_data #有则显示nil
+		player_ticket $ : *ticket_data #卡券
+		instance_id $ : integer # 服务器运行实例 id，客户端据此判断是否需要重启 走更新流程
+		glory_data $ : glory_data #荣耀数据
+		dressed_head_frame $ : integer 		#当前佩戴的头像框id
+		player_level $ : integer # 用户等级： 0 普通用户，大于 1 ，管理员，支持 gm_command
+		step_task_status $ : *integer # 步步生财第一个大步骤的所有小步骤的状态
+		gift_bag_data $ : *gift_bag_data # 礼包数据
+		proto_token $ : string # 协议token
+	}
+}
+
+# GM 命令
+gm_command @ {
+	request {
+		command $: string # 命令字符串
+	}
+	response {
+		result $ : string # 执行结果字符串
+	}
+}
+
+# 上报登录设备信息
+device_info @ {
+	request {
+		device_type $: string # 设备类型 "android"/"ios"
+        device_token $: string # 设备的 id
+	}
+	response {
+		result $ : integer # 0 succed ,or error id 
+	}
+}
+
+# 心跳
+heartbeat @ {
+	request {
+	}
+	response {
+	}
+}
+
+#客户端状态
+change_clientStatus @ {
+	request {
+		status $ : integer # 1 切换到后台 , 0 切换到正常（从后台切换回来）
+	}
+	response {
+		result $ : integer
+	}
+}
+
+#请求玩家所在位置
+get_location @ {
+	request {
+	}
+	response {
+		result $ : integer
+		location $ : string
+	}
+}
+
+#请求玩家所在 副位置
+get_vice_location @ {
+	request {
+	}
+	response {
+		result $ : integer
+		location $ : string
+	}
+}
+
+
+
+#请求玩家财物
+query_asset @ {
+	request {
+	}
+	response {
+		result $ : integer
+		player_asset $ : *player_asset
+	}
+}
+
+#查询实名认证
+query_real_name_authentication @ {
+	request {
+	}
+	response {
+		result $ : integer
+		status $ : integer # 0-未认证 1-已认证
+	}
+}
+
+#进行实名认证
+proceed_real_name_authentication @ {
+	request {
+		name $ : string
+		identity_number $ : string
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+#设置性别
+set_sex @ {
+	request {
+		sex $ : integer		# 性别 1男 0女
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+#查询收货地址
+query_shipping_address  @ {
+	request {
+	}
+	response {
+		result $ : integer
+		shipping_address $ : shipping_address
+	}
+}
+
+
+#修改收货地址
+update_shipping_address  @ {
+	request {
+		name $ : string 	#收货人名字
+		phone_number $ : string 	#收货人电话
+		address $ : string 	#收货人地址
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+#查询自由场玩家数据
+get_freestyle_player_data @ {
+	request {
+	}
+	response {
+		result $ : integer
+		win_count $ : integer 	#胜利次数
+		rate_count $ : integer 	#总倍数
+	}
+}
+
+
+
+#查询比赛场玩家的统计数据
+get_statistics_player_match @ {
+	request {
+	}
+	response {
+		result $ : integer
+		first $ : integer
+		second $ : integer
+		third $ : integer
+	}
+}
+
+
+#查询百万大奖赛玩家的统计数据
+get_statistics_player_million_ddz @ {
+	request {
+	}
+	response {
+		result $ : integer
+		dizhu_win_count $ : integer
+		nongmin_win_count $ : integer
+		defeated_count $ : integer
+		final_win $ : integer
+	}
+}
+
+#查询自由场玩家的统计数据
+get_statistics_player_freestyle_ddz @ {
+	request {
+	}
+	response {
+		result $ : integer
+		drivingrange_dizhu_win_count $ : integer
+		drivingrange_nongmin_win_count $ : integer
+		drivingrange_defeated_count $ : integer
+
+		diamond_field_dizhu_win_count $ : integer
+		diamond_field_nongmin_win_count $ : integer
+		diamond_field_defeated_count $ : integer
+	}
+}
+
+
+
+use_dwq @ {
+	request {
+	 	asset_type $ : string
+	 	value $ : integer
+
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+#查询邮件数量
+query_email_count @ {
+	request {
+	}
+	response {
+		result $ : integer
+		count $ : integer
+	}
+}
+
+
+#获取邮件的id列表
+get_email_ids @ {
+	request {
+	}
+	response {
+		result $ : integer
+		list $ : *integer
+	}
+}
+
+
+#获取邮件
+get_email @ {
+	request {
+	 	email_id $ : integer
+	}
+	response {
+		result $ : integer
+		email $ : email
+	}
+}
+
+#获取所有邮件
+get_all_email @ {
+	request {
+	}
+	response {
+		result $ : integer
+		emails $ : *email
+	}
+}
+
+
+#阅读邮件
+read_email @ {
+	request {
+	 	email_id $ : integer
+	}
+	response {
+		result $ : integer
+		email_id $ : integer
+	}
+}
+
+
+#删除邮件
+delete_email @ {
+	request {
+	 	email_id $ : integer
+	}
+	response {
+		result $ : integer
+		email_id $ : integer
+	}
+}
+
+
+#获取邮件附件
+get_email_attachment @ {
+	request {
+	 	email_id $ : integer
+	}
+	response {
+		result $ : integer
+		email_id $ : integer
+	}
+}
+
+
+#获取邮件附件
+get_all_email_attachment @ {
+	request {
+	}
+	response {
+		result $ : integer
+		email_ids $ : *integer
+	}
+}
+
+#创建订单
+create_pay_order @ {
+	request {
+	 	goods_id $ : integer # 商品id
+	 	channel_type $ : string # weixin,alipay
+	 	geturl $ : string # y/n 是否获取 url
+		convert $ : string #要转换的资产类型
+	}
+	response {
+		result $ : integer
+		order_id $ : string
+		url $ : string # 如果 geturl 为 true 则返回 url
+	}
+}
+
+
+#创建商城 token
+create_shoping_token @ {
+	request {
+	 	geturl $ : string # y/n 是否获取 url
+	}
+	response {
+		result $ : integer
+		token $ : string
+		url $ : string # 如果 geturl 为 true 则返回 url
+	}
+}
+
+#在充值界面中购买物品：消耗钻石，购买 鲸币/记牌器
+pay_exchange_goods @ {
+	request {
+	 	goods_type $ : string # 商品类型 ："jing_bi"/"jipaiqi"
+	 	goods_id $ : integer # 商品编号
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+
+
+#请求服务器验证 app store pay
+req_appstorepay_check @ {
+	request {
+		product_id $ : string #产品号
+		receipt $ : string #支付后苹果返回给app的票据
+		is_sandbox $ : integer  #是否用沙盒支付 0-no  1-yes
+		transaction_id $ : string #ios订单号，服务器验证完了后需要回传给客户端
+		convert $ : string #要转换的资产类型
+		definition_id $ : string
+	}
+	response {
+		result $ : integer
+	}
+}
+
+#查询胜率
+query_win_rate @ {
+	request {
+	}
+	response {
+		result $ : integer
+		win_count $ : integer
+		all_count $ : integer
+	}
+}
+
+
+#退出游戏 -- 切换账号
+player_quit @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+# 得到分享 字符串
+get_share_url @ {
+	request {
+	}
+	response {
+		result $ : integer
+		share_url $ : string
+	}
+}
+
+# 提取现金
+withdraw_cash @ {
+	request {
+		cash_type $ : integer # 类型 
+	}
+	response {
+		result $ : integer
+		value $ : integer # 已提取的金额
+	}
+}
+
+
+# 查询绑定手机号码信息
+query_bind_phone @ {
+	request {
+	}
+	response {
+		result $ : integer
+		phone_no $ : string  # 手机号码
+		cd $ : integer
+	}
+}
+
+
+# 发送绑定手机短信验证码
+send_bind_phone_verify_code @ {
+	request {
+		phone_no $ : string  # 手机号码
+	}
+	response {
+		result $ : integer
+		cd $ : integer
+	}
+}
+
+# 验证绑定手机验证码
+verify_bind_phone_code @ {
+	request {
+		code $ : string # 手机验证码
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+# xsyd 的一块钱话费
+pay_1_tariffe @ {
+	request {
+		phone_no $ : string  # 手机号码
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+#--确认百万大奖赛奖杯
+confirm_million_cup @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+
+
+#--分享完成
+shared_finish @ {
+	request {
+		type $ : string
+		arg $ : integer
+	}
+	response {
+		result $ : integer
+	}
+}
+
+query_everyday_shared_award @ {
+	request {
+		type $ : string
+	}
+	response {
+		result $ : integer
+		status $ : integer #0-no  1-yes
+		arg $ : integer
+	}
+}
+
+
+
+# 发出语音聊天
+send_voice_chat @ {
+	request {
+		data $ : string
+	}
+}
+#玩家简易交互  （表情  快捷语音等）
+send_player_easy_chat @ {
+	request {
+		act_apt_player_id $ : string   #动画等的接受人ID(action_accpt_player_id)
+		parm $ : string   #发送的内容
+    }
+    response {
+		result $ : integer
+	}
+}
+
+client_breakdown_info @ {
+	request {
+		error $ : string
+    }
+}
+
+
+
+query_gift_bag_status @ {
+	request {
+		gift_bag_id $ : integer
+	}
+	response {
+		result $ : integer
+		gift_bag_id $ : integer
+		status $ : integer
+		permit_time $ : string #权限时间
+	}
+}
+
+
+query_gift_bag_num @ {
+	request {
+		gift_bag_id $ : integer
+	}
+	response {
+		result $ : integer
+		gift_bag_id $ : integer
+		num $ : integer
+	}
+}
+
+#练习场统计数据
+get_statistics_drivingrange_win_data @ {
+	request {
+	}
+	response {
+		result  $ : integer
+		race_count  $ : integer
+		win_count  $ : integer
+		max_win_streak  $ : integer
+		win_streak  $ : integer
+		all_win  $ : integer
+	}
+}
+
+
+
+#查询装扮数据
+query_dress_data @ {
+	request {
+	}
+	response {
+		result  $ : integer
+		dress_data $ : dress_data #装扮数据
+	}
+}
+
+#佩戴头像框
+dressed_head_frame @ {
+	request {
+		id  $ : integer
+	}
+	response {
+		result  $ : integer
+	}
+}
+
+
+
+
+# 购买并抽奖
+pay_lottery @ {
+	request {
+		type $ : string  #类型
+		time $ : integer
+		tag $ : integer
+	}
+	response {
+		result  $ : integer
+		tag $ : integer
+		buy_data $ :  complex_asset_data	#购买的数据
+		lottery_data $ :  complex_asset_data	#抽奖的数据
+	}
+}
+
+
+#使用激活码
+use_redeem_code @ {
+	request {
+		code  $ : string
+	}
+	response {
+		result  $ : integer
+		time  $ : integer
+	}
+}
+
+
+
+#破产补助
+broke_subsidy @ {
+	request {
+	}
+	response {
+		result  $ : integer
+	}
+}
+
+
+
+#破产补助
+query_broke_subsidy_num @ {
+	request {
+	}
+	response {
+		result  $ : integer
+		num  $ : integer
+	}
+}
+
+
+
+#免费的破产补助
+free_broke_subsidy @ {
+	request {
+	}
+	response {
+		result  $ : integer
+	}
+}
+
+
+
+#免费的破产补助
+query_free_broke_subsidy_num @ {
+	request {
+	}
+	response {
+		result  $ : integer
+		num  $ : integer
+	}
+}
+
+
+
+#活动兑换
+activity_exchange @ {
+	request {
+		type  $ : string
+		id  $ : integer
+	}
+	response {
+		result  $ : integer
+	}
+}
+
+
+
+
+#抽奖宝箱状态
+query_luck_box_lottery_status @ {
+	request {
+	}
+	response {
+		result $ : integer
+	}
+}
+
+#抽奖宝箱数据
+query_luck_box_lottery_data @ {
+	request {
+	}
+	response {
+		result $ : integer
+		nums $ : *integer
+		boxs $ : *integer
+	}
+}
+
+#抽奖宝箱
+pay_lottery_luck_box @ {
+	request {
+		id  $ : integer
+	}
+	response {
+		result $ : integer
+		index $ : integer
+	}
+}
+
+
+#开宝箱
+open_luck_box @ {
+	request {
+		id  $ : integer
+	}
+	response {
+		result $ : integer
+	}
+}

@@ -1,0 +1,100 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+##创建房卡场的配置数据项
+.friendgame_room_option {
+	option $ : string 		# 选项
+	value $ : integer 		# 值
+}
+
+
+##斗地主的结算信息
+.friendgame_ddz_nor_statistics {
+	bomb_count $ : *integer
+	dizhu_count $ : *integer
+	chuntian_count $ : *integer
+}
+
+
+##麻将的结算信息
+.friendgame_mj_xzdd_statistics {
+	zi_mo_count $ : *integer
+	jie_pao_count $ : *integer
+	dian_pao_count $ : *integer
+	an_gang_count $ : *integer
+	ming_gang_count $ : *integer
+	cha_da_jiao_count $ : *integer
+}
+
+.friendgame_settlement_info {
+	#数组   下标表示玩家的座位号
+	grades $ : *integer
+	ddz_nor_statistics $ : friendgame_ddz_nor_statistics
+	mj_xzdd_statistics $ : friendgame_mj_xzdd_statistics
+}
+
+.friendgame_playerinfo {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string
+	score $ : integer
+
+	#头像框
+	dressed_head_frame $: integer
+	#荣誉分
+	glory_score $: integer
+	
+	# 网络质量： 1 好 ，0 差
+	net_quality $ : integer
+}
+
+##房卡场的账单玩家数据项
+.friendgame_history_record_player_info {
+	id $ : string 		# 玩家id
+	name $ : string 		# 玩家名字
+	head_img_url $ : string 		# 头像连接
+	score $ : integer 		# 分数
+}
+
+##房卡场的账单数据项
+.friendgame_history_record {
+	id $ : integer 		# id
+	game_name $ : string 		# 游戏名字(服务端的游戏名)
+	time $ : string 		# 时间
+	room_no $ : string 		# 房号
+	player_infos $ : *friendgame_history_record_player_info 		# 玩家信息
+}
+
+#分数改变信息
+.friendgame_score_change{
+
+    # 分数改变的人
+    cur_p $ : integer
+
+    # 分数变化量
+    score $ : integer
+
+}
+
+.friendgame_vote_data{
+	agree_count $ : integer
+	disagree_count $ : integer
+	my_vote $ : integer
+	begin_player_id $ : string
+	countdown $ : integer
+}
+
+
+.friendgame_gps_data{
+	locations $ : string #地点
+	ip $ : string #ip
+	distance $ : *integer #距离 -1代表无gps数据
+}
+

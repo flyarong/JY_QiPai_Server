@@ -1,0 +1,3642 @@
+
+########### common_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+.package {
+	type 0 : integer
+	session 1 : integer
+}
+
+
+.object_attribute {
+	name 0 : string 			#-- 道具属性名字
+	value 1 : string 			#-- 道具属性值
+}
+
+##道具
+.player_asset {
+	asset_type 0 : string 				#-- 资产类型
+	asset_value 1 : string 				#-- 资产数量(不可叠加的物品，此项为道具的object_id)
+	attribute 2 : *object_attribute 	#-- 属性列表
+}
+
+
+#装扮 可能有数量或时间限制
+.dress_item{
+	id 0 : integer 		#装扮id
+	num 1 : integer 	#装扮数量限制
+	time 2 : integer 	#装扮可用时间限制
+}
+
+
+#装扮数据
+.dress_data{
+	head_frame 0 : *dress_item 		#头像框数据
+	expression 1 : *dress_item 	#表情数据
+	phrase 2 : *dress_item 		#短语数据
+}
+
+#收货地址
+.shipping_address{
+	name 0 : string 	#收货人名字
+	phone_number 1 : string 	#收货人电话
+	address 2 : string 	#收货人地址
+}
+
+
+#邮件
+.email{
+
+	id 0 : integer 	#邮件ID
+	type 1 : string 	#邮件类型
+	title 2 : string 	#标题
+	sender 3 : string 	#发送人
+	state 4 : string 	#状态
+	create_time 5 : string 	#创建时间
+	valid_time 6 : string 	#有效时间
+	data 7 : string 	#邮件数据
+
+}
+
+#奖杯状态
+.million_cup_data{
+	issue 0 : integer 	#期号
+	bonus 1 : integer 	#奖金
+}
+
+
+
+#资产数据结构
+.asset_data{
+	asset_type 0 : string 	#资产类型
+	value 1 : integer 	#数量
+}
+
+
+
+#卡券数据结构
+.ticket_data{
+	id 0 : integer 	#卡券id
+	type 1 : string 	#卡券类型
+	num 2 : integer 	#卡券数量
+	valid_time 3 : string 	#有效期
+	data 4 : integer(2) 	#卡券折扣
+}
+
+
+
+.glory_data {
+	level 0 : integer
+	score 1 : integer
+}
+
+
+
+#复合财产数据
+.complex_asset_data {
+	dress_data 0 : dress_data 	#装扮数据 
+	asset_data 1 : *asset_data  #资产数据
+}
+
+.gift_bag_data {
+	gift_bag_id 0 : integer
+	status 1 : integer
+}
+
+########### dbwg_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+#dbwg 百万大奖赛 ********************************************************************************
+
+#屏幕
+.dbwg_bonus_rank_list_info {
+	name 0 : string
+	#奖金
+	bonus 1 : integer
+	rank 2 : integer
+}
+
+.dbwg_match_list_info {
+	#比赛状态 status  0 没有比赛  1 未开始  2 报名  3 比赛中 4 比赛结束
+	status 0 : integer
+	issue 1 : integer #期数
+	ticket 2 : integer
+	bonus 3 : integer
+	signup_time 4 : string
+	begin_time 5 : string
+}
+
+.dbwg_match_info {
+	#游戏名字
+	name 0 : string
+	bonus 1 : integer
+	issue 2 : integer #期数
+	#总轮数
+	total_round 3 : integer
+	signup_time 4 : string
+	begin_time 5 : string
+}
+
+.dbwg_round_info {#--轮信息
+
+	#当前轮数
+	round 0 : integer
+
+	# 此轮晋级分数
+	rise_grades 1 : integer
+
+	# 此轮的局数
+	race_count 2 : integer
+
+	# 此轮的初始倍率
+	init_rate 3 : integer
+
+	# 此轮的底分
+	init_stake 4 : integer
+}
+
+
+
+.dbwg_room_info {
+	room_id 0 : string
+	##桌号
+	t_num 1 : integer
+	#座位号
+	seat_num 2 : integer
+}
+
+.dbwg_action {
+	#动作类型
+	type 0 : integer
+	#做出动作的人
+	p 1 : integer
+	#分数
+	rate 2 : integer
+	#出牌列表
+	cp_list 3 : *integer
+}
+
+.dbwg_status_info {
+	#当前状态
+	status 0 : string
+	#倒计时
+	countdown 1 : integer(2)
+	#当前权限拥有人
+	cur_p 2 : integer
+	#我的牌列表
+	my_pai_list 3 : *integer
+	##每个人剩余的牌数量
+	remain_pai_amount 4 : *integer
+	##我的倍数
+	my_rate 5: integer
+	##动作序列 保留最近两次的即可
+	act_list 6 : *dbwg_action
+	##玩家的托管状态
+	auto_status 7 : *integer
+	#当前轮数
+	round 8 : integer
+	#当前局数
+	race 9 : integer
+	#我的座位号
+	seat_num 10 : integer
+	#地主座位号
+	dizhu 11 : integer
+	#地主牌
+	dz_pai 12 : *integer
+	grades 13 : integer
+
+	jipaiqi 14 : *integer
+	round_info 15: dbwg_round_info
+	
+	#加倍情况 0-还没有加倍 1-已经加倍
+	jiabei 16 : integer
+
+	#我已经复活了几次
+	fuhuo_status 17 : integer
+	
+	#总共可复活多少次
+	fuhuo_count 18 : integer
+}
+.dbwg_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string
+	grades 5: integer
+}
+.dbwg_players_info {
+	p_info 0 : *dbwg_p_info
+	##玩家数量
+	p_count 1 : integer
+}
+.dbwg_dz_info {
+			#地主座位号
+			dizhu 0 : integer
+			#地主牌
+			dz_pai 1 : *integer
+		}
+.dbwg_pai_info {
+			#玩家（座位号）
+			p 0 : integer
+			#牌列表
+			pai 1 : *integer
+	}
+
+.dbwg_ddz_settlement_info {
+	# 4农民  5地主 0都输了（不叫地主的情况）
+	winner 0 : integer
+	#玩家得分 
+	p_scores 1 : *integer 
+	
+	#玩家的加倍情况
+	p_jiabei 2 : *integer
+
+	#玩家的叫地主情况
+	p_jdz 3 : *integer
+
+	#炸弹数量
+	bomb_count 4 : integer
+
+	#春天 0-无 1-春天  2-反春
+	chuntian 5 : integer
+
+	#玩家剩余的牌的列表
+	remain_pai 6 : *dbwg_pai_info
+}
+
+
+.dbwg_reward {
+	asset_type 0 : string
+	value 1 : integer
+}
+
+.dbwg_final_result {
+	
+	#登顶 0-失败  1-成功
+	is_win 0 : integer
+
+	#你坚持到的轮数
+	round 1 : integer
+
+	#总共有几轮
+	round_count 2 : integer
+
+	#安慰奖
+	reward 3 : *dbwg_reward
+}
+
+########### nmjxlfg_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+
+#nmjxlfg start********** 麻将血流自由场**********************************************************************
+
+
+.nmjxlfg_room_rent {
+	asset_type 0 : string
+	asset_count 1 : integer
+}
+
+#比赛列表信息
+.nmjxlfg_match_list_info {
+	game_id 0 : integer
+	ui_order 1 : integer
+	signup_service_id 2 : string
+	room_rent 3 : nmjxlfg_room_rent #房费
+}
+
+
+.nmjxlfg_match_info {
+	#--游戏名字
+	name 0 : string
+
+}
+
+#分数改变信息
+.nmjxlfg_grades_change{
+
+    # 分数改变的人
+    cur_p 0 : integer
+
+    # 分数变化量
+    grades 1 : integer
+
+}
+
+# 胡牌数据
+.nmjxlfg_hu_data
+ {
+	#座位号
+	seat_num 0 : integer
+
+ 	#胡牌类型：zimo-自摸 pao-别人点炮 qghu-抢杠胡
+	hu_type 1 : string
+
+	#胡 的牌
+	pai 2 : integer
+	#点炮人
+	dianpao_p 3 : integer
+}
+.nmjxlfg_hu_data_list
+{
+	hu_data 0 : *nmjxlfg_hu_data
+}
+
+# 番型 数据： 番型 -> 倍数
+.nmjxlfg_multi_data
+{
+    qing_yi_se 0 : integer # nil 或 番数
+    da_dui_zi 1 : integer # nil 或 番数
+    qi_dui 2 : integer # nil 或 番数
+    long_qi_dui 3 : integer # nil 或 番数
+
+    dai_geng 4 : integer # nil 或 根数
+
+    jiang_dui 5 : integer # nil 或 番数
+    men_qing 6 : integer # nil 或 番数
+    zhong_zhang 7 : integer # nil 或 番数
+    jin_gou_diao 8 : integer # nil 或 番数
+
+    hai_di_ly 9 : integer # nil 或 番数 ,海底捞月 最后一张牌胡牌（自摸）
+    hai_di_pao 10 : integer # nil 或 番数 ,海底炮  最后一张牌胡牌（被人点炮）
+    tian_hu 11 : integer # nil 或 番数 天胡：庄家，第一次发完牌既胡牌
+    di_hu 12 : integer # nil 或 番数 ,地胡：非庄家第一次发完牌 既自摸或 被别人点炮
+    gang_shang_hua 13 : integer # nil 或 番数 ,杠上花：自己杠后补杠自摸
+    gang_shang_pao 14 : integer # nil 或 番数 ,杠上炮：别人杠后补拍点炮
+
+    zimo 15 : integer # nil 或 番数 自摸
+    qiangganghu 16 : integer # nil 或 番数 抢杠胡
+}
+
+# 杠的牌信息
+.nmjxlfg_gang_pai
+{
+    pai 0 : integer
+    gang_type 1 : string # "zg"/"wg"/"ag"
+
+	# 倍数
+	sum  2 : integer
+}
+
+# 结算
+.nmjxlfg_settle_data
+ {
+
+    # 结算类型：hu 胡牌， ting 听牌, wujiao 无叫, hz 花猪
+    # 注意： 这个数据放到 nmjxlfg_settlement_item 中了
+    #   settle_type 0 : string
+
+ 	#胡牌类型（settle_type == hu）：zimo-自摸 pao-别人点炮 qghu-抢杠胡
+	hu_type 1 : string
+
+	#胡的牌
+	hu_pai 2 : integer
+
+	multi 3 : nmjxlfg_multi_data
+
+	# 总番数
+	sum_multi 4 : integer
+
+	# 注意： 这个数据放到 nmjxlfg_settlement_item 中了
+	# score 5 : integer # 分数
+
+	# 总倍数
+	sum  6 : integer
+}
+
+.nmjxlfg_action {
+	#动作类型
+	type 0 : string # "dq" 定缺； "cp" 出牌; "peng" 碰; "gang" 杠; "hu" 胡; "guo" 过;
+
+	#做出动作的人
+	p 1 : integer
+
+	#牌
+	pai 2 : integer
+
+	#胡信息
+	hu_data 3 : nmjxlfg_hu_data
+
+	#额外数据
+	other 4 : string # type=gang（zg 直杠,ag 暗杠,wg 弯杠）
+}
+
+.nmjxlfg_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string
+	jing_bi 5 : string
+	#头像框
+	dressed_head_frame 6: integer
+}
+
+.nmjxlfg_room_info {
+	#座位号
+	game_id 0 : integer
+	seat_num 1 : integer
+	init_stake 2 : integer
+
+	#总共多少局
+	race_count 3 : integer
+}
+
+.nmjxlfg_players_info {
+	p_info 0 : *nmjxlfg_p_info
+	##玩家数量
+	p_count 1 : integer
+}
+
+.nmjxlfg_pg_pai_info {
+	type 0 : string
+	pai 1 : integer
+}
+
+.nmjxlfg_player_pg_pai_info {
+	pg_pai_list 0 : *nmjxlfg_pg_pai_info
+}
+
+.nmjxlfg_player_chu_pai_info {
+	pai_list 0 : *integer
+}
+
+.nmjxlfg_sezi_data{
+	sezi_value1 0 : integer
+	sezi_value2 1 : integer
+	zj_seat 2 : integer
+}
+
+
+.nmjxlfg_chupai_data{
+	seat_num 0 : integer
+	pai 1 : integer
+}
+
+.nmjxlfg_allow_opt
+{
+    peng 0 : integer # 可以碰
+    gang 1 : integer # 可以杠
+    hu 2 : integer # 可以胡
+}
+
+.nmjxlfg_status_info {
+
+	status 0 : string
+
+	countdown 1 : integer(2)
+
+	cur_p 2 : integer
+
+	#当前局数
+	cur_race 3 : integer
+
+	cur_chupai 4 : nmjxlfg_chupai_data
+
+	cur_mopai 5 : integer
+
+	cur_pgh_card 6 : integer
+
+	remain_card 7 : integer
+
+	player_remain_card 8 : *integer
+
+	#--我的牌列表
+	my_pai_list 9 : *integer
+
+	pg_pai 10 : *nmjxlfg_player_pg_pai_info
+
+	chu_pai 11 : *nmjxlfg_player_chu_pai_info
+
+	#--玩家的托管状态
+	auto_status 12 : *integer
+
+	#--定缺的花色 -1 0 1-3 具体的花色
+	dingque_pai 13 : *integer
+
+	#--当前动作
+	action 14 : nmjxlfg_action
+
+	#--骰子
+	sezi_data 15 : nmjxlfg_sezi_data
+
+	hu_data 16 : *nmjxlfg_hu_data_list
+
+	cur_pgh_allow_opt 17 : nmjxlfg_allow_opt
+
+	jipaiqi 18 : *integer
+
+	#有出牌权限时的过记录 用于过掉胡牌  弯杠等
+	is_guo 19 : integer
+}
+
+.nmjxlfg_settlement_item
+{
+    seat_num 0 : integer
+
+    # 结算类型：hu 胡牌， ting 听牌, wujiao 无叫, hz 花猪
+    settle_type 1 : string
+
+	settle_data 2 : *nmjxlfg_settle_data
+
+	# 总番数
+	sum_multi 3 : integer
+
+	score 4 : integer # 分数
+
+	shou_pai 5 : *integer # 手上的牌
+	pg_pai 6 : *nor_mj_pg_pai # 碰杠的牌
+
+	# 总倍数
+	sum  7 : integer
+}
+
+.nmjxlfg_settlement_info{
+    settlement_items 0 : *nmjxlfg_settlement_item
+
+	#房费
+	room_rent 1 : nmjxlfg_room_rent
+}
+
+#nmjxlfg end********************************************************************************************
+
+
+
+
+
+
+
+
+
+########### tydfg_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+.tydfg_room_rent {
+	asset_type 0 : string
+	asset_count 1 : integer
+}
+
+.tydfg_match_list_info {
+	game_id 0 : integer
+	ui_order 1 : integer
+	signup_service_id 2 : string 
+	room_rent 3 : tydfg_room_rent #房费
+}
+.tydfg_match_info {
+	#游戏名字
+	name 0 : string   
+	#游戏类型 
+	game_model 1 : integer
+}
+.tydfg_room_info {
+	#座位号
+	game_id 0 : integer
+	seat_num 1 : integer
+	init_stake 2 : integer
+	init_rate 3 : integer
+}
+.tydfg_cp_list {
+	#非癞子的牌的序列
+	nor 0 : *integer
+	#由癞子生成的牌
+	lz 1 : *integer
+}
+.tydfg_action {
+	#动作类型
+	type 0 : integer
+	#做出动作的人
+	p 1 : integer
+	#分数
+	rate 2 : integer
+	#出牌列表
+	cp_list 3 : tydfg_cp_list
+}
+.tydfg_status_info {
+	#当前状态
+	status 0 : string
+	#倒计时
+	countdown 1 : integer(2)
+	#当前权限拥有人
+	cur_p 2 : integer
+	#我的牌列表
+	my_pai_list 3 : *integer
+	#癞子的牌类型
+	laizi 4 : integer
+	##每个人剩余的牌数量
+	remain_pai_amount 5 : *integer
+	##我的倍数
+	my_rate 6: integer
+	##动作序列 保留最近两次的即可
+	act_list 7 : *tydfg_action
+	##玩家的托管状态
+	auto_status 8 : *integer
+	#我的座位号
+	seat_num 9 : integer
+	#地主座位号
+	dizhu 10 : integer
+	#地主牌
+	dz_pai 11 : *integer
+	#记牌器
+	jipaiqi 12 : *integer
+	#加倍情况 0-还没有加倍 1-已经加倍
+	jiabei 13 : integer
+	win_count 14 : integer
+
+	# -1 还没开始  0没有倒拉 1倒或拉了
+	p_dao_la 15 : *integer 
+
+	#--0-nil  1-不操作  2-是操作
+	men_data 16 : *integer 
+	zhua_data 17 : *integer
+}
+.tydfg_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string
+	jing_bi 5 : string
+	#头像框
+	dressed_head_frame 6: integer
+}
+.tydfg_players_info {
+	p_info 0 : *tydfg_p_info
+	##玩家数量
+	p_count 1 : integer
+}
+.tydfg_dz_info {
+			#地主座位号
+			dizhu 0 : integer
+			#地主牌
+			dz_pai 1 : *integer
+		}
+.tydfg_pai_info {
+			#玩家（座位号）
+			p 0 : integer
+			#牌列表
+			pai 1 : *integer
+		}
+.tydfg_settlement_info {
+  # 4农民  5地主 0都输了（不叫地主的情况）
+  winner 0 : integer
+  award 1 : *integer
+  #托管包赔情况 包赔人的位置
+  auto_baopei_pos 2 : integer
+  #玩家剩余的牌的列表
+  remain_pai 3 : *tydfg_pai_info
+
+  #炸弹数量
+  bomb_count 4 : integer
+
+  #春天 0-无 1-春天  2-反春
+  chuntian 5 : integer
+
+  #房费
+  room_rent 6 : tydfg_room_rent
+}
+
+
+
+########### nor_mj_xzdd_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+
+#分数改变信息
+.nor_mj_xzdd_grades_change{
+
+    # 分数改变的人
+    cur_p 0 : integer
+
+    # 分数变化量
+    score 1 : integer
+
+    # 还差多少才够输
+    lose_surplus 2 : integer
+
+}
+
+.nor_mj_xzdd_grades_change_item{
+	# 分数改变信息
+	data 0 : *nor_mj_xzdd_grades_change
+	# 类型 (为何改变)
+	type 1 : string
+}
+
+# 胡牌数据
+.nor_mj_xzdd_hu_data
+ {
+	#座位号
+	seat_num 0 : integer
+
+ 	#胡牌类型：zimo-自摸 pao-别人点炮 qghu-抢杠胡
+	hu_type 1 : string 
+
+	#胡 的牌
+	pai 2 : integer
+	#点炮人
+	dianpao_p 3 : integer
+}
+
+# 番型 数据： 番型 -> 倍数
+.nor_mj_xzdd_multi_data
+{
+    qing_yi_se 0 : integer # nil 或 番数
+    da_dui_zi 1 : integer # nil 或 番数
+    qi_dui 2 : integer # nil 或 番数
+    long_qi_dui 3 : integer # nil 或 番数
+
+    dai_geng 4 : integer # nil 或 根数
+
+    jiang_dui 5 : integer # nil 或 番数
+    men_qing 6 : integer # nil 或 番数
+    zhong_zhang 7 : integer # nil 或 番数
+    jin_gou_diao 8 : integer # nil 或 番数
+
+    hai_di_ly 9 : integer # nil 或 番数 ,海底捞月 最后一张牌胡牌（自摸）
+    hai_di_pao 10 : integer # nil 或 番数 ,海底炮  最后一张牌胡牌（被人点炮）
+    tian_hu 11 : integer # nil 或 番数 天胡：庄家，第一次发完牌既胡牌
+    di_hu 12 : integer # nil 或 番数 ,地胡：非庄家第一次发完牌 既自摸或 被别人点炮
+    gang_shang_hua 13 : integer # nil 或 番数 ,杠上花：自己杠后补杠自摸
+    gang_shang_pao 14 : integer # nil 或 番数 ,杠上炮：别人杠后补拍点炮
+
+    zimo 15 : integer # nil 或 番数 自摸
+    qiangganghu 16 : integer # nil 或 番数 抢杠胡 
+}
+
+# 杠的牌信息
+.nor_mj_xzdd_gang_pai
+{
+    pai 0 : integer
+    gang_type 1 : string # "zg"/"wg"/"ag"
+
+	# 倍数
+	sum  2 : integer
+}
+
+# 碰杠的牌信息
+.nor_mj_pg_pai
+{
+    pai 0 : integer
+    pg_type 1 : string # "peng"/"zg"/"wg"/"ag"
+
+	# 倍数
+	sum  2 : integer
+}
+
+# 结算
+.nor_mj_xzdd_settle_data
+ {
+
+    # 结算类型：hu 胡牌， ting 听牌, wujiao 无叫, hz 花猪
+    settle_type 0 : string
+
+ 	#胡牌类型（settle_type == hu）：zimo-自摸 pao-别人点炮 qghu-抢杠胡
+	hu_type 1 : string
+
+	#胡的牌
+	hu_pai 2 : integer
+
+	multi 3 : nor_mj_xzdd_multi_data
+
+	# 总番数
+	sum_multi 4 : integer
+
+	score 5 : integer # 分数
+
+	lose_surplus 6 : integer # 差多少才够输分数
+
+	# 总倍数
+	sum  7 : integer
+}
+
+.nor_mj_xzdd_action {
+	#动作类型
+	type 0 : string # "dq" 定缺； "cp" 出牌; "peng" 碰; "gang" 杠; "hu" 胡; "guo" 过;
+
+	#做出动作的人
+	p 1 : integer
+
+	#牌
+	pai 2 : integer
+
+	#胡信息
+	hu_data 3 : nor_mj_xzdd_hu_data
+
+	#额外数据
+	other 4 : string # type=gang（zg 直杠,ag 暗杠,wg 弯杠）
+}
+
+
+.nor_mj_xzdd_pg_pai_info {
+	type 0 : string
+	pai 1 : integer
+}
+
+.nor_mj_xzdd_player_pg_pai_info {
+	pg_pai_list 0 : *nor_mj_xzdd_pg_pai_info
+}
+
+.nor_mj_xzdd_player_chu_pai_info {
+	pai_list 0 : *integer
+}
+
+.nor_mj_xzdd_sezi_data{
+	sezi_value1 0 : integer
+	sezi_value2 1 : integer
+	zj_seat 2 : integer
+}
+
+
+.nor_mj_xzdd_chupai_data{
+	seat_num 0 : integer
+	pai 1 : integer
+}
+
+.nor_mj_xzdd_allow_opt
+{
+    peng 0 : integer # 可以碰
+    gang 1 : integer # 可以杠
+    hu 2 : integer # 可以胡
+}
+
+.nor_mj_xzdd_settlement_item
+{
+    seat_num 0 : integer
+	settle_data 1 : nor_mj_xzdd_settle_data
+	shou_pai 2 : *integer # 手上的牌
+	pg_pai 3 : *nor_mj_pg_pai # 碰杠的牌
+}
+
+.nor_mj_xzdd_settlement_info {
+
+    settlement_items 0 : *nor_mj_xzdd_settlement_item
+
+    #赢封顶
+	yingfengding 1 : *integer
+
+}
+
+# 转雨的结构
+.zhuan_yu_struct {
+	gang_seat 0 : integer
+	hu_seat 1 : integer
+	pai 2 : integer
+}
+
+.nor_mj_xzdd_status_info {
+
+	status 0 : string
+
+	countdown 1 : integer(2)
+
+	cur_p 2 : integer
+
+	#当前局数
+	cur_race 3 : integer
+
+	cur_chupai 4 : nor_mj_xzdd_chupai_data
+
+	cur_mopai 5 : integer
+
+	cur_pgh_card 6 : integer
+
+	remain_card 7 : integer
+
+	player_remain_card 8 : *integer
+
+	#--我的牌列表
+	my_pai_list 9 : *integer
+
+	pg_pai 10 : *nor_mj_xzdd_player_pg_pai_info
+
+	chu_pai 11 : *nor_mj_xzdd_player_chu_pai_info
+
+	#--玩家的托管状态
+	auto_status 12 : *integer
+
+	#--定缺的花色 -1 0 1-3 具体的花色
+	dingque_pai 13 : *integer
+
+	#--当前动作
+	action 14 : nor_mj_xzdd_action
+
+	# 游戏玩家的信息 离桌也不清除
+	game_players_info 15 : *fg_p_info
+
+	hu_data 16 : *nor_mj_xzdd_hu_data
+
+	cur_pgh_allow_opt 17 : nor_mj_xzdd_allow_opt
+	#记牌器
+	jipaiqi 18 : *integer
+	#有出牌权限时的过记录 用于过掉胡牌  弯杠等
+	is_guo 19 : integer
+
+	ready 20 : *integer
+	
+	settlement_info 21 : nor_mj_xzdd_settlement_info
+
+	seat_num 22 : integer
+	
+
+	#是否结束(是否还有下一局)  0-no   1-yes
+	is_over 23 : integer
+
+	init_stake 24 : integer
+	
+	init_rate 25 : integer
+	
+	race_count 26 : integer
+	
+	sezi_data 27 : nor_mj_xzdd_sezi_data
+
+	da_piao_nums 28 : *integer   # 打漂的值
+
+	is_huan_pai 29 : integer   # 是否换牌 
+
+	score_change_list 30 : *nor_mj_xzdd_grades_change_item   # 分数变化列表
+
+	game_bankrupt 31 : *integer   # 游戏破产
+	
+	zhuan_yu_data 32 : *zhuan_yu_struct   # 转雨数据
+}
+
+# nor_mj_xzdd **************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+########### nor_ddz_nor_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.nor_ddz_nor_match_info {
+	#游戏名字
+	name 0 : string   
+	#游戏类型 
+	game_model 1 : integer
+}
+.nor_ddz_nor_room_info {
+	#座位号
+	game_id 0 : integer
+	seat_num 1 : integer
+	init_stake 2 : integer
+	init_rate 3 : integer
+}
+.nor_ddz_nor_cp_list {
+	#非癞子的牌的序列
+	nor 0 : *integer
+	#由癞子生成的牌
+	lz 1 : *integer
+}
+.nor_ddz_nor_action {
+	#动作类型
+	type 0 : integer
+	#做出动作的人
+	p 1 : integer
+	#分数
+	rate 2 : integer
+	#出牌列表
+	cp_list 3 : nor_ddz_nor_cp_list
+}
+.nor_ddz_nor_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string
+	jing_bi 5 : string
+	#头像框
+	dressed_head_frame 6: integer
+	#荣誉分
+	glory_score 7: integer
+}
+.nor_ddz_nor_players_info {
+	p_info 0 : *nor_ddz_nor_p_info
+	##玩家数量
+	p_count 1 : integer
+}
+.nor_ddz_nor_dz_info {
+			#地主座位号
+			dizhu 0 : integer
+			#地主牌
+			dz_pai 1 : *integer
+			rangpai_num 2 : integer
+		}
+.nor_ddz_nor_pai_info {
+			#玩家（座位号）
+			p 0 : integer
+			#牌列表
+			pai 1 : *integer
+		}
+
+.nor_ddz_nor_settlement_info {
+	# 4农民  5地主 0都输了（不叫地主的情况）
+	winner 0 : integer
+	award 1 : *integer
+	#托管包赔情况 包赔人的位置
+	auto_baopei_pos 2 : integer
+
+	#输的玩家如果破产还差多少才够输
+	lose_surplus 3 : *integer
+
+	#玩家剩余的牌的列表
+	remain_pai 4 : *nor_ddz_nor_pai_info
+
+	#玩家的加倍情况
+	p_jiabei 5 : *integer
+
+	#玩家的叫地主情况
+	p_jdz 6 : *integer
+
+	#炸弹数量
+	bomb_count 7 : integer
+
+	#春天 0-无 1-春天  2-反春
+	chuntian 8 : integer
+
+	#二人抢地主次数
+	er_qiang_dizhu_count 9 : integer
+	#赢封顶
+	yingfengding 10 : *integer
+
+}
+
+
+.nor_ddz_nor_status_info {
+
+	#当前状态
+	status 0 : string
+	#倒计时
+	countdown 1 : integer(2)
+	#当前权限拥有人
+	cur_p 2 : integer
+	
+	#癞子的牌类型
+	laizi 3 : integer
+
+	#我的牌列表
+	my_pai_list 4 : *integer
+	##每个人剩余的牌数量
+	remain_pai_amount 5 : *integer
+	##我的倍数
+	my_rate 6: integer
+	##动作序列 保留最近两次的即可
+	act_list 7 : *nor_ddz_nor_action
+	##玩家的托管状态
+	auto_status 8 : *integer
+	#我的座位号
+	seat_num 9 : integer
+	#地主座位号
+	dizhu 10 : integer
+	#地主牌
+	dz_pai 11 : *integer
+	#记牌器
+	jipaiqi 12 : *integer
+	#加倍情况 0-还没有加倍 1-已经加倍
+	jiabei 13 : integer
+	win_count 14 : integer
+	
+	#是否结束(是否还有下一局) 0-no   1-yes
+	is_over 15 : integer
+
+	init_stake 16 : integer
+	init_rate 17 : integer
+
+	ready 18 : *integer
+
+	cur_race 19 : integer
+	race_count 20 : integer
+
+	rangpai_num 21 : integer
+	er_qiang_dizhu_count 22 : integer
+
+	# -1 还没开始  0没有倒拉 1倒或拉了
+	dao_la_data 23 : *integer 
+	#--0-nil  1-不操作  2-是操作
+	men_data 24 : *integer 
+	zhua_data 25 : *integer
+
+	# -- 闷拉倒 必须操作
+	is_must_mld_opt 26 : integer
+
+	settlement_info 27 : nor_ddz_nor_settlement_info
+}
+
+#分数改变信息
+.nor_ddz_grades_change{
+
+    # 分数改变的人
+    cur_p 0 : integer
+
+    # 分数变化量
+    score 1 : integer
+}
+
+
+
+
+########### friendgame_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+##创建房卡场的配置数据项
+.friendgame_room_option {
+	option 0 : string 		# 选项
+	value 1 : integer 		# 值
+}
+
+
+##斗地主的结算信息
+.friendgame_ddz_nor_statistics {
+	bomb_count 0 : *integer
+	dizhu_count 1 : *integer
+	chuntian_count 2 : *integer
+}
+
+
+##麻将的结算信息
+.friendgame_mj_xzdd_statistics {
+	zi_mo_count 0 : *integer
+	jie_pao_count 1 : *integer
+	dian_pao_count 2 : *integer
+	an_gang_count 3 : *integer
+	ming_gang_count 4 : *integer
+	cha_da_jiao_count 5 : *integer
+}
+
+.friendgame_settlement_info {
+	#数组   下标表示玩家的座位号
+	grades 0 : *integer
+	ddz_nor_statistics 1 : friendgame_ddz_nor_statistics
+	mj_xzdd_statistics 2 : friendgame_mj_xzdd_statistics
+}
+
+.friendgame_playerinfo {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string
+	score 5 : integer
+
+	#头像框
+	dressed_head_frame 6: integer
+	#荣誉分
+	glory_score 7: integer
+	
+	# 网络质量： 1 好 ，0 差
+	net_quality 8 : integer
+}
+
+##房卡场的账单玩家数据项
+.friendgame_history_record_player_info {
+	id 0 : string 		# 玩家id
+	name 1 : string 		# 玩家名字
+	head_img_url 2 : string 		# 头像连接
+	score 3 : integer 		# 分数
+}
+
+##房卡场的账单数据项
+.friendgame_history_record {
+	id 0 : integer 		# id
+	game_name 1 : string 		# 游戏名字(服务端的游戏名)
+	time 2 : string 		# 时间
+	room_no 3 : string 		# 房号
+	player_infos 4 : *friendgame_history_record_player_info 		# 玩家信息
+}
+
+#分数改变信息
+.friendgame_score_change{
+
+    # 分数改变的人
+    cur_p 0 : integer
+
+    # 分数变化量
+    score 1 : integer
+
+}
+
+.friendgame_vote_data{
+	agree_count 0 : integer
+	disagree_count 1 : integer
+	my_vote 2 : integer
+	begin_player_id 3 : string
+	countdown 4 : integer
+}
+
+
+.friendgame_gps_data{
+	locations 0 : string #地点
+	ip 1 : string #ip
+	distance 2 : *integer #距离 -1代表无gps数据
+}
+
+
+
+########### citymg_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.citymg_match_info {
+	#游戏名字
+	name 0 : string   
+	#总参与人数
+	total_players 1 : integer
+	#总轮数
+	total_round 2 : integer
+	match_model  3 : string
+	# 0-不可以取消  1-可以取消
+	is_cancel_signup 4 : integer
+}
+
+
+.citymg_round_info {#--轮信息
+
+	#当前轮数
+	round 0 : integer
+
+	# 0-初赛  1-决赛 
+	round_type 1 : integer
+
+	# 此轮晋级人数
+	rise_num 2 : integer
+
+	# 晋级分数
+	rise_score 3 : integer
+
+	# 此轮的局数
+	race_count 4 : integer
+
+	# 此轮的初始倍率
+	init_rate 5 : integer
+
+	# 此轮的底分
+	init_stake 6 : integer
+}
+
+
+.citymg_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string 
+	score 5: integer
+	#头像框
+	dressed_head_frame 6: integer
+	#荣誉分
+	glory_score 7: integer
+}
+
+.citymg_reward {
+	asset_type 0 : string
+	value 1 : integer
+}
+
+.citymg_final_result {
+	rank 0 : integer
+	reward 1 : *citymg_reward
+	match_type 2 : integer
+}
+
+
+.citymg_rank_list {
+	id 0 : string
+	rank 1 : integer
+	name 2 : string
+	award 3 : string
+}
+
+
+
+########### nor_mg_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.nor_mg_match_info {
+	#游戏名字
+	name 0 : string   
+	#总参与人数
+	total_players 1 : integer
+	#总轮数
+	total_round 2 : integer
+	match_model  3 : string
+	# 0-不可以取消  1-可以取消
+	is_cancel_signup 4 : integer
+}
+
+
+.nor_mg_round_info {#--轮信息
+
+	#当前轮数
+	round 0 : integer
+
+	# 0-初赛  1-决赛 
+	round_type 1 : integer
+
+	# 此轮晋级人数
+	rise_num 2 : integer
+
+	# 晋级分数
+	rise_score 3 : integer
+
+	# 此轮的局数
+	race_count 4 : integer
+
+	# 此轮的初始倍率
+	init_rate 5 : integer
+
+	# 此轮的底分
+	init_stake 6 : integer
+	# 决赛的轮数
+	final_round 7 : integer
+}
+
+
+.nor_mg_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string 
+	score 5: integer
+	#头像框
+	dressed_head_frame 6: integer
+	#荣誉分
+	glory_score 7: integer
+}
+
+.nor_mg_reward {
+	asset_type 0 : string
+	value 1 : integer
+}
+
+.nor_mg_final_result {
+	rank 0 : integer
+	reward 1 : *nor_mg_reward
+	game_id 2 : integer
+}
+
+
+.nor_mg_room_info {
+	game_id 0 : integer
+	##桌号
+	t_num 1 : integer
+	#座位号
+	seat_num 2 : integer
+}
+
+
+
+
+.nor_mg_rank_info {
+	rank 0 : integer
+	player_id 1 : string
+	player_name 2 : string
+	head_link 3 : string
+}
+
+
+########### fg_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.fg_room_info {
+	game_id 0 : integer
+	init_stake 1 : integer
+	init_rate 2 : integer
+}
+
+
+.fg_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string 
+	score 5: integer
+	#1-准备了  0-没准备
+	ready 6: integer
+	#头像框
+	dressed_head_frame 7: integer
+	#荣誉分
+	glory_score 8: integer
+}
+
+.fg_room_rent {
+	asset_type 0 : string
+	asset_count 1 : integer
+}
+
+.fg_activity_data {
+	key 0 : string
+	value 1 : integer
+}
+
+
+.fg_exchange_hongbao_data {
+	jing_bi 0 : integer
+	hong_bao 1 : integer
+	is_exchanged 2 : integer
+}
+
+########### task_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+.task_item {
+	id 0 : integer
+	now_total_process 1 : integer    # 当前总进度
+	now_lv 2 : integer               # 当前等级
+	now_process 3 : integer          # 当前等级总进度
+	need_process 4 : integer         # 当前等级需要的总进度
+	task_round 5 : integer           # 应该领取的奖励档位
+
+	# 0-不能领取 | 1-可领取 | 2-已完成 | 3- 未启用
+	award_status 6 : integer
+
+	# 奖励领取的状态
+	award_get_status 7 : integer
+}
+
+.award_data {
+	asset_type 0 : string
+	asset_value 1 : string
+}
+
+
+########### sczd_proto_both.sproto #############
+
+# 生财之道  both
+
+# 每个son的main信息
+.son_main_info {
+	id 0 : string                # 玩家id
+	name 1 : string
+	is_have_login 2 : integer     # 是否登录过
+    my_all_gx 3 : integer         # 我对邀请人的总贡献
+    m_register_time 4 : integer   # 我的注册时间
+    last_login_time 5 : integer   # 最后登录时间
+}
+
+# 每一条贡献的结构
+.sczd_contribute_data {
+	id 0 : string                  # 玩家id
+	name 1 : string                # 玩家昵称
+	treasure_type 2 : integer      # 财富产生原因,1~100 表示完成第几天的bbsc , 101表示推广礼包1 , 102表示推广礼包2 , 105 表示历史账单转移 , 110 是自己完成了金猪任务 ,150  千元赛返利  , 103 vip 礼包返利
+    treasure_value 3 : integer     # 产生的财富值
+    time 4 : integer               # 产生的时间
+    is_active 5 : integer          # 是否激活
+}
+
+# 生财之道提现记录
+.sczd_extract_record { 
+	id 0 : integer                     # 唯一id
+	extract_value 1 : integer          # 提现值
+	extract_time 2 : integer           # 提现时间
+}
+
+########### zajindan_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+
+# 推广奖金的统计记录
+.zjd_one_game_status { 
+	level     	0 : integer   				# 等级
+	base_money  1 : integer                 # 底分
+	eggs_status 2 : *integer                # 蛋的状态  -1表示已开 0 完好  1-N 表示已经被敲了1-N下
+	award_list 3 : *integer                 # 奖励列表
+	replace_money 4 : integer 				# 换一批需要的money
+}
+.zjd_game_status {
+	now_level 0 : integer               # 当前所在的锥子
+	status 1 : *zjd_one_game_status     # 所有锤子对应的状态
+}
+
+.zjd_kaijiang_result {
+	egg_no 0  : integer                     # 蛋的id
+	award 1 : integer                       # 奖励id
+	award_value 2 : integer                       # 奖励 倍率
+}
+
+
+.zjd_rank_data {
+	player_id 0 : string           # 玩家id
+	today_award 1 : integer        # 今日获得的奖励
+}
+
+.zjd_log_data {
+	award 0 : integer        # 奖励
+	time 1 : integer         # 时间
+}
+
+
+
+
+
+
+
+
+########### nor_gobang_nor_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.nor_gobang_nor_match_info {
+	#游戏名字
+	name 0 : string   
+	#游戏类型 
+	game_model 1 : integer
+}
+.nor_gobang_nor_room_info {
+	#座位号
+	game_id 0 : integer
+	seat_num 1 : integer
+	init_stake 2 : integer
+	init_rate 3 : integer
+}
+.nor_gobang_nor_action {
+	#动作类型
+	type 0 : string
+	#做出动作的人
+	p 1 : integer
+	#坐标
+	pos 2 : integer
+	#当前操作人的剩余总时间
+	race_time 3 : integer
+}
+.nor_gobang_nor_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string
+	jing_bi 5 : string
+	#头像框
+	dressed_head_frame 6: integer
+	#荣誉分
+	glory_score 7: integer
+}
+.nor_gobang_nor_players_info {
+	p_info 0 : *nor_gobang_nor_p_info
+	##玩家数量
+	p_count 1 : integer
+}
+.nor_gobang_nor_settlement_info {
+	# 获胜的座位号 0代表没人赢
+	win_seat 0 : integer
+	win_type 1 : string
+	award 2 : *integer
+	type 3 : string
+	#输的玩家如果破产还差多少才够输
+	lose_surplus 4 : *integer
+	#倍数
+	p_rate 5 : integer
+	#赢封顶
+	yingfengding 6 : *integer
+
+}
+
+
+.nor_gobang_nor_status_info {
+
+	#当前状态
+	status 0 : string
+	#倒计时
+	countdown 1 : integer(2)
+	#当前权限拥有人
+	cur_p 2 : integer
+
+	##动作序列 下棋动作
+	act_list 3 : *nor_gobang_nor_action
+
+	#我的座位号
+	seat_num 4 : integer
+	#黑子玩家
+	first_seat 5 : integer
+	
+	#是否结束(是否还有下一局) 0-no   1-yes
+	is_over 6 : integer
+
+	init_stake 7 : integer
+	init_rate 8 : integer
+
+	ready 9 : *integer
+
+	cur_race 10 : integer
+	race_count 11 : integer
+	p_race_times 12 : *integer
+	countdown_max 13 : integer
+	p_race_time_max 14 : integer
+
+	settlement_info 15 : nor_gobang_nor_settlement_info
+}
+
+#分数改变信息
+.nor_gobang_grades_change{
+
+    # 分数改变的人
+    cur_p 0 : integer
+
+    # 分数变化量
+    score 1 : integer
+}
+
+
+
+
+########### fishing_game_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+.fsg_room_info {
+	game_id 0 : integer
+	t_num 1 : integer
+}
+
+
+.fsg_p_info {
+	#玩家名字
+	name 0 : string
+	#玩家头像下载链接
+	head_link 1 : string
+	#玩家座位号
+	seat_num 2 : integer
+	#1男0女  其他男
+	sex 3 : integer
+	id 4 : string 
+	score 5: integer
+	fish_coin 6: integer
+	#1-准备了  0-没准备
+	ready 7: integer
+	#头像框
+	dressed_head_frame 8: integer
+	#荣誉分
+	glory_score 9: integer
+}
+
+
+.fsg_skill {
+	skill 0 : string
+	time 1 : integer
+	seat_num 2 : integer
+}
+
+
+
+.fsg_skill_cfg {
+	skill 0 : string
+	time 1 : integer
+	cd_time 2 : integer
+}
+
+.shell_dead {
+	shell_id 0 : integer
+	money 1 : integer
+}
+
+
+
+########### nor_fishing_nor_proto_both.sproto #############
+
+
+
+
+
+
+########### xiaoxiaole_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+########### dafuhao_proto_both.sproto #############
+
+#
+# 协议：客户端 服务端 共用
+#
+
+########### common_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+#将要被踢出的原因
+will_kick_reason 56 {
+	request {
+		reason 0 : string #  'logout' 玩家注销（心跳超时）；'relogin' 被新的登录挤下线
+	}
+}
+
+#通知资产改变消息
+notify_asset_change_msg 57 {
+	request {
+		player_asset 0 : *player_asset
+		change_asset 1 : *player_asset
+		type 2 : string #改变的类型(原因)
+	}
+}
+
+
+#通知装扮改变消息
+notify_dress_change_msg 58 {
+	request {
+		dress_data 0 : dress_data #装扮数据
+		type 1 : string #改变的类型(原因)
+	}
+}
+
+#通知装扮改变消息
+notify_dress_item_change_msg 59 {
+	request {
+		dress_type 0 : string #装扮类型
+		dress_id 1 : integer #装扮id
+		dress_num 2 : integer #装扮数量
+		dress_time 3 : integer #装扮时间
+		change_type 4 : string #改变类型
+	}
+}
+
+
+
+#通知新邮件
+notify_new_email_msg 60 {
+	request {
+		email 0 : email 	#-- 邮件
+	}
+}
+
+#通知订单充值结果
+notify_pay_order_msg 61 {
+	request {
+		result 0 : integer 	# 0成功
+		error_info 1 : string
+		order_id 2 : string
+		goods_id 3 : integer
+		transaction_id 4 : string
+		definition_id 5 : string
+	}
+}
+
+
+#广播消息
+multicast_msg 62 {
+	request {
+		type 0 : integer #--广播类型 1系统广播 2 其他广播
+		format_type 1 : integer #--广播消息格式类型 1 纯文本 其他指定格式
+		content 2 : string #--内容
+	}
+}
+
+
+
+#--百万大奖赛奖杯状态
+notify_million_cup_msg 63 {
+	request {
+		million_cup_status 0 : million_cup_data #有则显示nil
+	}
+}
+
+
+
+#--通知卡券变化消息
+notify_ticket_change_msg 64 {
+	request {
+		player_ticket 0 : *ticket_data #卡券
+	}
+}
+
+# 接收语音聊天
+recv_voice_chat 65 {
+	request {
+		player_id 0 : string
+		data 1 : string
+	}
+}
+recv_player_easy_chat 66 {
+	request {
+		player_id 0 : string
+		act_apt_player_id 1 : string   #动画等的接受人ID(action_accpt_player_id)
+		parm 2 : string   #发送的内容
+	}
+}
+
+
+#--通知荣誉等级升级
+notify_glory_promoted_msg 67 {
+	request {
+		level 0 : integer
+		score 1 : integer
+	}
+}
+
+
+# 开关，番数 改变
+kaiguan_multi_change_msg 68 {
+	request {
+		game_kaiguan 0 : integer         # 游戏开关，客户端转成二进制
+		game_multi 1 : string            # 游戏倍数，一个字节表示一个
+	}
+}
+
+
+
+gift_bag_status_change_msg 69 {
+	request {
+		gift_bag_id 0 : integer
+		status 1 : integer
+		permit_time 2 : string #权限时间
+	}
+}
+
+########### dbwg_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+#dbwg start******************************************************************* 
+
+
+#比赛被放弃，由于人数不足
+dbwg_discard_msg 1016 {
+	request {
+		#当前人数
+		player_num 0 : integer
+		#至少需要的人数
+		min_player 1 : integer
+	}
+}
+
+#比赛场开始
+dbwg_begin_msg 1017 {
+	request {
+		#最新状态编号
+		status_no 0 : integer
+	}
+}
+
+
+#进入房间消息
+dbwg_enter_room_msg 1018 {
+
+	request {
+		status_no 0 : integer
+		room_info 1 : dbwg_room_info
+		round_info 2: dbwg_round_info
+		players_info 3 : dbwg_players_info
+	}
+
+}
+
+#比赛场玩家加入
+dbwg_join_msg 1019 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : dbwg_p_info
+	}
+}
+
+#比赛场斗地主牌消息
+dbwg_pai_msg 1020 {
+	request {
+		status_no 0 : integer
+		#我的牌的列表
+		my_pai_list 1 : *integer
+		#所有玩家手里剩余的牌数量
+		remain_pai_amount 2 : *integer
+		#当前轮数
+		round 3 : integer
+		#当前局数
+		race 4 : integer
+	}
+}
+#比赛场斗地主权限消息
+dbwg_permit_msg 1021 {
+	request {
+		status_no 0 : integer
+		#当前状态
+		status 1 : string
+		#倒计时
+		countdown 2 : integer
+		#当前权限拥有人 0表示所有人 1-3具体的玩家 4农民 5 地主
+		cur_p 3 : integer
+		#其他数据 
+		other 4 : integer
+	}
+}
+#比赛场斗地主玩家操作消息
+dbwg_action_msg 1022 {
+	request {
+		status_no 0 : integer
+		action 1 : dbwg_action
+	}
+}
+#加倍完成消息
+dbwg_jiabeifinshani_msg 1023 {
+	request {
+		status_no 0 : integer
+		my_rate 1 : integer
+	}
+}
+#比赛场斗地主地主消息
+dbwg_dizhu_msg 1024 {
+	request {
+		status_no 0 : integer
+		#地主信息
+		dz_info 1 : dbwg_dz_info
+	}
+}
+#比赛场斗地主玩家托管状态消息
+dbwg_auto_msg 1025 {
+	request {
+		p 0 : integer
+		auto_status 1 : integer
+	}
+}
+
+
+#结算消息
+dbwg_ddz_settlement_msg 1026 {
+	request {
+		status_no 0 : integer
+		settlement_info 1 : dbwg_ddz_settlement_info
+	}
+}
+
+
+#等待复活消息 
+dbwg_wait_fuhuo_msg 1027 {
+	request {
+		status_no 0 : integer
+		
+		#当前状态
+		status 1 : string
+
+		#你坚持到的轮数
+		round 2 : integer
+
+		#总共有几轮
+		round_count 3 : integer
+
+		#我已经复活了几次
+		fuhuo_status 4 : integer
+		
+		#总共可复活多少次
+		fuhuo_count 5 : integer
+
+		countdown 6 : integer
+	}
+}
+
+#比赛结束消息 
+dbwg_gameover_msg 1028 {
+	request {
+		status_no 0 : integer
+		final_result 1 : dbwg_final_result
+	}
+}
+
+
+dbwg_start_again_msg 1029 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+	}
+}
+dbwg_new_game_msg 1030 {
+	request {
+		status_no 0 : integer
+		race 1 : integer # 局数
+		status 2 : string
+	}
+}
+
+
+#--晋级，准备开始下一轮
+dbwg_promoted_msg 1031 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+		countdown 2 : integer
+	}
+}
+
+
+#比赛场斗地主分数改变
+dbwg_grades_change_msg 1032 {
+	request {
+		status_no 0 : integer
+		grades 1 : integer
+	}
+}
+
+dbwg_status_info 1033 {
+	request {
+		status_no 0 : integer
+		status_info 1 : dbwg_status_info
+		
+	}
+}
+
+dbwg_all_info 1034 {
+	request {
+		result 0 : integer
+		status_no 1 : integer
+		match_info 2 : dbwg_match_info
+		room_info 3 : dbwg_room_info
+		status_info 4 : dbwg_status_info
+		players_info 5 : dbwg_players_info
+		settlement_info 6 : dbwg_ddz_settlement_info
+		final_result 7 : dbwg_final_result
+	}
+}
+
+
+########### nmjxlfg_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+#dmg start********** ***************************************************************************
+
+#nmjxlfg start********** 麻将自由场*********************************************************************
+
+#匹配超时自动取消报名消息
+nmjxlfg_auto_cancel_signup_msg 2009 {
+	request {
+		result 0 : integer
+	}
+}
+
+#进入房间消息
+nmjxlfg_enter_room_msg 2010 {
+	request {
+		status_no 0 : integer
+		room_info 1 : nmjxlfg_room_info
+		players_info 2 : nmjxlfg_players_info
+		win_count 3 : integer
+	}
+}
+
+#玩家加入桌子
+nmjxlfg_join_msg 2011 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : nmjxlfg_p_info
+	}
+}
+
+#投骰子（定庄）
+nmjxlfg_tou_sezi_msg 2012 {
+	request {
+		status_no 0 : integer
+
+        #庄家座位号
+        zj_seat 1 : integer
+
+		#色子结果：庄家 从 东方位 算起
+		sezi_value1 2 : integer
+		sezi_value2 3 : integer
+	}
+}
+
+nmjxlfg_auto_msg 2013 {
+	request {
+		p 0 : integer
+		auto_status 1 : integer
+	}
+}
+
+#牌消息
+nmjxlfg_pai_msg 2014 {
+	request {
+		status_no 0 : integer
+		#我的牌的列表
+		my_pai_list 1 : *integer
+		#当前牌池的数量
+		remain_card 2 : integer
+		#当前局数
+		race 3 : integer
+	}
+}
+
+#权限消息
+nmjxlfg_permit_msg 2015 {
+	request {
+		status_no 0 : integer
+
+		#当前状态
+		#ding_que-定缺 cp-出牌 mo_pai-摸牌 peng_gang_hu-碰杠胡（别人打的）
+		status 1 : string
+
+		# 牌
+		pai 2 : integer
+
+		# 允许的操作
+		allow_opt 3 : nmjxlfg_allow_opt
+
+		#倒计时
+		countdown 4 : integer
+
+		#当前权限拥有人 0表示所有人 1-4具体的玩家
+		cur_p 5 : integer
+
+		#其他数据
+		other 6 : string
+	}
+}
+
+#分数改变
+nmjxlfg_grades_change_msg 2016 {
+	request {
+		status_no 0 : integer
+
+		# 分数改变信息
+		data 1 : *nmjxlfg_grades_change
+
+	}
+}
+
+#玩家操作消息
+nmjxlfg_action_msg 2017 {
+	request {
+		status_no 0 : integer
+		action 1 : nmjxlfg_action
+	}
+}
+
+
+#玩家定缺结果消息
+nmjxlfg_dingque_result_msg 2018 {
+	request {
+		status_no 0 : integer
+		result 1 : *integer
+	}
+}
+
+
+#玩家胡了消息
+nmjxlfg_hu_msg 2019 {
+	request {
+		status_no 0 : integer
+		hu 1 : nmjxlfg_hu_data
+	}
+}
+
+
+#真结算（最后 游戏结束时 的结算）
+nmjxlfg_gameover_msg 2020 {
+	request {
+		status_no 0 : integer
+		settlement_info 1 : nmjxlfg_settlement_info
+	}
+}
+
+
+nmjxlfg_all_info 2021 {
+	request {
+		status_no 0 : integer
+		room_info 1 : nmjxlfg_room_info
+		players_info 2 : nmjxlfg_players_info
+		match_info 3 : nmjxlfg_match_info
+		status_info 4 : nmjxlfg_status_info
+		settlement_info 5 : nmjxlfg_settlement_info
+	}
+}
+
+
+#nmjxlfg end********************************************************************************************
+
+
+
+########### tydfg_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+
+#tydfg start*****************************************************************************
+
+
+#匹配超时自动取消报名消息
+tydfg_auto_cancel_signup_msg 3013 {
+	request {
+		result 0 : integer
+	}
+}
+
+
+#玩家加入桌子
+tydfg_join_msg 3014 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : tydfg_p_info
+	}
+}
+#发牌消息
+tydfg_pai_msg 3015 {
+	request {
+		status_no 0 : integer
+		#所有玩家手里剩余的牌数量
+		remain_pai_amount 1 : *integer
+		#当前局数
+		race 2 : integer
+	}
+}
+#权限消息
+tydfg_permit_msg 3016 {
+	request {
+		status_no 0 : integer
+		#当前状态
+		status 1 : string
+		#倒计时
+		countdown 2 : integer
+		#当前权限拥有人 0表示所有人 1-3具体的玩家 4农民 5 地主
+		cur_p 3 : integer
+		#其他数据
+		other 4 : integer
+	}
+}
+#玩家操作消息
+tydfg_action_msg 3017 {
+	request {
+		status_no 0 : integer
+		action 1 : tydfg_action
+	}
+}
+
+#地主消息
+tydfg_dizhu_msg 3018 {
+	request {
+		status_no 0 : integer
+		#地主座位号
+		dizhu 1 : integer
+	}
+}
+
+#地主牌消息
+tydfg_dizhu_pai_msg 3019 {
+	request {
+		status_no 0 : integer
+		#地主牌
+		dz_pai 1 : *integer
+	}
+}
+
+
+#看自己的牌消息
+tydfg_kan_my_pai_msg 3020 {
+	request {
+		status_no 0 : integer
+		#看我自己的牌的列表
+		my_pai_list 1 : *integer
+	}
+}
+
+
+#玩家托管状态消息
+tydfg_auto_msg 3021 {
+	request {
+		p 0 : integer
+		auto_status 1 : integer
+	}
+}
+#比赛结束消息 
+tydfg_gameover_msg 3022 {
+	request {
+		status_no 0 : integer
+		settlement_info 1 : tydfg_settlement_info
+	}
+}
+#进入房间消息
+tydfg_enter_room_msg 3023 {
+	request {
+		status_no 0 : integer
+		room_info 1 : tydfg_room_info
+		players_info 2 : tydfg_players_info
+		win_count 3 : integer
+	}
+}
+
+tydfg_start_again_msg 3024 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+	}
+}
+tydfg_new_game_msg 3025 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+	}
+}
+
+
+tydfg_status_info 3026 {
+	request {
+		status_no 0 : integer
+		status_info 1 : tydfg_status_info
+		
+	}
+}
+tydfg_all_info 3027 {
+	request {
+		result 0 : integer
+		status_no 1 : integer
+		match_info 2 : tydfg_match_info
+		room_info 3 : tydfg_room_info
+		status_info 4 : tydfg_status_info
+		players_info 5 : tydfg_players_info
+		settlement_info 6 : tydfg_settlement_info
+	}
+}
+
+########### nor_mj_xzdd_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+#********** 麻将xzdd*********************************************************************
+
+nor_mj_xzdd_ready_msg 4006 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		seat_num 1 : integer
+		#本局
+		cur_race 2 : integer
+	}
+}
+nor_mj_xzdd_begin_msg 4007 {
+	request {
+		status_no 0 : integer
+        cur_race 1 : integer
+	}
+}
+#投骰子（定庄）
+nor_mj_xzdd_tou_sezi_msg 4008 {
+	request {
+		status_no 0 : integer
+        #庄家座位号
+        zj_seat 1 : integer
+		#色子结果：庄家 从 东方位 算起
+		sezi_value1 2 : integer
+		sezi_value2 3 : integer
+	}
+}
+
+nor_mj_xzdd_auto_msg 4009 {
+	request {
+		p 0 : integer
+		auto_status 1 : integer
+	}
+}
+
+#牌消息
+nor_mj_xzdd_pai_msg 4010 {
+	request {
+		status_no 0 : integer
+		#我的牌的列表
+		my_pai_list 1 : *integer
+		#当前牌池的数量
+		remain_card 2 : integer
+	}
+}
+
+#权限消息
+nor_mj_xzdd_permit_msg 4011 {
+	request {
+		status_no 0 : integer
+
+		#当前状态
+		#ding_que-定缺 cp-出牌 mo_pai-摸牌 peng_gang_hu-碰杠胡（别人打的）
+		status 1 : string 
+
+		# 牌
+		pai 2 : integer
+
+		# 允许的操作
+		allow_opt 3 : nor_mj_xzdd_allow_opt
+
+		#倒计时
+		countdown 4 : integer
+
+		#当前权限拥有人 0表示所有人 1-4具体的玩家
+		cur_p 5 : integer
+
+		#其他数据
+		other 6 : string
+	}
+}
+
+
+#玩家操作消息
+nor_mj_xzdd_action_msg 4012 {
+	request {
+		status_no 0 : integer
+		action 1 : nor_mj_xzdd_action
+	}
+}
+
+
+#玩家定缺结果消息
+nor_mj_xzdd_dingque_result_msg 4013 {
+	request {
+		status_no 0 : integer
+		result 1 : *integer
+	}
+}
+
+
+
+#玩家胡了消息
+nor_mj_xzdd_hu_msg 4014 {
+	request {
+		status_no 0 : integer
+		hu 1 : nor_mj_xzdd_hu_data
+	}
+}
+
+#结算
+nor_mj_xzdd_settlement_msg 4015 {
+	request {
+		status_no 0 : integer
+		settlement_info 1 : nor_mj_xzdd_settlement_info
+
+		# 游戏玩家的信息 离桌也不清除
+		game_players_info 2 : *fg_p_info
+
+		#是否结束(是否还有下一局) 0-no   1-yes
+		is_over 3 : integer
+
+		score_change_list 4 : *nor_mj_xzdd_grades_change_item   # 分数变化列表
+
+	}
+}
+
+nor_mj_xzdd_player_exit_msg 4016 {
+	request {
+		status_no 0 : integer
+		seat_num 1 : integer
+	}
+}
+
+nor_mj_xzdd_gameover_msg 4017 {
+	request {
+		status_no 0 : integer
+	}
+}
+
+
+nor_mj_xzdd_next_game_msg 4018 {
+	request {
+		status_no 0 : integer
+		cur_race 1 : integer 
+	}
+}
+
+#分数改变
+nor_mj_xzdd_score_change_msg 4019 {
+	request {
+		status_no 0 : integer
+
+		# 分数改变信息
+		data 1 : *nor_mj_xzdd_grades_change
+
+		# 类型 (为何改变)
+		type 2 : string
+
+	}
+}
+
+# 操作
+nor_mj_xzdd_huansanzhang_msg 4020 {
+	request {
+		status_no 0 : integer
+        pai_vec 1 : *integer # 新换的n张牌
+        pai_list 2 : *integer # 新的手牌
+        jipaiqi 3 : *integer # 新的记牌器
+        is_time_out 4 : integer # 是否是超时
+	}
+}
+
+# 换牌完成
+nor_mj_xzdd_huan_pai_finish_msg 4021 {
+	request {
+		status_no 0 : integer
+	}
+}
+
+# 打漂完成
+nor_mj_xzdd_da_piao_msg 4022 {
+	request {
+		status_no 0 : integer
+		seat_num 1 : integer    #哪个座位打漂
+		piao_num 2 : integer    #漂的几分
+	}
+}
+
+# 打漂完成
+nor_mj_xzdd_da_piao_finish_msg 4023 {
+	request {
+		status_no 0 : integer
+	}
+}
+
+
+
+# 游戏破产
+nor_mj_xzdd_game_bankrupt_msg 4024 {
+	request {
+		status_no 0 : integer
+		game_bankrupt 1 : *integer
+	}
+}
+
+
+
+
+
+########### nor_ddz_nor_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+#dfg start********** ************************************************************************
+
+
+nor_ddz_nor_ready_msg 5015 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		seat_num 1 : integer
+		#本局
+		cur_race 2 : integer
+	}
+}
+
+nor_ddz_nor_begin_msg 5016 {
+	request {
+		status_no 0 : integer
+        cur_race 1 : integer
+	}
+}
+
+
+#玩家加入桌子
+nor_ddz_nor_join_msg 5017 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : nor_ddz_nor_p_info
+	}
+}
+#斗地主牌消息
+nor_ddz_nor_pai_msg 5018 {
+	request {
+		status_no 0 : integer
+		#我的牌的列表
+		my_pai_list 1 : *integer
+		#所有玩家手里剩余的牌数量
+		remain_pai_amount 2 : *integer
+		#当前局数
+		cur_race 3 : integer
+	}
+}
+
+#斗地主权限消息
+nor_ddz_nor_permit_msg 5019 {
+	request {
+		status_no 0 : integer
+		#当前状态
+		status 1 : string
+		#倒计时
+		countdown 2 : integer
+		#当前权限拥有人 0表示所有人 1-3具体的玩家 4农民 5 地主
+		cur_p 3 : integer
+		#其他数据 
+		other 4 : integer
+	}
+}
+#斗地主玩家操作消息
+nor_ddz_nor_action_msg 5020 {
+	request {
+		status_no 0 : integer
+		action 1 : nor_ddz_nor_action
+	}
+}
+#加倍完成消息
+nor_ddz_nor_jiabeifinshani_msg 5021 {
+	request {
+		status_no 0 : integer
+		my_rate 1 : integer
+	}
+}
+#癞子消息
+nor_ddz_nor_laizi_msg 5022 {
+	request {
+		status_no 0 : integer
+		#癞子信息
+		laizi 1 : integer
+	}
+}
+
+#斗地主地主消息
+nor_ddz_nor_dizhu_msg 5023 {
+	request {
+		status_no 0 : integer
+		#地主信息
+		dz_info 1 : nor_ddz_nor_dz_info
+	}
+}
+
+#斗地主玩家托管状态消息
+nor_ddz_nor_auto_msg 5024 {
+	request {
+		p 0 : integer
+		auto_status 1 : integer
+	}
+}
+#比赛结束消息 
+nor_ddz_nor_gameover_msg 5025 {
+	request {
+		status_no 0 : integer
+	}
+}
+#进入房间消息
+nor_ddz_nor_enter_room_msg 5026 {
+	request {
+		status_no 0 : integer
+		room_info 1 : nor_ddz_nor_room_info
+		players_info 2 : nor_ddz_nor_players_info
+		win_count 3 : integer
+	}
+}
+
+nor_ddz_nor_start_again_msg 5027 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+	}
+}
+
+nor_ddz_nor_new_game_msg 5028 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+		cur_race 2 : string
+	}
+}
+
+
+nor_ddz_nor_status_info 5029 {
+	request {
+		status_no 0 : integer
+		status_info 1 : nor_ddz_nor_status_info
+		
+	}
+}
+
+ 
+
+#结算
+nor_ddz_nor_settlement_msg 5030 {
+	request {
+		status_no 0 : integer
+		settlement_info 1 : nor_ddz_nor_settlement_info
+		
+		#是否结束(是否还有下一局) 0-no   1-yes
+		is_over 2 : integer
+	}
+}
+
+#分数改变
+nor_ddz_nor_score_change_msg 5031 {
+	request {
+		status_no 0 : integer
+
+		# 分数改变信息
+		data 1 : *nor_ddz_grades_change
+
+	}
+}
+
+
+#闷拉倒 看自己的牌消息
+nor_ddz_mld_kan_my_pai_msg 5032 {
+	request {
+		status_no 0 : integer
+		#看我自己的牌的列表
+		my_pai_list 1 : *integer
+	}
+}
+
+
+#闷拉倒 地主牌消息
+nor_ddz_mld_dizhu_pai_msg 5033 {
+	request {
+		status_no 0 : integer
+		#地主牌
+		dz_pai 1 : *integer
+	}
+}
+
+########### friendgame_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+
+#匹配超时自动取消报名消息
+friendgame_all_info 6014 {
+	request {
+		status_no 0 : integer
+		status 1 : string 
+		game_type 2 : string
+		friendgame_room_no 3 : string
+		ori_game_cfg 4 : *friendgame_room_option
+		player_info 5 : *friendgame_playerinfo
+		gameover_info 6 : *friendgame_settlement_info
+		room_owner 7 : string 
+		room_rent 8 : integer
+		player_count 9 : integer
+		vote_data 10 : friendgame_vote_data
+		room_dissolve 11 : integer # 不为 0 ，表示房间已解散
+
+		#游戏数据
+		nor_mj_xzdd_status_info 12 : nor_mj_xzdd_status_info
+		nor_ddz_nor_status_info 13 : nor_ddz_nor_status_info
+	}
+}
+
+
+#玩家加入桌子
+friendgame_join_msg 6015 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : friendgame_playerinfo
+	}
+}
+
+
+#玩家离开桌子
+friendgame_quit_msg 6016 {
+	request {
+		status_no 0 : integer
+		#玩家座位号
+		seat_num 1 : integer
+	}
+}
+#
+friendgame_gameover_msg 6017 {
+	request {
+		status_no 0 : integer
+		gameover_info 1 : *friendgame_settlement_info
+	}
+}
+friendgame_begin_vote_cancel_room_msg 6018 {
+	request {
+		status_no 0 : integer
+		player_id 1 : string
+		countdown 2 : integer
+	}
+}
+friendgame_over_vote_cancel_room_msg 6019 {
+	request {
+		status_no 0 : integer
+		vote_result 1 : integer
+	}
+}
+friendgame_player_vote_cancel_room_msg 6020 {
+	request {
+		status_no 0 : integer
+		player_id 1 : string
+		opt 2 : integer
+	}
+}
+
+
+friendgame_gamecancel_msg 6021 {
+	request {
+		status_no 0 : integer
+	}
+}
+
+#玩家网络质量 变化
+friendgame_net_quality 6022 {
+	request {
+		status_no 0 : integer
+
+		#玩家座位号
+		seat_num 1 : integer
+
+		# 好/坏  1/0
+		net_quality 2 : integer 
+	}
+}
+
+
+gps_info_msg 6023 {
+	request {
+		data 0 : *friendgame_gps_data
+	}
+}
+
+
+
+
+########### citymg_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+
+#匹配超时自动取消报名消息
+citymg_all_info 7012 {
+	request {
+		status_no 0 : integer
+		status 1 : string 
+		game_type 2 : string
+		players_info 3 : *citymg_p_info
+		match_info 4 : citymg_match_info
+		round_info 5 : citymg_round_info
+		signup_num 6 : integer
+		rank 7 : integer
+		match_type 8 : integer
+		promoted_type 9 : integer
+		gameover_info 10 : citymg_final_result
+
+		#游戏数据
+		nor_mj_xzdd_status_info 11 : nor_mj_xzdd_status_info
+		nor_ddz_nor_status_info 12 : nor_ddz_nor_status_info
+	}
+}
+
+#匹配超时自动取消报名消息
+citymg_auto_cancel_signup_msg 7013 {
+	request {
+		status_no 0 : integer
+	}
+}
+
+#比赛场开始
+citymg_begin_msg 7014 {
+	request {
+		#最新状态编号
+		status_no 0 : integer
+		#初始排名
+		rank 1 : integer
+		score 2 : integer
+		total_players 3 : integer
+	}
+}
+
+#比赛场进入房间消息
+citymg_enter_room_msg 7015 {
+	request {
+		status_no 0 : integer
+		seat_num 1 : integer
+		round_info 2: citymg_round_info
+		players_info 3 : *citymg_p_info
+	}
+}
+
+#玩家加入桌子
+citymg_join_msg 7016 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : citymg_p_info
+	}
+}
+
+
+citymg_gameover_msg 7017 {
+	request {
+		status_no 0 : integer
+		final_result 1 : citymg_final_result
+	}
+}
+
+#比赛场斗地主分数改变
+citymg_score_change_msg 7018 {
+	request {
+		status_no 0 : integer
+		score 1 : integer
+	}
+}
+citymg_rank_msg 7019 {
+	request {
+		status_no 0 : integer
+		rank 1 : integer
+	}
+}
+
+#--等待结果
+citymg_wait_result_msg 7020 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+	}
+}
+
+#--晋级，准备开始下一轮
+citymg_promoted_msg 7021 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+		countdown 2 : integer
+		#--0表示普通晋级 1表示晋级决赛
+		promoted_type 3 : integer
+	}
+}
+
+
+
+
+
+########### nor_mg_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+
+#匹配超时自动取消报名消息
+nor_mg_all_info 8014 {
+	request {
+		status_no 0 : integer
+		status 1 : string 
+		game_type 2 : string
+		game_kaiguan 3 : integer         # 游戏开关，客户端转成二进制
+		game_multi 4 : string            # 游戏倍数，一个字节表示一个
+		players_info 5 : *nor_mg_p_info
+		match_info 6 : nor_mg_match_info
+		round_info 7 : nor_mg_round_info
+		room_info 8 : nor_mg_room_info
+		signup_num 9 : integer
+		countdown 10 : integer
+		rank 11 : integer
+		promoted_type 12 : integer
+		gameover_info 13 : nor_mg_final_result
+
+		#--复活数据
+		revive_num 14 : integer
+		revive_round 15 : integer
+		revive_assets 16 : *asset_data
+
+		#游戏数据
+		nor_mj_xzdd_status_info 17 : nor_mj_xzdd_status_info
+		nor_ddz_nor_status_info 18 : nor_ddz_nor_status_info
+	}
+}
+
+#匹配超时自动取消报名消息
+nor_mg_auto_cancel_signup_msg 8015 {
+	request {
+		status_no 0 : integer
+	}
+}
+
+#比赛场开始
+nor_mg_begin_msg 8016 {
+	request {
+		#最新状态编号
+		status_no 0 : integer
+		#初始排名
+		rank 1 : integer
+		score 2 : integer
+		total_players 3 : integer
+	}
+}
+
+#比赛场进入房间消息
+nor_mg_enter_room_msg 8017 {
+	request {
+		status_no 0 : integer
+		seat_num 1 : integer
+		round_info 2: nor_mg_round_info
+		room_info 3 : nor_mg_room_info
+		players_info 4 : *nor_mg_p_info
+	}
+}
+
+#玩家加入桌子
+nor_mg_join_msg 8018 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : nor_mg_p_info
+	}
+}
+
+
+nor_mg_gameover_msg 8019 {
+	request {
+		status_no 0 : integer
+		final_result 1 : nor_mg_final_result
+		round_info 2: nor_mg_round_info
+	}
+}
+
+#比赛场斗地主分数改变
+nor_mg_score_change_msg 8020 {
+	request {
+		status_no 0 : integer
+		score 1 : integer
+	}
+}
+nor_mg_rank_msg 8021 {
+	request {
+		status_no 0 : integer
+		rank 1 : integer
+	}
+}
+
+#--等待结果
+nor_mg_wait_result_msg 8022 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+		round_info 2: nor_mg_round_info
+	}
+}
+
+#--晋级，准备开始下一轮
+nor_mg_promoted_msg 8023 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+		countdown 2 : integer
+		#--0表示普通晋级 1表示晋级决赛
+		promoted_type 3 : integer
+		round_info 4: nor_mg_round_info
+	}
+}
+
+
+
+
+#比赛被放弃
+nor_mg_match_discard_msg 8024 {
+	request {
+		game_id 0 : integer
+	}
+}
+
+
+
+
+#你已经失败 需要复活
+nor_mg_wait_revive_msg 8025 {
+	request {
+		status_no 0 : integer
+		num 1 : integer
+		time 2 : integer
+		round 3 : integer
+		assets 4 : *asset_data
+	}
+}
+
+
+
+#条件已经满足 免费复活
+nor_mg_free_revive_msg 8026 {
+	request {
+		status_no 0 : integer
+	}
+}
+
+
+########### fg_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+
+#all_info
+fg_all_info 9010 {
+	request {
+		status_no 0 : integer
+		status 1 : string 
+		game_type 2 : string
+		jdz_type 3 : string
+		game_kaiguan 4 : integer         # 游戏开关，客户端转成二进制
+		game_multi 5 : string            # 游戏倍数，一个字节表示一个
+		players_info 6 : *fg_p_info
+		settlement_players_info 7 : *fg_p_info
+		room_info 8 : fg_room_info
+		room_rent 9 : fg_room_rent
+		countdown 10 : integer
+
+		exchange_hongbao 11 : fg_exchange_hongbao_data
+
+		glory_score_count 12 : integer
+		glory_score_change 13 : integer
+
+		#游戏数据
+		nor_mj_xzdd_status_info 14 : nor_mj_xzdd_status_info
+		nor_ddz_nor_status_info 15 : nor_ddz_nor_status_info
+		nor_gobang_nor_status_info 16 : nor_gobang_nor_status_info
+
+		#活动数据
+		activity_data 17 : *fg_activity_data
+	}
+}
+
+#匹配超时自动取消报名消息
+fg_auto_quit_game_msg 9011 {
+	request {
+		status 0 : integer
+	}
+}
+
+
+#比赛场进入房间消息
+fg_enter_room_msg 9012 {
+	request {
+		status_no 0 : integer
+		seat_num 1 : integer
+		room_info 2 : fg_room_info
+		players_info 3 : *fg_p_info
+	}
+}
+
+#玩家加入桌子
+fg_join_msg 9013 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : fg_p_info
+	}
+}
+
+#玩家离开
+fg_leave_msg 9014 {
+	request {
+		status_no 0 : integer
+		#玩家座位号
+		seat_num 1 : integer
+	}
+}
+
+#玩家准备
+fg_ready_msg 9015 {
+	request {
+		status_no 0 : integer
+		#玩家座位号
+		seat_num 1 : integer
+	}
+}
+
+fg_gameover_msg 9016 {
+	request {
+		status_no 0 : integer
+		exchange_hongbao 1 : fg_exchange_hongbao_data
+		glory_score_count 2 : integer
+		glory_score_change 3 : integer
+	}
+}
+
+#分数改变
+fg_score_change_msg 9017 {
+	request {
+		status_no 0 : integer
+		score 1 : integer
+	}
+}
+
+
+
+#活动数据
+fg_activity_data_msg 9018 {
+	request {
+		#活动数据
+		activity_data 0 : *fg_activity_data
+	}
+}
+
+########### task_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+# 任务改变
+task_change_msg 11014 {
+	request {
+		task_item 0 : task_item
+	}
+}
+
+# 任务的子任务id改变
+fish_daily_children_tasks_change_msg 11027 {
+	request {
+		fish_game_id 0 : integer
+		children_tasks 1 : *task_item
+	}
+}
+
+
+# 步步生财 任务改变
+stepstep_money_task_change_msg 11015 {
+	request {
+		task_item 0 : task_item
+	}
+}
+
+# 步步生财大步骤启动
+stepstep_money_task_big_step_open 11016 {
+	request {
+		now_big_step 0 : integer    # 当前的大步骤
+		step_tasks 1 : *task_item    # 这个步骤的所有任务
+	}
+}
+
+
+
+# 鲸鱼宝箱
+get_jingyu_award_box 11017 {
+	request {
+		jingbi_value 0 : integer   # 得到的鲸币值
+		blast_value 1 : integer    # 暴击的倍数
+	}
+}
+
+# 金猪任务改变
+goldpig_task_change_msg 11018 {
+	request {
+		task_item 0 : task_item
+	}
+}
+
+# 金猪剩余次数改变
+goldpig_task_remain_change_msg 11019 {
+	request {
+		task_remain 0 : integer
+	}
+}
+
+# 金猪2 剩余次数改变
+goldpig2_task_remain_change_msg 11020 {
+	request {
+		task_remain 0 : integer
+	}
+}
+
+################################################################## 周卡相关
+# 鲸币 周卡剩余次数改变
+jinbgi_zhouka_remain_change_msg 11024 {
+	request {
+		task_remain 0 : integer
+	}
+}
+
+# 千元赛 周卡剩余次数改变
+qys_zhouka_remain_change_msg 11025 {
+	request {
+		task_remain 0 : integer
+		next_get_day 1 : integer      #第几天后能领取
+	}
+}
+
+
+########### sczd_proto_s2c.sproto #############
+
+# 生财之道  s2c
+
+# 推广礼包收益激活
+tglb_profit_activate 12009 {
+	request {
+		is_active_tglb1_profit 0 : integer    # 是否激活推广礼包1收益 , 1 = true ,
+	}
+}
+
+# 金猪礼包缓存值更新
+goldpig_profit_cache_change 12010 {
+  request {
+    now_goldpig_profit_cache 0 : integer    # 当前的金猪礼包缓存
+  }
+}
+
+# sczd各种开关改变
+sczd_activate_change_msg 12011 {
+  request {
+    is_activate_xj_profit 0 : integer           # 是否激活下级玩家奖 收益 , 1 = true 
+    is_activate_tglb_profit 1 : integer         # 是否激活下级礼包 收益 , 1 = true 
+    is_activate_gjhhr 2 : integer               # 是否激活 高级合伙人 , 1 = true 
+    is_activate_bisai_profit 3 : integer        # 是否激活 比赛奖收益 , 1 = true 
+  }
+}
+
+
+#####
+vip_lb_base_info_change_msg 12013 {
+  request {
+    is_buy_vip_lb 0 : integer           # 是否购买vip 礼包 0未买  1 购买
+    task_get_num1 1 : integer           # 1号任务当前获取的次数
+    task_max_num1 2 : integer           # 1号任务总获取的次数
+    task_get_num2 3 : integer           # 2号任务当前获取的次数
+    task_max_num2 4 : integer           # 2号任务总获取的次数
+    task_overdue_time 5 : integer       # 任务过期时间戳
+    remain 6 : integer                    # 剩余的礼包数量
+  }
+}
+
+
+########### zajindan_proto_s2c.sproto #############
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+########### nor_gobang_nor_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+#dfg start********** ************************************************************************
+
+
+nor_gobang_nor_ready_msg 14002 {
+	request {
+		status_no 0 : integer
+		seat_num 1 : integer
+		cur_race 2 : integer
+	}
+}
+
+nor_gobang_nor_begin_msg 14003 {
+	request {
+		status_no 0 : integer
+        cur_race 1 : integer
+        p_race_times 2 : *integer
+		countdown_max 3 : integer
+        p_race_time_max 4 : integer
+	}
+}
+
+
+#玩家加入桌子
+nor_gobang_nor_join_msg 14004 {
+	request {
+		status_no 0 : integer
+		#玩家信息
+		player_info 1 : nor_gobang_nor_p_info
+	}
+}
+#选黑子消息
+nor_gobang_nor_xhz_msg 14005 {
+	request {
+		status_no 0 : integer
+		#黑子玩家
+		first_seat 1 : integer
+	}
+}
+
+#权限消息
+nor_gobang_nor_permit_msg 14006 {
+	request {
+		status_no 0 : integer
+		#当前状态
+		status 1 : string
+		#倒计时
+		countdown 2 : integer
+		#当前权限拥有人
+		cur_p 3 : integer
+		#其他数据 
+		other 4 : integer
+	}
+}
+#玩家操作消息
+nor_gobang_nor_action_msg 14007 {
+	request {
+		status_no 0 : integer
+		action 1 : nor_gobang_nor_action
+	}
+}
+
+#比赛结束消息 
+nor_gobang_nor_gameover_msg 14008 {
+	request {
+		status_no 0 : integer
+	}
+}
+#进入房间消息
+nor_gobang_nor_enter_room_msg 14009 {
+	request {
+		status_no 0 : integer
+		room_info 1 : nor_gobang_nor_room_info
+		players_info 2 : nor_gobang_nor_players_info
+	}
+}
+
+nor_gobang_nor_start_again_msg 14010 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+	}
+}
+
+nor_gobang_nor_new_game_msg 14011 {
+	request {
+		status_no 0 : integer
+		status 1 : string
+		cur_race 2 : string
+	}
+}
+
+
+nor_gobang_nor_status_info 14012 {
+	request {
+		status_no 0 : integer
+		status_info 1 : nor_gobang_nor_status_info
+		
+	}
+}
+
+ 
+
+#结算
+nor_gobang_nor_settlement_msg 14013 {
+	request {
+		status_no 0 : integer
+		settlement_info 1 : nor_gobang_nor_settlement_info
+		
+		#是否结束(是否还有下一局) 0-no   1-yes
+		is_over 2 : integer
+	}
+}
+
+#分数改变
+nor_gobang_nor_score_change_msg 14014 {
+	request {
+		status_no 0 : integer
+
+		# 分数改变信息
+		data 1 : *nor_gobang_grades_change
+
+	}
+}
+
+
+
+
+########### fishing_game_proto_s2c.sproto #############
+
+
+
+#玩家加入桌子
+fsg_join_msg 15005 {
+	request {
+		#玩家信息
+		player_info 0 : fsg_p_info
+	}
+}
+
+#玩家离开
+fsg_leave_msg 15006 {
+	request {
+		#玩家座位号
+		seat_num 0 : integer
+	}
+}
+
+
+
+
+########### nor_fishing_nor_proto_s2c.sproto #############
+
+
+
+
+########### xiaoxiaole_proto_s2c.sproto #############
+
+
+
+
+
+########### dafuhao_proto_s2c.sproto #############
+
+#
+# 协议：服务端 => 客户端
+#
+
+dafuhao_base_info_change 18004 {
+	request {
+		need_credits 0 : integer          # 本次需要积分
+		now_credits 1 : integer           # 我的积分
+	}
+}

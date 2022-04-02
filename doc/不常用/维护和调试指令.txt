@@ -1,0 +1,84 @@
+
+发布到 test4 预发布 服务器
+	查看运行的，例如 ： ./show.sh
+	杀死运行的，例如 ： ./kill.sh aliyun_test4
+
+发布到 release
+动态配置变量
+动态配置文件
+动态加载代码
+
+*** 进入调试控制台
+
+telnet <host> <port>
+
+	host : 节点 ip
+	port : 控制台端口，参见 'admin_console_port' 的配置
+
+
+*** 查看指令帮助
+
+输入 help 并回车，能看到支持的指令及其用法
+
+
+*** 常用指令说明
+
+setcfg    设置配置项，注意：配置相关指令仅对当前节点生效！下同
+getcfg    得到配置项
+
+getenv    得到只读配置项
+
+call      调用服务的 cmd 指令
+
+*** 服务器在线修改说明
+
+★ 调试控制台开关
+
+	各配置项的含义参见 center.lua 文件，也可以在源代码中全局搜索 skynet.getcfg("<配置名称>")！
+	所有功能开关都是 即时生效
+
+  常用的功能开关：
+
+  禁止游客登录： forbid_youke=true 	
+  	★注意★：要允许登录则注掉整行 ，不能设为 false ，因为 skynet 的机制会将 false 解析为 "false"，下同。
+
+  禁止机器人陪玩： forbid_assign_robot=true
+
+  关闭提现功能 ： forbid_withdraw_cash = true
+
+  关闭兑换商城 : forbid_shoping = true
+
+  绑定手机的验证码通知短信 ： bind_phone_code_sms="。。。你的验证码为 %s 。。。"
+
+  同时在线数量： gate_maxclient=10000
+
+  每个客户端 5 秒内最大的请求数： max_request_rate=50
+
+  商城 token 的超时时间（秒）: shop_token_timeout = 180
+
+★ 调试控制台调用服务的 cmd 命令
+
+	临时封号（重启服务器后失效），时间 单位 分钟， 0 表示解除 ）
+	call data_service reject_user "102376715",4320000
+
+	永久封号/解封
+	call data_service block_player "102376715"
+	call data_service unblock_player "102376715"
+
+	强制下线：即使在游戏中！
+	注意：需要先封号 或 禁止登陆，再强制下线，否则会自动重连！
+	call login_service force_kick "102376715"
+
+	踢人， 和 reject_user 不同的是：如果没有 此用户id，会返回错误号
+	call service_console kick_user "102396610",4320000
+
+★ 文件配置	
+
+	支付渠道和苹果 appstore bundleid 配置：
+		game/config/payment_config.lua
+		（动态加载，5 秒内刷新）
+
+	开关支付渠道：
+		game/config/payment_switch.lua
+		（动态加载，5 秒内刷新）
+

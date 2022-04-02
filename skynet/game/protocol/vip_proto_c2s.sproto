@@ -1,0 +1,116 @@
+#
+# 协议：客户端 => 服务端
+#
+
+
+###############################
+# 查询vip红包任务的每日完成记录
+query_reward_task_complete_record @ {
+	request {
+		page_index $ : integer
+		page_num $ : integer
+	}
+	response {
+		result $ : integer      # 0 成功
+		total_get $ : integer                   # 总共领取的值
+		record_data $ : *reward_task_record     # 记录
+	}
+}
+
+# 查询vip红包任务的找回记录
+query_reward_task_find_record @ {
+	request {
+		page_index $ : integer
+		page_num $ : integer
+	}
+	response {
+		result $ : integer      # 0 成功
+		total_find $ : integer      # 总共找回的值
+		record_data $ : *reward_task_record     # 记录
+	}
+}
+
+# 领取vip红包的找回奖金
+get_reward_task_finded_award @ {
+	request {
+	}
+	response {
+		result $ : integer      # 0 成功
+		late_record $ : reward_task_record     #最近一条记录
+	}
+}
+
+#######################################################################
+#领取 推广奖金
+get_generalize_award @ {
+	request {
+	}
+	response {
+		result $ : integer                 # 0 成功
+		award_value $ : integer            # 当前可领取的奖励值
+	}
+}
+
+#查 我的推广奖金
+query_generalize_award @ {
+	request {
+	}
+	response {
+		result $ : integer                 # 0 成功
+		award_value $ : integer            # 当前可领取的奖励值
+		total_award_value $ : integer      # 总共的奖励值
+	}
+}
+
+#查 推广奖金的获得记录
+query_generalize_award_get_record @ {
+	request {
+		page_index $ : integer
+		page_num $ : integer
+	}
+	response {
+		result $ : integer      # 0 成功
+		record_data $ : *generalize_award_get_record
+	}
+}
+
+#查 推广奖金的提现记录
+query_generalize_award_extract_record @ {
+	request {
+		page_index $ : integer
+		page_num $ : integer
+	}
+	response {
+		result $ : integer      # 0 成功
+		record_data $ : *generalize_award_extract_record
+	}
+}
+
+#查 推广奖金的统计
+query_generalize_statistics @ {
+	request {
+	}
+	response {
+		result $ : integer         # 0 成功
+		total $ : integer          # 总共
+		cur_month $ : integer      # 本月
+		today $ : integer          # 今日
+		record_data $ : *generalize_award_statistics_record
+	}
+}
+
+# 查询自己的推广子节点信息
+query_generalize_children @ {
+	request {
+		page_index $ : integer
+		page_num $ : integer
+	}
+	response {
+		result $ : integer                           # 0 成功
+		children_data $ : *generalize_children       # 子玩家信息
+	}
+}
+
+#######################################################################
+
+

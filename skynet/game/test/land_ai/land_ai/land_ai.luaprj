@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<Project Name="land_ai.luaprj" Cmd="" Arg="" Dir="" Toggle="false" >
+    <Filter RelativePath=".\..\..\..\common\landai" Toggle="false" >
+        <LuaFile RelativePath=".\card_type_split.lua" />
+        <LuaFile RelativePath=".\exist_analysis.lua" />
+        <LuaFile RelativePath=".\landai_enum.lua" />
+        <LuaFile RelativePath=".\landai_util.lua" />
+        <LuaFile RelativePath=".\lys_cards.lua" />
+        <LuaFile RelativePath=".\split_analysis.lua" />
+        <LuaFile RelativePath=".\split_type_item.lua" />
+        <LuaFile RelativePath=".\type_switcher.lua" />
+        <LuaFile RelativePath=".\type_weighter.lua" />
+        <Filter RelativePath=".\test" Toggle="false" >
+            <LuaFile RelativePath=".\test_split.lua" />
+            <LuaFile RelativePath=".\test_card_exist.lua" />
+        </Filter>
+    </Filter>
+</Project>

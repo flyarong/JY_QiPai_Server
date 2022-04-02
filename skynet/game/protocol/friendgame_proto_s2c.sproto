@@ -1,0 +1,102 @@
+#
+# 协议：服务端 => 客户端
+#
+
+
+#匹配超时自动取消报名消息
+friendgame_all_info @ {
+	request {
+		status_no $ : integer
+		status $ : string 
+		game_type $ : string
+		friendgame_room_no $ : string
+		ori_game_cfg $ : *friendgame_room_option
+		player_info $ : *friendgame_playerinfo
+		gameover_info $ : *friendgame_settlement_info
+		room_owner $ : string 
+		room_rent $ : integer
+		player_count $ : integer
+		vote_data $ : friendgame_vote_data
+		room_dissolve $ : integer # 不为 0 ，表示房间已解散
+
+		#游戏数据
+		nor_mj_xzdd_status_info $ : nor_mj_xzdd_status_info
+		nor_ddz_nor_status_info $ : nor_ddz_nor_status_info
+	}
+}
+
+
+#玩家加入桌子
+friendgame_join_msg @ {
+	request {
+		status_no $ : integer
+		#玩家信息
+		player_info $ : friendgame_playerinfo
+	}
+}
+
+
+#玩家离开桌子
+friendgame_quit_msg @ {
+	request {
+		status_no $ : integer
+		#玩家座位号
+		seat_num $ : integer
+	}
+}
+#
+friendgame_gameover_msg @ {
+	request {
+		status_no $ : integer
+		gameover_info $ : *friendgame_settlement_info
+	}
+}
+friendgame_begin_vote_cancel_room_msg @ {
+	request {
+		status_no $ : integer
+		player_id $ : string
+		countdown $ : integer
+	}
+}
+friendgame_over_vote_cancel_room_msg @ {
+	request {
+		status_no $ : integer
+		vote_result $ : integer
+	}
+}
+friendgame_player_vote_cancel_room_msg @ {
+	request {
+		status_no $ : integer
+		player_id $ : string
+		opt $ : integer
+	}
+}
+
+
+friendgame_gamecancel_msg @ {
+	request {
+		status_no $ : integer
+	}
+}
+
+#玩家网络质量 变化
+friendgame_net_quality @ {
+	request {
+		status_no $ : integer
+
+		#玩家座位号
+		seat_num $ : integer
+
+		# 好/坏  1/0
+		net_quality $ : integer 
+	}
+}
+
+
+gps_info_msg @ {
+	request {
+		data $ : *friendgame_gps_data
+	}
+}
+
+

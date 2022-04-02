@@ -1,0 +1,235 @@
+return {
+	config=
+	{
+		[1]=
+		{
+			id = 1,
+			ddz_name = "斗九品",
+			mj_name = "雀九品",
+			ddz_level_icon = "com_icon_ddz1",
+			mj_level_icon = "com_icon_mj1",
+			min_val = 0,
+			max_val = 200,
+		},
+		[2]=
+		{
+			id = 2,
+			ddz_name = "斗八品",
+			mj_name = "雀八品",
+			ddz_level_icon = "com_icon_ddz2",
+			mj_level_icon = "com_icon_mj2",
+			min_val = 200,
+			max_val = 600,
+			item_key = {"shop_gold_sum","diamond","room_card","jing_bi","jipaiqi","emoticon1","frame1","shop_gold_sum_limit"},
+			item_val = {100,50,1,15000,172800,1,1,1},
+			item_tips = {"红包券奖励","钻石奖励","房卡奖励","鲸币奖励","记牌器奖励","互动表情","头像框","每日红包额度+1元",},
+		},
+		[3]=
+		{
+			id = 3,
+			ddz_name = "斗七品",
+			mj_name = "雀七品",
+			ddz_level_icon = "com_icon_ddz3",
+			mj_level_icon = "com_icon_mj3",
+			min_val = 600,
+			max_val = 1000,
+			item_key = {"shop_gold_sum","diamond","jing_bi","jipaiqi","frame2","chat","shop_gold_sum_limit"},
+			item_val = {100,100,35000,172800,1,1,1},
+			item_tips = {"红包券奖励","钻石奖励","鲸币奖励","记牌器奖励","头像框","快捷短语","每日红包额度+1元",},
+		},
+		[4]=
+		{
+			id = 4,
+			ddz_name = "斗六品",
+			mj_name = "雀六品",
+			ddz_level_icon = "com_icon_ddz4",
+			mj_level_icon = "com_icon_mj4",
+			min_val = 1000,
+			max_val = 1400,
+			item_key = {"shop_gold_sum","diamond","room_card","jing_bi","jipaiqi","frame3","shop_gold_sum_limit"},
+			item_val = {300,150,2,90000,777600,1,1.5},
+			item_tips = {"红包券奖励","钻石奖励","房卡奖励","鲸币奖励","记牌器奖励","头像框","每日红包额度+1.5元",},
+		},
+		[5]=
+		{
+			id = 5,
+			ddz_name = "斗五品",
+			mj_name = "雀五品",
+			ddz_level_icon = "com_icon_ddz5",
+			mj_level_icon = "com_icon_mj5",
+			min_val = 1400,
+			max_val = 1800,
+			item_key = {"shop_gold_sum","diamond","room_card","jing_bi","jipaiqi","frame4","chat","shop_gold_sum_limit"},
+			item_val = {500,200,3,135000,950400,1,1,1.5},
+			item_tips = {"红包券奖励","钻石奖励","房卡奖励","鲸币奖励","记牌器奖励","头像框","快捷短语","每日红包额度+1.5元",},
+		},
+		[6]=
+		{
+			id = 6,
+			ddz_name = "斗四品",
+			mj_name = "雀四品",
+			ddz_level_icon = "com_icon_ddz6",
+			mj_level_icon = "com_icon_mj6",
+			min_val = 1800,
+			max_val = 2200,
+			item_key = {"shop_gold_sum","diamond","room_card","jing_bi","jipaiqi","emoticon2","frame5","shop_gold_sum_limit"},
+			item_val = {900,250,4,180000,1296000,1,1,1.5},
+			item_tips = {"红包券奖励","钻石奖励","房卡奖励","鲸币奖励","记牌器奖励","互动表情","头像框","每日红包额度+1.5元",},
+		},
+		[7]=
+		{
+			id = 7,
+			ddz_name = "斗三品",
+			mj_name = "雀三品",
+			ddz_level_icon = "com_icon_ddz7",
+			mj_level_icon = "com_icon_mj7",
+			min_val = 2200,
+			max_val = 2800,
+			item_key = {"shop_gold_sum","diamond","room_card","jing_bi","jipaiqi","frame6","chat","shop_gold_sum_limit"},
+			item_val = {1300,250,5,225000,1814400,1,1,1.5},
+			item_tips = {"红包券奖励","钻石奖励","房卡奖励","鲸币奖励","记牌器奖励","头像框","快捷短语","每日红包额度+1.5元",},
+		},
+		[8]=
+		{
+			id = 8,
+			ddz_name = "斗二品",
+			mj_name = "雀二品",
+			ddz_level_icon = "com_icon_ddz8",
+			mj_level_icon = "com_icon_mj8",
+			min_val = 2800,
+			max_val = 3400,
+			item_key = {"shop_gold_sum","diamond","jing_bi","jipaiqi","emoticon3","frame7","shop_gold_sum_limit"},
+			item_val = {1500,700,270000,2073600,1,1,1.5},
+			item_tips = {"红包券奖励","钻石奖励","鲸币奖励","记牌器奖励","互动表情","头像框","每日红包额度+1.5元",},
+		},
+		[9]=
+		{
+			id = 9,
+			ddz_name = "斗一品",
+			mj_name = "雀一品",
+			ddz_level_icon = "com_icon_ddz9",
+			mj_level_icon = "com_icon_mj9",
+			min_val = 3400,
+			max_val = 4000,
+			item_key = {"shop_gold_sum","diamond","jing_bi","jipaiqi","emoticon4","frame8","chat","shop_gold_sum_limit"},
+			item_val = {3000,1250,315000,2592000,1,1,1,1.5},
+			item_tips = {"红包券奖励","钻石奖励","鲸币奖励","记牌器奖励","互动表情","头像框","快捷短语","每日红包额度+1.5元",},
+		},
+		[10]=
+		{
+			id = 10,
+			ddz_name = "斗皇",
+			mj_name = "雀皇",
+			ddz_level_icon = "com_icon_ddz10",
+			mj_level_icon = "com_icon_mj10",
+			min_val = 4000,
+			max_val = 5000,
+			item_key = {"shop_gold_sum","diamond","jing_bi","jipaiqi_free","broadcast","frame9","shop_gold_sum_limit"},
+			item_val = {4000,2000,360000,1,1,1,1.5},
+			item_tips = {"红包券奖励","钻石奖励","鲸币奖励","保持在该段位，可免费使用记牌器","保持在该段位，登录时全服播放欢迎广播","头像框","每日红包额度+1.5元",},
+		},
+	},
+	level_config=
+	{
+		[1]=
+		{
+			id = 1,
+			ddz_name = "斗九品",
+			mj_name = "雀九品",
+			ddz_level_icon = "com_icon_ddz1",
+			mj_level_icon = "com_icon_mj1",
+			min_val = 0,
+			max_val = 200,
+		},
+		[2]=
+		{
+			id = 2,
+			ddz_name = "斗八品",
+			mj_name = "雀八品",
+			ddz_level_icon = "com_icon_ddz2",
+			mj_level_icon = "com_icon_mj2",
+			min_val = 200,
+			max_val = 600,
+		},
+		[3]=
+		{
+			id = 3,
+			ddz_name = "斗七品",
+			mj_name = "雀七品",
+			ddz_level_icon = "com_icon_ddz3",
+			mj_level_icon = "com_icon_mj3",
+			min_val = 600,
+			max_val = 1000,
+		},
+		[4]=
+		{
+			id = 4,
+			ddz_name = "斗六品",
+			mj_name = "雀六品",
+			ddz_level_icon = "com_icon_ddz4",
+			mj_level_icon = "com_icon_mj4",
+			min_val = 1000,
+			max_val = 1400,
+		},
+		[5]=
+		{
+			id = 5,
+			ddz_name = "斗五品",
+			mj_name = "雀五品",
+			ddz_level_icon = "com_icon_ddz5",
+			mj_level_icon = "com_icon_mj5",
+			min_val = 1400,
+			max_val = 1800,
+		},
+		[6]=
+		{
+			id = 6,
+			ddz_name = "斗四品",
+			mj_name = "雀四品",
+			ddz_level_icon = "com_icon_ddz6",
+			mj_level_icon = "com_icon_mj6",
+			min_val = 1800,
+			max_val = 2200,
+		},
+		[7]=
+		{
+			id = 7,
+			ddz_name = "斗三品",
+			mj_name = "雀三品",
+			ddz_level_icon = "com_icon_ddz7",
+			mj_level_icon = "com_icon_mj7",
+			min_val = 2200,
+			max_val = 2800,
+		},
+		[8]=
+		{
+			id = 8,
+			ddz_name = "斗二品",
+			mj_name = "雀二品",
+			ddz_level_icon = "com_icon_ddz8",
+			mj_level_icon = "com_icon_mj8",
+			min_val = 2800,
+			max_val = 3400,
+		},
+		[9]=
+		{
+			id = 9,
+			ddz_name = "斗一品",
+			mj_name = "雀一品",
+			ddz_level_icon = "com_icon_ddz9",
+			mj_level_icon = "com_icon_mj9",
+			min_val = 3400,
+			max_val = 4000,
+		},
+		[10]=
+		{
+			id = 10,
+			ddz_name = "斗皇",
+			mj_name = "雀皇",
+			ddz_level_icon = "com_icon_ddz10",
+			mj_level_icon = "com_icon_mj10",
+			min_val = 4000,
+			max_val = 5000,
+		},
+	},
+}

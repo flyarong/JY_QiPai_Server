@@ -1,0 +1,16 @@
+include "../common/config"
+cluster = "./game/launch/" .. _dir_names[1] .. "/clustername.lua"
+
+start = _dir_names[1] .. "/main"	-- main script
+
+logger = "./logs/node_test_node_3.log"
+daemon = "./logs/node_test_node_3.pid"
+
+debug_file = "./debug_node_test_node_3.log"
+debug_file_size = 100	-- 日志文件大小（单位：MB）：超过此大小即分文件
+
+my_node_name="node_3"
+
+thread = 10
+
+strict_transfer=1

@@ -1,0 +1,79 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+
+.citymg_match_info {
+	#游戏名字
+	name $ : string   
+	#总参与人数
+	total_players $ : integer
+	#总轮数
+	total_round $ : integer
+	match_model  $ : string
+	# 0-不可以取消  1-可以取消
+	is_cancel_signup $ : integer
+}
+
+
+.citymg_round_info {#--轮信息
+
+	#当前轮数
+	round $ : integer
+
+	# 0-初赛  1-决赛 
+	round_type $ : integer
+
+	# 此轮晋级人数
+	rise_num $ : integer
+
+	# 晋级分数
+	rise_score $ : integer
+
+	# 此轮的局数
+	race_count $ : integer
+
+	# 此轮的初始倍率
+	init_rate $ : integer
+
+	# 此轮的底分
+	init_stake $ : integer
+}
+
+
+.citymg_p_info {
+	#玩家名字
+	name $ : string
+	#玩家头像下载链接
+	head_link $ : string
+	#玩家座位号
+	seat_num $ : integer
+	#1男0女  其他男
+	sex $ : integer
+	id $ : string 
+	score $: integer
+	#头像框
+	dressed_head_frame $: integer
+	#荣誉分
+	glory_score $: integer
+}
+
+.citymg_reward {
+	asset_type $ : string
+	value $ : integer
+}
+
+.citymg_final_result {
+	rank $ : integer
+	reward $ : *citymg_reward
+	match_type $ : integer
+}
+
+
+.citymg_rank_list {
+	id $ : string
+	rank $ : integer
+	name $ : string
+	award $ : string
+}
+

@@ -1,0 +1,19 @@
+
+
+#玩家加入桌子
+fsg_join_msg @ {
+	request {
+		#玩家信息
+		player_info $ : fsg_p_info
+	}
+}
+
+#玩家离开
+fsg_leave_msg @ {
+	request {
+		#玩家座位号
+		seat_num $ : integer
+	}
+}
+
+

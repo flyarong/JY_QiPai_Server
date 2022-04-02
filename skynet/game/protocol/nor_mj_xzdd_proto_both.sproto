@@ -1,0 +1,277 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+
+#分数改变信息
+.nor_mj_xzdd_grades_change{
+
+    # 分数改变的人
+    cur_p $ : integer
+
+    # 分数变化量
+    score $ : integer
+
+    # 还差多少才够输
+    lose_surplus $ : integer
+
+}
+
+.nor_mj_xzdd_grades_change_item{
+	# 分数改变信息
+	data $ : *nor_mj_xzdd_grades_change
+	# 类型 (为何改变)
+	type $ : string
+}
+
+# 胡牌数据
+.nor_mj_xzdd_hu_data
+ {
+	#座位号
+	seat_num $ : integer
+
+ 	#胡牌类型：zimo-自摸 pao-别人点炮 qghu-抢杠胡
+	hu_type $ : string 
+
+	#胡 的牌
+	pai $ : integer
+	#点炮人
+	dianpao_p $ : integer
+}
+
+# 番型 数据： 番型 -> 倍数
+.nor_mj_xzdd_multi_data
+{
+    qing_yi_se $ : integer # nil 或 番数
+    da_dui_zi $ : integer # nil 或 番数
+    qi_dui $ : integer # nil 或 番数
+    long_qi_dui $ : integer # nil 或 番数
+
+    dai_geng $ : integer # nil 或 根数
+
+    jiang_dui $ : integer # nil 或 番数
+    men_qing $ : integer # nil 或 番数
+    zhong_zhang $ : integer # nil 或 番数
+    jin_gou_diao $ : integer # nil 或 番数
+
+    hai_di_ly $ : integer # nil 或 番数 ,海底捞月 最后一张牌胡牌（自摸）
+    hai_di_pao $ : integer # nil 或 番数 ,海底炮  最后一张牌胡牌（被人点炮）
+    tian_hu $ : integer # nil 或 番数 天胡：庄家，第一次发完牌既胡牌
+    di_hu $ : integer # nil 或 番数 ,地胡：非庄家第一次发完牌 既自摸或 被别人点炮
+    gang_shang_hua $ : integer # nil 或 番数 ,杠上花：自己杠后补杠自摸
+    gang_shang_pao $ : integer # nil 或 番数 ,杠上炮：别人杠后补拍点炮
+
+    zimo $ : integer # nil 或 番数 自摸
+    qiangganghu $ : integer # nil 或 番数 抢杠胡 
+}
+
+# 杠的牌信息
+.nor_mj_xzdd_gang_pai
+{
+    pai $ : integer
+    gang_type $ : string # "zg"/"wg"/"ag"
+
+	# 倍数
+	sum  $ : integer
+}
+
+# 碰杠的牌信息
+.nor_mj_pg_pai
+{
+    pai $ : integer
+    pg_type $ : string # "peng"/"zg"/"wg"/"ag"
+
+	# 倍数
+	sum  $ : integer
+}
+
+# 结算
+.nor_mj_xzdd_settle_data
+ {
+
+    # 结算类型：hu 胡牌， ting 听牌, wujiao 无叫, hz 花猪
+    settle_type $ : string
+
+ 	#胡牌类型（settle_type == hu）：zimo-自摸 pao-别人点炮 qghu-抢杠胡
+	hu_type $ : string
+
+	#胡的牌
+	hu_pai $ : integer
+
+	multi $ : nor_mj_xzdd_multi_data
+
+	# 总番数
+	sum_multi $ : integer
+
+	score $ : integer # 分数
+
+	lose_surplus $ : integer # 差多少才够输分数
+
+	# 总倍数
+	sum  $ : integer
+}
+
+.nor_mj_xzdd_action {
+	#动作类型
+	type $ : string # "dq" 定缺； "cp" 出牌; "peng" 碰; "gang" 杠; "hu" 胡; "guo" 过;
+
+	#做出动作的人
+	p $ : integer
+
+	#牌
+	pai $ : integer
+
+	#胡信息
+	hu_data $ : nor_mj_xzdd_hu_data
+
+	#额外数据
+	other $ : string # type=gang（zg 直杠,ag 暗杠,wg 弯杠）
+}
+
+
+.nor_mj_xzdd_pg_pai_info {
+	type $ : string
+	pai $ : integer
+}
+
+.nor_mj_xzdd_player_pg_pai_info {
+	pg_pai_list $ : *nor_mj_xzdd_pg_pai_info
+}
+
+.nor_mj_xzdd_player_chu_pai_info {
+	pai_list $ : *integer
+}
+
+.nor_mj_xzdd_sezi_data{
+	sezi_value1 $ : integer
+	sezi_value2 $ : integer
+	zj_seat $ : integer
+}
+
+
+.nor_mj_xzdd_chupai_data{
+	seat_num $ : integer
+	pai $ : integer
+}
+
+.nor_mj_xzdd_allow_opt
+{
+    peng $ : integer # 可以碰
+    gang $ : integer # 可以杠
+    hu $ : integer # 可以胡
+}
+
+.nor_mj_xzdd_settlement_item
+{
+    seat_num $ : integer
+	settle_data $ : nor_mj_xzdd_settle_data
+	shou_pai $ : *integer # 手上的牌
+	pg_pai $ : *nor_mj_pg_pai # 碰杠的牌
+}
+
+.nor_mj_xzdd_settlement_info {
+
+    settlement_items $ : *nor_mj_xzdd_settlement_item
+
+    #赢封顶
+	yingfengding $ : *integer
+
+}
+
+# 转雨的结构
+.zhuan_yu_struct {
+	gang_seat $ : integer
+	hu_seat $ : integer
+	pai $ : integer
+}
+
+.nor_mj_xzdd_status_info {
+
+	status $ : string
+
+	countdown $ : integer(2)
+
+	cur_p $ : integer
+
+	#当前局数
+	cur_race $ : integer
+
+	cur_chupai $ : nor_mj_xzdd_chupai_data
+
+	cur_mopai $ : integer
+
+	cur_pgh_card $ : integer
+
+	remain_card $ : integer
+
+	player_remain_card $ : *integer
+
+	#--我的牌列表
+	my_pai_list $ : *integer
+
+	pg_pai $ : *nor_mj_xzdd_player_pg_pai_info
+
+	chu_pai $ : *nor_mj_xzdd_player_chu_pai_info
+
+	#--玩家的托管状态
+	auto_status $ : *integer
+
+	#--定缺的花色 -1 0 1-3 具体的花色
+	dingque_pai $ : *integer
+
+	#--当前动作
+	action $ : nor_mj_xzdd_action
+
+	# 游戏玩家的信息 离桌也不清除
+	game_players_info $ : *fg_p_info
+
+	hu_data $ : *nor_mj_xzdd_hu_data
+
+	cur_pgh_allow_opt $ : nor_mj_xzdd_allow_opt
+	#记牌器
+	jipaiqi $ : *integer
+	#有出牌权限时的过记录 用于过掉胡牌  弯杠等
+	is_guo $ : integer
+
+	ready $ : *integer
+	
+	settlement_info $ : nor_mj_xzdd_settlement_info
+
+	seat_num $ : integer
+	
+
+	#是否结束(是否还有下一局)  0-no   1-yes
+	is_over $ : integer
+
+	init_stake $ : integer
+	
+	init_rate $ : integer
+	
+	race_count $ : integer
+	
+	sezi_data $ : nor_mj_xzdd_sezi_data
+
+	da_piao_nums $ : *integer   # 打漂的值
+
+	is_huan_pai $ : integer   # 是否换牌 
+
+	score_change_list $ : *nor_mj_xzdd_grades_change_item   # 分数变化列表
+
+	game_bankrupt $ : *integer   # 游戏破产
+	
+	zhuan_yu_data $ : *zhuan_yu_struct   # 转雨数据
+}
+
+# nor_mj_xzdd **************
+
+
+
+
+
+
+
+
+
+
+
+

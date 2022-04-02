@@ -1,0 +1,40 @@
+#
+# 协议：客户端 服务端 共用
+#
+
+
+# 推广奖金的统计记录
+.zjd_one_game_status { 
+	level     	$ : integer   				# 等级
+	base_money  $ : integer                 # 底分
+	eggs_status $ : *integer                # 蛋的状态  -1表示已开 0 完好  1-N 表示已经被敲了1-N下
+	award_list $ : *integer                 # 奖励列表
+	replace_money $ : integer 				# 换一批需要的money
+}
+.zjd_game_status {
+	now_level $ : integer               # 当前所在的锥子
+	status $ : *zjd_one_game_status     # 所有锤子对应的状态
+}
+
+.zjd_kaijiang_result {
+	egg_no $  : integer                     # 蛋的id
+	award $ : integer                       # 奖励id
+	award_value $ : integer                       # 奖励 倍率
+}
+
+
+.zjd_rank_data {
+	player_id $ : string           # 玩家id
+	today_award $ : integer        # 今日获得的奖励
+}
+
+.zjd_log_data {
+	award $ : integer        # 奖励
+	time $ : integer         # 时间
+}
+
+
+
+
+
+
